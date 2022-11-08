@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>CLD</name>
+		<uuid>75fc1bfa-a843-4889-aa59-c471dd9837e0</uuid>
+		<vendor>isee systems, inc.</vendor>
+		<product version="1.7.1" isee:build_number="1574" isee:saved_by_v1="true" lang="en">Stella Architect</product>
+	</header>
+	<sim_specs isee:simulation_delay="0.1" method="Euler" time_units="Months" isee:instantaneous_flows="false">
+		<start>1</start>
+		<stop>13</stop>
+		<dt reciprocal="true">4</dt>
+	</sim_specs>
+	<isee:prefs show_module_prefix="true" live_update_on_drag="true" show_restore_buttons="false" layer="cld" interface_scale_ui="true" interface_max_page_width="10000" interface_max_page_height="10000" interface_min_page_width="0" interface_min_page_height="0" saved_runs="5" keep="false" rifp="true"/>
+	<isee:multiplayer_settings include_chat="true" allow_observers="false" advance_time_increment="1" observer_start_page="home_page" enabled="false"/>
+	<isee:time_formats default_format="Builtin">
+		<isee:time_format name="Builtin" type="adaptive"/>
+	</isee:time_formats>
+	<default_format/>
+	<model_units/>
+	<model>
+		<variables>
+			<aux name="Cotton in Storage">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Harvest Cotton">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Traders leave with Cotton">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Cotton in route">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Trade for gold">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Successful RAID">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Gold in route">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Attack readiness">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Gold in Storage">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Pay Toll">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="General Expenses">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Taxes">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Return Home">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Villagers Born">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Adults in Village">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Villagers Die">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Elders in Village">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Children in Village">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Traders">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Village make more traders up to 35">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Children Bandits">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandits Born">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Adult Bandits">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Elder Bandits">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandits Die">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandits Gold">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Villagers Kidnapped">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandit's Cotton">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandit's sell cotton on black market">
+				<isee:delay_aux/>
+			</aux>
+			<isee:dependencies>
+				<var name="Cotton_in_Storage">
+					<in>Harvest_Cotton</in>
+					<in>Traders_leave_with_Cotton</in>
+				</var>
+				<var name="Cotton_in_route">
+					<in>Traders_leave_with_Cotton</in>
+					<in>Successful_RAID</in>
+				</var>
+				<var name="Trade_for_gold">
+					<in>Cotton_in_route</in>
+				</var>
+				<var name="Successful_RAID">
+					<in>Attack_readiness</in>
+				</var>
+				<var name="Gold_in_route">
+					<in>Trade_for_gold</in>
+					<in>Successful_RAID</in>
+				</var>
+				<var name="Attack_readiness">
+					<in>Successful_RAID</in>
+				</var>
+				<var name="Gold_in_Storage">
+					<in>Pay_Toll</in>
+					<in>General_Expenses</in>
+					<in>Taxes</in>
+					<in>Return_Home</in>
+				</var>
+				<var name="Return_Home">
+					<in>Gold_in_route</in>
+				</var>
+				<var name="Adults_in_Village">
+					<in>Villagers_Die</in>
+					<in>Children_in_Village</in>
+					<in>Villagers_Kidnapped</in>
+				</var>
+				<var name="Elders_in_Village">
+					<in>Villagers_Die</in>
+					<in>Adults_in_Village</in>
+				</var>
+				<var name="Children_in_Village">
+					<in>Villagers_Die</in>
+					<in>Villagers_Born</in>
+				</var>
+				<var name="Traders">
+					<in>Village_make_more_traders_up_to_35</in>
+					<in>Villagers_Kidnapped</in>
+				</var>
+				<var name="Children_Bandits">
+					<in>Bandits_Born</in>
+					<in>Bandits_Die</in>
+				</var>
+				<var name="Adult_Bandits">
+					<in>Bandits_Die</in>
+					<in>Children_Bandits</in>
+					<in>Villagers_Kidnapped</in>
+				</var>
+				<var name="Elder_Bandits">
+					<in>Bandits_Die</in>
+					<in>Adult_Bandits</in>
+				</var>
+				<var name="Bandits_Gold">
+					<in>Successful_RAID</in>
+					<in>Bandit&apos;s_sell_cotton_on_black_market</in>
+				</var>
+				<var name="Villagers_Kidnapped">
+					<in>Successful_RAID</in>
+				</var>
+				<var name="Bandit's_Cotton">
+					<in>Successful_RAID</in>
+					<in>Bandit&apos;s_sell_cotton_on_black_market</in>
+				</var>
+				<var name="Bandit's_sell_cotton_on_black_market">
+					<in>Bandit&apos;s_Cotton</in>
+				</var>
+			</isee:dependencies>
+		</variables>
+		<views>
+			<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+				<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<isee:loop_indicator color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<numeric_display color="blue" background="white" font_size="9pt" isee:transparent="false"/>
+				<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false" axis_title_font_style="normal" axis_title_font_weight="normal" axis_title_text_decoration="none" axis_title_text_align="center" axis_title_vertical_text_align="center" axis_title_font_color="black" axis_title_font_family="Arial" axis_title_font_size="12pt" axis_title_text_padding="2" axis_title_text_border_color="black" axis_title_text_border_width="thin" axis_title_text_border_style="none" axis_label_font_style="normal" axis_label_font_weight="normal" axis_label_text_decoration="none" axis_label_text_align="center" axis_label_vertical_text_align="center" axis_label_font_color="black" axis_label_font_family="Arial" axis_label_font_size="9pt" axis_label_text_padding="2" axis_label_text_border_color="black" axis_label_text_border_width="thin" axis_label_text_border_style="none">
+					<isee:series_styles>
+						<isee:series_style color="blue" thickness="1"/>
+						<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF7F00" thickness="1"/>
+						<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF007F" thickness="1"/>
+						<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#C8C8C8" thickness="1"/>
+					</isee:series_styles>
+				</graph>
+				<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous" header_font_style="normal" header_font_weight="normal" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="12pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
+				<button color="black" background="#E0E0E0" font_size="12pt" transparent="false" corner_radius="0" isee:flat="false" icon_side="top" isee:highlight_on_hover="false" isee:highlight_color="#959595"/>
+				<isee:annotation color="black" background="#E0E0E0" font_size="12pt" transparent="false" corner_radius="0" isee:flat="false" icon_side="top" isee:highlight_on_hover="false" isee:highlight_color="#959595" popup_background_color="#FFFECF"/>
+				<slider color="black" background="#E0E0E0" font_size="12pt" num_ticks="3" label_side="top" wrap_title="true" vertical="false" isee:always_show_hover_tip="false" input_expands="true" input_width="100"/>
+				<isee:sim_speed_slider color="black" background="white"/>
+				<isee:time_slider color="#E95F74" background="silver"/>
+				<isee:pie_input color="black" background="white" font_size="12pt" legend_position="bottom" isee:transparent="false"/>
+				<knob color="#66CC66" background="#E0E0E0" font_size="12pt" label_side="bottom" wrap_title="true"/>
+				<numeric_input color="black" background="#E0E0E0" font_size="12pt" label_side="left" wrap_title="true" input_expands="false" input_width="100"/>
+				<switch color="black" background="#E0E0E0" font_size="12pt" label_side="top" wrap_title="true" isee:appearance="switch"/>
+				<options color="black" background="white" appearance="radio-buttons" arrangement="vertical"/>
+				<graphical_input color="black" background="#E0E0E0" font_size="12pt"/>
+				<group_input color="black" background="#E0E0E0" font_size="12pt"/>
+				<lamp color="black" background="white" font_size="9pt"/>
+				<gauge color="black" background="white" font_size="9pt" needle_color="#F09F72" bar_color="#EEEEEE" bar_progress_color="black" appearance="radial" num_major_ticks="11" num_minor_ticks="11" show_numeric_value="true"/>
+				<isee:spatial_map color="black" background="white" font_size="12pt"/>
+				<isee:animation_object color="black" background="white" font_size="12pt"/>
+			</style>
+			<view isee:show_pages="false" isee:converter_size="name_only" page_width="1097" page_height="767" isee:page_cols="2" isee:page_rows="2" isee:scroll_x="196" isee:popup_graphs_are_comparative="true" type="stock_flow">
+				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+					<stock color="white" background="black" font_color="blue" font_size="9pt" label_side="top">
+						<shape type="rectangle" width="45" height="35"/>
+					</stock>
+					<flow color="white" background="black" font_color="blue" font_size="9pt" label_side="bottom"/>
+					<module color="white" background="black" font_color="blue" font_size="9pt" label_side="top">
+						<shape type="rectangle" width="55" height="45"/>
+					</module>
+					<aux color="white" background="black" font_color="blue" font_size="9pt" label_side="bottom">
+						<shape type="name_only"/>
+					</aux>
+					<group color="red" background="white" font_color="red" font_size="9pt"/>
+					<connector color="#FF007F" background="white" font_color="#FF007F" font_size="9pt" isee:thickness="1"/>
+					<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+					<isee:loop_indicator color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+					<numeric_display color="blue" background="white" font_size="9pt" isee:transparent="false"/>
+					<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false" axis_title_font_style="normal" axis_title_font_weight="normal" axis_title_text_decoration="none" axis_title_text_align="center" axis_title_vertical_text_align="center" axis_title_font_color="black" axis_title_font_family="Arial" axis_title_font_size="12pt" axis_title_text_padding="2" axis_title_text_border_color="black" axis_title_text_border_width="thin" axis_title_text_border_style="none" axis_label_font_style="normal" axis_label_font_weight="normal" axis_label_text_decoration="none" axis_label_text_align="center" axis_label_vertical_text_align="center" axis_label_font_color="black" axis_label_font_family="Arial" axis_label_font_size="9pt" axis_label_text_padding="2" axis_label_text_border_color="black" axis_label_text_border_width="thin" axis_label_text_border_style="none">
+						<isee:series_styles>
+							<isee:series_style color="blue" thickness="1"/>
+							<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF7F00" thickness="1"/>
+							<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF007F" thickness="1"/>
+							<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#C8C8C8" thickness="1"/>
+						</isee:series_styles>
+					</graph>
+					<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous" header_font_style="normal" header_font_weight="normal" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="12pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
+				</style>
+				<aux x="361.375" y="174.875" width="75.25" height="12" name="Cotton in Storage"/>
+				<aux x="238.25" y="104.625" width="67.25" height="12" name="Harvest Cotton"/>
+				<connector uid="1" polarity="+" isee:polarity_placement="outside" angle="1.63658">
+					<from>Harvest_Cotton</from>
+					<to>Cotton_in_Storage</to>
+				</connector>
+				<aux x="211.5" y="231.5" width="109.25" height="12" name="Traders leave with Cotton"/>
+				<connector uid="2" polarity="-" isee:polarity_placement="outside" angle="358.095">
+					<from>Traders_leave_with_Cotton</from>
+					<to>Cotton_in_Storage</to>
+				</connector>
+				<aux x="323.875" y="344" width="64.25" height="12" name="Cotton in route"/>
+				<connector uid="3" polarity="+" isee:polarity_placement="outside" angle="342.394">
+					<from>Traders_leave_with_Cotton</from>
+					<to>Cotton_in_route</to>
+				</connector>
+				<aux x="424.625" y="356" width="60.25" height="12" name="Trade for gold"/>
+				<connector uid="4" polarity="+" isee:polarity_placement="outside" angle="326.31">
+					<from>Cotton_in_route</from>
+					<to>Trade_for_gold</to>
+				</connector>
+				<aux x="430.25" y="525.5" width="75.25" height="12" name="Successful RAID"/>
+				<connector uid="5" polarity="-" isee:polarity_placement="outside" angle="174.144">
+					<from>Successful_RAID</from>
+					<to>Cotton_in_route</to>
+				</connector>
+				<aux x="540.125" y="344" width="55.25" height="12" name="Gold in route"/>
+				<connector uid="6" polarity="+" isee:polarity_placement="outside" angle="343.571">
+					<from>Trade_for_gold</from>
+					<to>Gold_in_route</to>
+				</connector>
+				<connector uid="7" polarity="-" isee:polarity_placement="outside" angle="8.65254">
+					<from>Successful_RAID</from>
+					<to>Gold_in_route</to>
+				</connector>
+				<aux x="428.625" y="413" width="72.25" height="12" name="Attack readiness"/>
+				<connector uid="8" polarity="+" isee:polarity_placement="inside" angle="153.435">
+					<from>Successful_RAID</from>
+					<to>Attack_readiness</to>
+				</connector>
+				<connector uid="9" polarity="-" isee:polarity_placement="inside" angle="317.42">
+					<from>Attack_readiness</from>
+					<to>Successful_RAID</to>
+				</connector>
+				<isee:loop_indicator text="B1" orientation="clockwise" uid="10" x="446" y="453.375" width="30" height="30">
+					<isee:entities>
+						<item uid="8"/>
+						<item uid="9"/>
+					</isee:entities>
+				</isee:loop_indicator>
+				<aux x="523.125" y="174.875" width="66.25" height="12" name="Gold in Storage"/>
+				<aux x="631.75" y="266.5" width="35.25" height="12" name="Pay Toll"/>
+				<connector uid="11" polarity="-" isee:polarity_placement="outside" angle="98.1301">
+					<from>Pay_Toll</from>
+					<to>Gold_in_Storage</to>
+				</connector>
+				<aux x="585.25" y="107.75" width="78.25" height="12" name="General Expenses"/>
+				<connector uid="12" polarity="-" isee:polarity_placement="outside" angle="187.595">
+					<from>General_Expenses</from>
+					<to>Gold_in_Storage</to>
+				</connector>
+				<aux x="470.625" y="104.625" width="26.25" height="12" name="Taxes"/>
+				<connector uid="13" polarity="-" isee:polarity_placement="outside" angle="272.603">
+					<from>Taxes</from>
+					<to>Gold_in_Storage</to>
+				</connector>
+				<aux x="542.125" y="270.25" width="58.25" height="12" name="Return Home"/>
+				<connector uid="14" polarity="+" isee:polarity_placement="outside" angle="65.677">
+					<from>Gold_in_route</from>
+					<to>Return_Home</to>
+				</connector>
+				<connector uid="15" polarity="+" isee:polarity_placement="outside" angle="111.801">
+					<from>Return_Home</from>
+					<to>Gold_in_Storage</to>
+				</connector>
+				<aux x="878.625" y="638.5" width="59.25" height="12" name="Villagers Born"/>
+				<aux x="1082.5" y="689" width="68.25" height="12" name="Adults in Village"/>
+				<aux x="1084.5" y="775.375" width="54.25" height="12" name="Villagers Die"/>
+				<connector uid="16" polarity="-" isee:polarity_placement="outside" angle="86.687">
+					<from>Villagers_Die</from>
+					<to>Adults_in_Village</to>
+				</connector>
+				<aux x="1222.5" y="689" width="68.25" height="12" name="Elders in Village"/>
+				<connector uid="17" polarity="-" isee:polarity_placement="outside" angle="356.566">
+					<from>Villagers_Die</from>
+					<to>Elders_in_Village</to>
+				</connector>
+				<connector uid="18" polarity="+" isee:polarity_placement="outside" angle="28.4429">
+					<from>Adults_in_Village</from>
+					<to>Elders_in_Village</to>
+				</connector>
+				<aux x="937.875" y="689" width="76.25" height="12" name="Children in Village"/>
+				<connector uid="19" polarity="-" isee:polarity_placement="outside" angle="181.181">
+					<from>Villagers_Die</from>
+					<to>Children_in_Village</to>
+				</connector>
+				<connector uid="20" polarity="+" isee:polarity_placement="inside" angle="277.667">
+					<from>Villagers_Born</from>
+					<to>Children_in_Village</to>
+				</connector>
+				<connector uid="21" polarity="+" isee:polarity_placement="outside" angle="32.9052">
+					<from>Children_in_Village</from>
+					<to>Adults_in_Village</to>
+				</connector>
+				<aux x="775.75" y="301" width="33.25" height="12" name="Traders"/>
+				<aux x="752.75" y="202" width="79.25" height="26" name="Village make more traders up to 35"/>
+				<connector uid="22" polarity="+" isee:polarity_placement="outside" angle="265.152">
+					<from>Village_make_more_traders_up_to_35</from>
+					<to>Traders</to>
+				</connector>
+				<aux x="1027" y="245.875" width="70.25" height="12" name="Children Bandits"/>
+				<aux x="913.625" y="160.5" width="55.25" height="12" name="Bandits Born"/>
+				<connector uid="23" polarity="+" isee:polarity_placement="outside" angle="293.199">
+					<from>Bandits_Born</from>
+					<to>Children_Bandits</to>
+				</connector>
+				<aux x="1176" y="245.875" width="57.25" height="12" name="Adult Bandits"/>
+				<aux x="1332.26" y="245.875" width="57.25" height="12" name="Elder Bandits"/>
+				<aux x="1179.5" y="329.625" width="50.25" height="12" name="Bandits Die"/>
+				<connector uid="24" polarity="-" isee:polarity_placement="outside" angle="175.426">
+					<from>Bandits_Die</from>
+					<to>Children_Bandits</to>
+				</connector>
+				<connector uid="25" polarity="-" isee:polarity_placement="outside" angle="90">
+					<from>Bandits_Die</from>
+					<to>Adult_Bandits</to>
+				</connector>
+				<connector uid="26" polarity="-" isee:polarity_placement="outside" angle="358.781">
+					<from>Bandits_Die</from>
+					<to>Elder_Bandits</to>
+				</connector>
+				<connector uid="27" polarity="+" isee:polarity_placement="outside" angle="55.5392">
+					<from>Children_Bandits</from>
+					<to>Adult_Bandits</to>
+				</connector>
+				<connector uid="28" polarity="+" isee:polarity_placement="outside" angle="41.8202">
+					<from>Adult_Bandits</from>
+					<to>Elder_Bandits</to>
+				</connector>
+				<aux x="559.375" y="650.5" width="55.25" height="12" name="Bandits Gold"/>
+				<aux x="708.375" y="375.375" width="83.25" height="12" name="Villagers Kidnapped"/>
+				<connector uid="29" polarity="+" isee:polarity_placement="outside" angle="333.625">
+					<from>Successful_RAID</from>
+					<to>Villagers_Kidnapped</to>
+				</connector>
+				<connector uid="30" polarity="-" isee:polarity_placement="outside" angle="113.728">
+					<from>Villagers_Kidnapped</from>
+					<to>Traders</to>
+				</connector>
+				<connector uid="31" polarity="-" isee:polarity_placement="outside" angle="345.005">
+					<from>Villagers_Kidnapped</from>
+					<to>Adults_in_Village</to>
+				</connector>
+				<connector uid="32" polarity="+" isee:polarity_placement="outside" angle="5.43529">
+					<pts>
+						<pt x="791.625" y="377.414"/>
+						<pt x="892" y="295"/>
+						<pt x="848" y="107"/>
+						<pt x="1049" y="41"/>
+						<pt x="1207" y="117"/>
+						<pt x="1206.31" y="245.875"/>
+					</pts>
+					<from>Villagers_Kidnapped</from>
+					<to>Adult_Bandits</to>
+				</connector>
+				<connector uid="33" polarity="+" isee:polarity_placement="outside" angle="279.241">
+					<from>Successful_RAID</from>
+					<to>Bandits_Gold</to>
+				</connector>
+				<aux x="553.875" y="771" width="66.25" height="12" name="Bandit's Cotton"/>
+				<connector uid="34" polarity="+" isee:polarity_placement="outside" angle="237.287">
+					<from>Successful_RAID</from>
+					<to>Bandit&apos;s_Cotton</to>
+				</connector>
+				<aux x="636.375" y="701" width="81.25" height="26" name="Bandit's sell cotton on black market"/>
+				<connector uid="35" polarity="-" isee:polarity_placement="outside" angle="289.29">
+					<from>Bandit&apos;s_sell_cotton_on_black_market</from>
+					<to>Bandit&apos;s_Cotton</to>
+				</connector>
+				<connector uid="36" polarity="+" isee:polarity_placement="outside" angle="62.3005">
+					<from>Bandit&apos;s_sell_cotton_on_black_market</from>
+					<to>Bandits_Gold</to>
+				</connector>
+				<connector uid="37" polarity="+" isee:polarity_placement="outside" angle="78.0239">
+					<from>Bandit&apos;s_Cotton</from>
+					<to>Bandit&apos;s_sell_cotton_on_black_market</to>
+				</connector>
+				<isee:loop_indicator text="B2" orientation="clockwise" uid="38" x="620.125" y="737" width="30" height="30">
+					<isee:entities>
+						<item uid="35"/>
+						<item uid="37"/>
+					</isee:entities>
+				</isee:loop_indicator>
+			</view>
+		</views>
+	</model>
+</xmile>
+
