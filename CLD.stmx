@@ -225,7 +225,7 @@
 				<isee:spatial_map color="black" background="white" font_size="12pt"/>
 				<isee:animation_object color="black" background="white" font_size="12pt"/>
 			</style>
-			<view isee:show_pages="false" isee:converter_size="name_only" page_width="1097" page_height="767" isee:page_cols="2" isee:page_rows="2" isee:scroll_x="196" isee:popup_graphs_are_comparative="true" type="stock_flow">
+			<view isee:show_pages="false" isee:converter_size="name_only" page_width="1097" page_height="767" isee:page_cols="2" isee:page_rows="2" isee:scroll_x="14" isee:popup_graphs_are_comparative="true" type="stock_flow">
 				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
 					<stock color="white" background="black" font_color="blue" font_size="9pt" label_side="top">
 						<shape type="rectangle" width="45" height="35"/>
@@ -336,14 +336,14 @@
 					<from>Return_Home</from>
 					<to>Gold_in_Storage</to>
 				</connector>
-				<aux x="878.625" y="638.5" width="59.25" height="12" name="Villagers Born"/>
-				<aux x="1082.5" y="689" width="68.25" height="12" name="Adults in Village"/>
-				<aux x="1084.5" y="775.375" width="54.25" height="12" name="Villagers Die"/>
+				<aux x="975.625" y="138.5" width="59.25" height="12" name="Villagers Born"/>
+				<aux x="1179.5" y="189" width="68.25" height="12" name="Adults in Village"/>
+				<aux x="1181.5" y="275.375" width="54.25" height="12" name="Villagers Die"/>
 				<connector uid="16" polarity="-" isee:polarity_placement="outside" angle="86.687">
 					<from>Villagers_Die</from>
 					<to>Adults_in_Village</to>
 				</connector>
-				<aux x="1222.5" y="689" width="68.25" height="12" name="Elders in Village"/>
+				<aux x="1319.5" y="189" width="68.25" height="12" name="Elders in Village"/>
 				<connector uid="17" polarity="-" isee:polarity_placement="outside" angle="356.566">
 					<from>Villagers_Die</from>
 					<to>Elders_in_Village</to>
@@ -352,7 +352,7 @@
 					<from>Adults_in_Village</from>
 					<to>Elders_in_Village</to>
 				</connector>
-				<aux x="937.875" y="689" width="76.25" height="12" name="Children in Village"/>
+				<aux x="1034.88" y="189" width="76.25" height="12" name="Children in Village"/>
 				<connector uid="19" polarity="-" isee:polarity_placement="outside" angle="181.181">
 					<from>Villagers_Die</from>
 					<to>Children_in_Village</to>
@@ -365,21 +365,21 @@
 					<from>Children_in_Village</from>
 					<to>Adults_in_Village</to>
 				</connector>
-				<aux x="775.75" y="301" width="33.25" height="12" name="Traders"/>
-				<aux x="752.75" y="202" width="79.25" height="26" name="Village make more traders up to 35"/>
-				<connector uid="22" polarity="+" isee:polarity_placement="outside" angle="265.152">
+				<aux x="780.75" y="282.25" width="33.25" height="12" name="Traders"/>
+				<aux x="710.375" y="182" width="79.25" height="26" name="Village make more traders up to 35"/>
+				<connector uid="22" polarity="+" isee:polarity_placement="outside" angle="296.933">
 					<from>Village_make_more_traders_up_to_35</from>
 					<to>Traders</to>
 				</connector>
-				<aux x="1027" y="245.875" width="70.25" height="12" name="Children Bandits"/>
-				<aux x="913.625" y="160.5" width="55.25" height="12" name="Bandits Born"/>
+				<aux x="950" y="670.875" width="70.25" height="12" name="Children Bandits"/>
+				<aux x="836.625" y="585.5" width="55.25" height="12" name="Bandits Born"/>
 				<connector uid="23" polarity="+" isee:polarity_placement="outside" angle="293.199">
 					<from>Bandits_Born</from>
 					<to>Children_Bandits</to>
 				</connector>
-				<aux x="1176" y="245.875" width="57.25" height="12" name="Adult Bandits"/>
-				<aux x="1332.26" y="245.875" width="57.25" height="12" name="Elder Bandits"/>
-				<aux x="1179.5" y="329.625" width="50.25" height="12" name="Bandits Die"/>
+				<aux x="1099" y="670.875" width="57.25" height="12" name="Adult Bandits"/>
+				<aux x="1255.26" y="670.875" width="57.25" height="12" name="Elder Bandits"/>
+				<aux x="1102.5" y="754.625" width="50.25" height="12" name="Bandits Die"/>
 				<connector uid="24" polarity="-" isee:polarity_placement="outside" angle="175.426">
 					<from>Bandits_Die</from>
 					<to>Children_Bandits</to>
@@ -392,7 +392,7 @@
 					<from>Bandits_Die</from>
 					<to>Elder_Bandits</to>
 				</connector>
-				<connector uid="27" polarity="+" isee:polarity_placement="outside" angle="55.5392">
+				<connector uid="27" polarity="+" isee:polarity_placement="outside" angle="30.8219">
 					<from>Children_Bandits</from>
 					<to>Adult_Bandits</to>
 				</connector>
@@ -410,50 +410,49 @@
 					<from>Villagers_Kidnapped</from>
 					<to>Traders</to>
 				</connector>
-				<connector uid="31" polarity="-" isee:polarity_placement="outside" angle="345.005">
-					<from>Villagers_Kidnapped</from>
-					<to>Adults_in_Village</to>
-				</connector>
-				<connector uid="32" polarity="+" isee:polarity_placement="outside" angle="5.43529">
-					<pts>
-						<pt x="791.625" y="377.414"/>
-						<pt x="892" y="295"/>
-						<pt x="848" y="107"/>
-						<pt x="1049" y="41"/>
-						<pt x="1207" y="117"/>
-						<pt x="1206.31" y="245.875"/>
-					</pts>
+				<connector uid="31" polarity="+" isee:polarity_placement="outside" angle="1.2148">
 					<from>Villagers_Kidnapped</from>
 					<to>Adult_Bandits</to>
 				</connector>
-				<connector uid="33" polarity="+" isee:polarity_placement="outside" angle="279.241">
+				<connector uid="32" polarity="+" isee:polarity_placement="outside" angle="279.241">
 					<from>Successful_RAID</from>
 					<to>Bandits_Gold</to>
 				</connector>
 				<aux x="553.875" y="771" width="66.25" height="12" name="Bandit's Cotton"/>
-				<connector uid="34" polarity="+" isee:polarity_placement="outside" angle="237.287">
+				<connector uid="33" polarity="+" isee:polarity_placement="outside" angle="237.287">
 					<from>Successful_RAID</from>
 					<to>Bandit&apos;s_Cotton</to>
 				</connector>
 				<aux x="636.375" y="701" width="81.25" height="26" name="Bandit's sell cotton on black market"/>
-				<connector uid="35" polarity="-" isee:polarity_placement="outside" angle="289.29">
+				<connector uid="34" polarity="-" isee:polarity_placement="outside" angle="289.29">
 					<from>Bandit&apos;s_sell_cotton_on_black_market</from>
 					<to>Bandit&apos;s_Cotton</to>
 				</connector>
-				<connector uid="36" polarity="+" isee:polarity_placement="outside" angle="62.3005">
+				<connector uid="35" polarity="+" isee:polarity_placement="outside" angle="62.3005">
 					<from>Bandit&apos;s_sell_cotton_on_black_market</from>
 					<to>Bandits_Gold</to>
 				</connector>
-				<connector uid="37" polarity="+" isee:polarity_placement="outside" angle="78.0239">
+				<connector uid="36" polarity="+" isee:polarity_placement="outside" angle="78.0239">
 					<from>Bandit&apos;s_Cotton</from>
 					<to>Bandit&apos;s_sell_cotton_on_black_market</to>
 				</connector>
-				<isee:loop_indicator text="B2" orientation="clockwise" uid="38" x="620.125" y="737" width="30" height="30">
+				<isee:loop_indicator text="B2" orientation="clockwise" uid="37" x="620.125" y="737" width="30" height="30">
 					<isee:entities>
-						<item uid="35"/>
-						<item uid="37"/>
+						<item uid="34"/>
+						<item uid="36"/>
 					</isee:entities>
 				</isee:loop_indicator>
+				<connector uid="38" polarity="-" isee:polarity_placement="outside" angle="7.12502">
+					<pts>
+						<pt x="791.625" y="376.172"/>
+						<pt x="887" y="312"/>
+						<pt x="868" y="96"/>
+						<pt x="1201" y="26"/>
+						<pt x="1215.29" y="189"/>
+					</pts>
+					<from>Villagers_Kidnapped</from>
+					<to>Adults_in_Village</to>
+				</connector>
 			</view>
 		</views>
 	</model>
