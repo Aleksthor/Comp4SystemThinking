@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee" uses_conveyor=""/>
+		<name>Model</name>
+		<uuid>df6a753e-9095-4835-af0b-d26e8209aa80</uuid>
+		<vendor>isee systems, inc.</vendor>
+		<product version="1.7.1" isee:build_number="1574" isee:saved_by_v1="true" lang="en">Stella Architect</product>
+	</header>
+	<sim_specs isee:simulation_delay="0.00333111" method="Euler" time_units="Days" isee:instantaneous_flows="false">
+		<start>0</start>
+		<stop>1500</stop>
+		<dt reciprocal="true">5</dt>
+	</sim_specs>
+	<isee:prefs show_module_prefix="true" live_update_on_drag="true" show_restore_buttons="false" layer="model" interface_scale_ui="true" interface_max_page_width="10000" interface_max_page_height="10000" interface_min_page_width="0" interface_min_page_height="0" saved_runs="5" keep="false" rifp="true"/>
+	<isee:multiplayer_settings include_chat="true" allow_observers="false" advance_time_increment="1" observer_start_page="home_page" enabled="false"/>
+	<isee:time_formats default_format="Builtin">
+		<isee:time_format name="Builtin" type="adaptive"/>
+	</isee:time_formats>
+	<default_format/>
+	<model_units/>
+	<model>
+		<variables>
+			<stock name="Cotton In Storage">
+				<eqn>0</eqn>
+				<inflow>More_Cotton</inflow>
+				<outflow>Less_Cotton</outflow>
+				<non_negative/>
+			</stock>
+			<flow name="More Cotton">
+				<eqn>Harvest_Cotton</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Less Cotton">
+				<eqn>Traders_bring_cotton_for_Trade</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Harvest Cotton">
+				<eqn>PULSE(25000, 0, 365)</eqn>
+			</aux>
+			<stock name="Slagtown Traders">
+				<eqn>60</eqn>
+				<inflow>More_Traders</inflow>
+				<outflow>Less_Traders</outflow>
+				<non_negative/>
+			</stock>
+			<flow name="More Traders">
+				<eqn>Trader_arrived_Cottonbog</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Less Traders">
+				<eqn>&quot;Are_any_traders_available?&quot;</eqn>
+				<non_negative/>
+			</flow>
+			<stock name="Cottonbog - Stagtown 1">
+				<eqn>0</eqn>
+				<inflow>Trader_leaves_1</inflow>
+				<outflow>Trader_arrives_sketchy_area_1</outflow>
+				<conveyor>
+					<len>4</len>
+				</conveyor>
+				<units/>
+			</stock>
+			<flow name="Trader arrived Cottonbog">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Trader leaves 1">
+				<eqn>Less_Traders*&quot;Are_we_sending_the_traders_to_Slagtown?&quot;</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Are we sending the traders to Slagtown?">
+				<eqn>1</eqn>
+			</aux>
+			<aux name="Traders bring\ncotton for Trade">
+				<eqn>Less_Traders * 13</eqn>
+			</aux>
+			<flow name="Trade with\nSlagtown">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<stock name="Gold in village">
+				<eqn>0</eqn>
+				<inflow>More_Gold</inflow>
+				<outflow>Less_Gold</outflow>
+			</stock>
+			<flow name="More Gold">
+				<eqn>Gold_arrives_Village</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Less Gold">
+				<eqn>&quot;TODO:_REMOVE_-_expenses&quot;</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="TODO: REMOVE - expenses">
+				<eqn>PULSE(24000, 0,  7)</eqn>
+			</aux>
+			<aux name="Are any traders available?">
+				<eqn>Slagtown_Traders</eqn>
+				<gf type="discrete">
+					<xscale min="0" max="2"/>
+					<yscale min="0" max="1"/>
+					<ypts>0,2,2</ypts>
+				</gf>
+			</aux>
+			<stock name="Slagtown - Cottonbog 2">
+				<eqn>0</eqn>
+				<inflow>Traved_leave_sketchy_area_2</inflow>
+				<outflow>Trader_arrived_Cottonbog</outflow>
+				<conveyor>
+					<len>3</len>
+				</conveyor>
+				<units/>
+			</stock>
+			<stock name="Slagtown - Cottonbog 1">
+				<eqn>0</eqn>
+				<inflow>Trade_with_Slagtown</inflow>
+				<outflow>Leave_Slagtown</outflow>
+				<conveyor>
+					<len>4</len>
+				</conveyor>
+				<units/>
+			</stock>
+			<stock name="Cottonbog - Slagtown 2">
+				<eqn>0</eqn>
+				<inflow>Arrive_Slagtown</inflow>
+				<outflow>Trade_with_Slagtown</outflow>
+				<conveyor>
+					<len>3</len>
+				</conveyor>
+				<units/>
+			</stock>
+			<flow name="Trader arrives sketchy area 1">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Arrive Slagtown">
+				<eqn>Trader_arrives_sketchy_area_1</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Leave Slagtown">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Traved leave sketchy area 2">
+				<eqn>Leave_Slagtown</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Price of Cotton - TOLL">
+				<eqn>1500</eqn>
+			</aux>
+			<aux name="Gold arrives Village">
+				<eqn>&quot;Price_of_Cotton_-_TOLL&quot;*Trader_arrived_Cottonbog</eqn>
+			</aux>
+			<group name="SlagTown Trade" run="false">
+				<entity name='"Slagtown_-_Cottonbog_2"'/>
+				<entity name='"Price_of_Cotton_-_TOLL"'/>
+				<entity name="Gold_arrives_Village"/>
+				<entity name="Trader_arrived_Cottonbog"/>
+				<entity name="Traved_leave_sketchy_area_2"/>
+				<entity name='"Slagtown_-_Cottonbog_1"'/>
+				<entity name="Trade_with_Slagtown"/>
+				<entity name="Leave_Slagtown"/>
+				<entity name='"Are_we_sending_the_traders_to_Slagtown?"'/>
+				<entity name='"Cottonbog_-_Stagtown_1"'/>
+				<entity name="Trader_leaves_1"/>
+				<entity name="Trader_arrives_sketchy_area_1"/>
+				<entity name='"Cottonbog_-_Slagtown_2"'/>
+				<entity name="Arrive_Slagtown"/>
+			</group>
+			<group name="Cotton Production" run="false">
+				<entity name="Cotton_In_Storage"/>
+				<entity name="Harvest_Cotton"/>
+				<entity name="More_Cotton"/>
+				<entity name="Less_Cotton"/>
+				<entity name="Traders_bring_cotton_for_Trade"/>
+				<entity name="Slagtown_Traders"/>
+				<entity name='"Are_any_traders_available?"'/>
+				<entity name="More_Traders"/>
+				<entity name="Less_Traders"/>
+			</group>
+			<group name="Gold" run="false">
+				<entity name='"TODO:_REMOVE_-_expenses"'/>
+				<entity name="Gold_in_village"/>
+				<entity name="More_Gold"/>
+				<entity name="Less_Gold"/>
+			</group>
+			<isee:dependencies>
+				<var name="More_Cotton">
+					<in>Harvest_Cotton</in>
+				</var>
+				<var name="Less_Cotton">
+					<in>Traders_bring_cotton_for_Trade</in>
+				</var>
+				<var name="More_Traders">
+					<in>Trader_arrived_Cottonbog</in>
+				</var>
+				<var name="Less_Traders">
+					<in>&quot;Are_any_traders_available?&quot;</in>
+				</var>
+				<var name="Trader_leaves_1">
+					<in>&quot;Are_we_sending_the_traders_to_Slagtown?&quot;</in>
+					<in>Less_Traders</in>
+				</var>
+				<var name="Traders_bring_cotton_for_Trade">
+					<in>Less_Traders</in>
+				</var>
+				<var name="More_Gold">
+					<in>Gold_arrives_Village</in>
+				</var>
+				<var name="Less_Gold">
+					<in>&quot;TODO:_REMOVE_-_expenses&quot;</in>
+				</var>
+				<var name='"Are_any_traders_available?"'>
+					<in>Slagtown_Traders</in>
+				</var>
+				<var name="Arrive_Slagtown">
+					<in>Trader_arrives_sketchy_area_1</in>
+				</var>
+				<var name="Traved_leave_sketchy_area_2">
+					<in>Leave_Slagtown</in>
+				</var>
+				<var name="Gold_arrives_Village">
+					<in>&quot;Price_of_Cotton_-_TOLL&quot;</in>
+					<in>Trader_arrived_Cottonbog</in>
+				</var>
+			</isee:dependencies>
+		</variables>
+		<views>
+			<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+				<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<isee:loop_indicator color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<numeric_display color="blue" background="white" font_size="9pt" isee:transparent="false"/>
+				<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false" axis_title_font_style="normal" axis_title_font_weight="normal" axis_title_text_decoration="none" axis_title_text_align="center" axis_title_vertical_text_align="center" axis_title_font_color="black" axis_title_font_family="Arial" axis_title_font_size="12pt" axis_title_text_padding="2" axis_title_text_border_color="black" axis_title_text_border_width="thin" axis_title_text_border_style="none" axis_label_font_style="normal" axis_label_font_weight="normal" axis_label_text_decoration="none" axis_label_text_align="center" axis_label_vertical_text_align="center" axis_label_font_color="black" axis_label_font_family="Arial" axis_label_font_size="9pt" axis_label_text_padding="2" axis_label_text_border_color="black" axis_label_text_border_width="thin" axis_label_text_border_style="none">
+					<isee:series_styles>
+						<isee:series_style color="blue" thickness="1"/>
+						<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF7F00" thickness="1"/>
+						<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF007F" thickness="1"/>
+						<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#C8C8C8" thickness="1"/>
+					</isee:series_styles>
+				</graph>
+				<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous" header_font_style="normal" header_font_weight="normal" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="12pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
+				<button color="black" background="#E0E0E0" font_size="12pt" transparent="false" corner_radius="0" isee:flat="false" icon_side="top" isee:highlight_on_hover="false" isee:highlight_color="#959595"/>
+				<isee:annotation color="black" background="#E0E0E0" font_size="12pt" transparent="false" corner_radius="0" isee:flat="false" icon_side="top" isee:highlight_on_hover="false" isee:highlight_color="#959595" popup_background_color="#FFFECF"/>
+				<slider color="black" background="#E0E0E0" font_size="12pt" num_ticks="3" label_side="top" wrap_title="true" vertical="false" isee:always_show_hover_tip="false" input_expands="true" input_width="100"/>
+				<isee:sim_speed_slider color="black" background="white"/>
+				<isee:time_slider color="#E95F74" background="silver"/>
+				<isee:pie_input color="black" background="white" font_size="12pt" legend_position="bottom" isee:transparent="false"/>
+				<knob color="#66CC66" background="#E0E0E0" font_size="12pt" label_side="bottom" wrap_title="true"/>
+				<numeric_input color="black" background="#E0E0E0" font_size="12pt" label_side="left" wrap_title="true" input_expands="false" input_width="100"/>
+				<switch color="black" background="#E0E0E0" font_size="12pt" label_side="top" wrap_title="true" isee:appearance="switch"/>
+				<options color="black" background="white" appearance="radio-buttons" arrangement="vertical"/>
+				<graphical_input color="black" background="#E0E0E0" font_size="12pt"/>
+				<group_input color="black" background="#E0E0E0" font_size="12pt"/>
+				<lamp color="black" background="white" font_size="9pt"/>
+				<gauge color="black" background="white" font_size="9pt" needle_color="#F09F72" bar_color="#EEEEEE" bar_progress_color="black" appearance="radial" num_major_ticks="11" num_minor_ticks="11" show_numeric_value="true"/>
+				<isee:spatial_map color="black" background="white" font_size="12pt"/>
+				<isee:animation_object color="black" background="white" font_size="12pt"/>
+			</style>
+			<view isee:show_pages="false" page_width="1097" page_height="767" isee:page_cols="4" isee:page_rows="3" isee:scroll_x="39" isee:popup_graphs_are_comparative="true" type="stock_flow">
+				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+					<stock color="#0055FF" background="white" font_color="blue" font_size="9pt" label_side="top">
+						<shape type="rectangle" width="45" height="35"/>
+					</stock>
+					<flow color="#0055FF" background="white" font_color="blue" font_size="9pt" label_side="bottom"/>
+					<module color="#0055FF" background="white" font_color="blue" font_size="9pt" label_side="top">
+						<shape type="rectangle" width="55" height="45"/>
+					</module>
+					<aux color="#0055FF" background="white" font_color="blue" font_size="9pt" label_side="bottom">
+						<shape type="circle" radius="18"/>
+					</aux>
+					<group color="red" background="white" font_color="red" font_size="9pt"/>
+					<connector color="#FF007F" background="white" font_color="#FF007F" font_size="9pt" isee:thickness="1"/>
+					<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+					<isee:loop_indicator color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+					<numeric_display color="blue" background="white" font_size="9pt" isee:transparent="false"/>
+					<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false" axis_title_font_style="normal" axis_title_font_weight="normal" axis_title_text_decoration="none" axis_title_text_align="center" axis_title_vertical_text_align="center" axis_title_font_color="black" axis_title_font_family="Arial" axis_title_font_size="12pt" axis_title_text_padding="2" axis_title_text_border_color="black" axis_title_text_border_width="thin" axis_title_text_border_style="none" axis_label_font_style="normal" axis_label_font_weight="normal" axis_label_text_decoration="none" axis_label_text_align="center" axis_label_vertical_text_align="center" axis_label_font_color="black" axis_label_font_family="Arial" axis_label_font_size="9pt" axis_label_text_padding="2" axis_label_text_border_color="black" axis_label_text_border_width="thin" axis_label_text_border_style="none">
+						<isee:series_styles>
+							<isee:series_style color="blue" thickness="1"/>
+							<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF7F00" thickness="1"/>
+							<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF007F" thickness="1"/>
+							<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#C8C8C8" thickness="1"/>
+						</isee:series_styles>
+					</graph>
+					<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous" header_font_style="normal" header_font_weight="normal" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="12pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
+				</style>
+				<stock x="596.429" y="193.571" name="Cotton In Storage"/>
+				<flow x="509.596" y="190.571" name="More Cotton">
+					<pts>
+						<pt x="445.262" y="190.571"/>
+						<pt x="573.929" y="190.571"/>
+					</pts>
+				</flow>
+				<flow x="685.512" y="193.905" name="Less Cotton">
+					<pts>
+						<pt x="618.929" y="193.905"/>
+						<pt x="776.095" y="193.905"/>
+					</pts>
+				</flow>
+				<aux label_side="top" x="509.595" y="112.786" name="Harvest Cotton"/>
+				<connector uid="1" angle="270">
+					<from>Harvest_Cotton</from>
+					<to>More_Cotton</to>
+				</connector>
+				<stock label_side="top" x="589.095" y="425.845" name="Slagtown Traders"/>
+				<flow x="501.429" y="425.845" name="More Traders">
+					<pts>
+						<pt x="436.262" y="425.845"/>
+						<pt x="566.595" y="425.845"/>
+					</pts>
+				</flow>
+				<flow x="678.714" y="425.845" name="Less Traders">
+					<pts>
+						<pt x="611.595" y="425.845"/>
+						<pt x="769.833" y="425.845"/>
+					</pts>
+				</flow>
+				<stock label_side="top" x="1087.86" y="419.286" name="Cottonbog - Stagtown 1"/>
+				<flow label_side="bottom" x="1019.82" y="230" name="Trader arrived Cottonbog">
+					<pts>
+						<pt x="1073.64" y="230"/>
+						<pt x="942" y="230"/>
+					</pts>
+				</flow>
+				<flow label_side="bottom" x="1010.11" y="419.286" name="Trader leaves 1">
+					<pts>
+						<pt x="954.857" y="419.286"/>
+						<pt x="1065.36" y="419.286"/>
+					</pts>
+				</flow>
+				<aux label_side="right" label_angle="315" x="1010.11" y="500.619" name="Are we sending the traders to Slagtown?"/>
+				<aux label_side="left" x="683.655" y="298.643" name="Traders bring\ncotton for Trade"/>
+				<connector uid="2" angle="83.2374">
+					<from>Less_Traders</from>
+					<to>Traders_bring_cotton_for_Trade</to>
+				</connector>
+				<connector uid="3" angle="88.9843">
+					<from>Traders_bring_cotton_for_Trade</from>
+					<to>Less_Cotton</to>
+				</connector>
+				<flow x="1794.31" y="241.238" name="Trade with\nSlagtown">
+					<pts>
+						<pt x="1732.96" y="436.833"/>
+						<pt x="1849.5" y="436.833"/>
+						<pt x="1849.5" y="241.238"/>
+						<pt x="1727.12" y="241.238"/>
+					</pts>
+				</flow>
+				<connector uid="4" angle="267.717">
+					<from>
+						<alias uid="5"/>
+					</from>
+					<to>More_Traders</to>
+				</connector>
+				<stock x="540.5" y="749.619" width="70.7143" height="45" name="Gold in village"/>
+				<flow x="463.393" y="770.571" name="More Gold">
+					<pts>
+						<pt x="386.286" y="770.571"/>
+						<pt x="540.5" y="770.571"/>
+					</pts>
+				</flow>
+				<flow x="681.036" y="767.714" name="Less Gold">
+					<pts>
+						<pt x="611.214" y="767.714"/>
+						<pt x="774.857" y="767.714"/>
+					</pts>
+				</flow>
+				<aux label_side="top" x="681.036" y="679.143" name="TODO: REMOVE - expenses"/>
+				<connector uid="6" angle="270">
+					<from>&quot;TODO:_REMOVE_-_expenses&quot;</from>
+					<to>Less_Gold</to>
+				</connector>
+				<stacked_container uid="7" x="934.182" y="604.714" width="350" height="250">
+					<graph x="934.182" y="604.714" width="350" height="250" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Cotton_In_Storage"/>
+						</plot>
+					</graph>
+					<graph x="934.182" y="604.714" width="350" height="250" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Traders_bring_cotton_for_Trade"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<stacked_container uid="8" x="1109.18" y="995.714">
+					<graph x="934.182" y="870.714" width="350" height="250" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Slagtown_Traders"/>
+							<scale min="0" max="35"/>
+						</plot>
+					</graph>
+					<graph x="934.182" y="870.714" width="350" height="250" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Trader_leaves_1"/>
+						</plot>
+						<plot color="red" pen_width="1" index="1" show_y_axis="true">
+							<entity name="Less_Traders"/>
+						</plot>
+					</graph>
+					<graph x="934.182" y="870.714" width="350" height="250" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Trader_arrived_Cottonbog"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<connector uid="9" angle="333.688">
+					<from>Less_Traders</from>
+					<to>Trader_leaves_1</to>
+				</connector>
+				<connector uid="10" angle="44.1358">
+					<from>&quot;Are_we_sending_the_traders_to_Slagtown?&quot;</from>
+					<to>Trader_leaves_1</to>
+				</connector>
+				<alias font_style="italic" uid="5" x="495.595" y="337.429" width="18" height="18">
+					<of>Trader_arrived_Cottonbog</of>
+				</alias>
+				<aux x="607.667" y="482.5" name="Are any traders available?"/>
+				<connector uid="11" angle="346.644">
+					<from>&quot;Are_any_traders_available?&quot;</from>
+					<to>Less_Traders</to>
+				</connector>
+				<connector uid="12" angle="253.423">
+					<from>Slagtown_Traders</from>
+					<to>&quot;Are_any_traders_available?&quot;</to>
+				</connector>
+				<stock x="1096.14" y="230" name="Slagtown - Cottonbog 2"/>
+				<stock x="1704.62" y="241.238" name="Slagtown - Cottonbog 1"/>
+				<stock label_side="top" x="1710.46" y="434.5" name="Cottonbog - Slagtown 2"/>
+				<stacked_container uid="13" x="1322.5" y="871.714" width="559" height="242">
+					<graph x="1322.5" y="871.714" width="559" height="242" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name='"Slagtown_-_Cottonbog_1"'/>
+						</plot>
+						<plot color="red" pen_style="dot_dashed" pen_width="1" index="1" show_y_axis="true">
+							<entity name='"Slagtown_-_Cottonbog_2"'/>
+						</plot>
+						<plot color="fuchsia" pen_style="dotted" pen_width="1" index="2" show_y_axis="true">
+							<entity name='"Cottonbog_-_Stagtown_1"'/>
+						</plot>
+						<plot color="#008F44" pen_style="dashed" pen_width="1" index="3" show_y_axis="true">
+							<entity name='"Cottonbog_-_Slagtown_2"'/>
+						</plot>
+						<plot color="#FF7F00" pen_width="1" index="4" show_y_axis="true">
+							<entity name="Slagtown_Traders"/>
+						</plot>
+					</graph>
+					<graph x="1322.5" y="871.714" width="559" height="242" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true"/>
+				</stacked_container>
+				<flow x="1180.43" y="419.286" name="Trader arrives sketchy area 1">
+					<pts>
+						<pt x="1110.36" y="419.286"/>
+						<pt x="1274.5" y="419.286"/>
+					</pts>
+				</flow>
+				<flow x="1607.06" y="438.5" name="Arrive Slagtown">
+					<pts>
+						<pt x="1526.17" y="438.5"/>
+						<pt x="1687.96" y="438.5"/>
+					</pts>
+				</flow>
+				<connector uid="14" angle="29.6539">
+					<from>Trader_arrives_sketchy_area_1</from>
+					<to>Arrive_Slagtown</to>
+				</connector>
+				<flow x="1610.73" y="236.667" name="Leave Slagtown">
+					<pts>
+						<pt x="1682.12" y="236.667"/>
+						<pt x="1515.33" y="236.667"/>
+					</pts>
+				</flow>
+				<flow x="1195.65" y="231.143" name="Traved leave sketchy area 2">
+					<pts>
+						<pt x="1272.67" y="231.143"/>
+						<pt x="1118.64" y="231.143"/>
+					</pts>
+				</flow>
+				<connector uid="15" angle="148.528">
+					<from>Leave_Slagtown</from>
+					<to>Traved_leave_sketchy_area_2</to>
+				</connector>
+				<aux label_side="right" label_angle="45" x="1019.82" y="85.786" name="Price of Cotton - TOLL"/>
+				<aux x="1019.82" y="150.071" name="Gold arrives Village"/>
+				<alias color="#0055FF" background="white" font_style="italic" uid="16" x="457.167" y="691.333" width="18" height="18">
+					<of>Gold_arrives_Village</of>
+				</alias>
+				<connector uid="17" angle="264.428">
+					<from>
+						<alias uid="16"/>
+					</from>
+					<to>More_Gold</to>
+				</connector>
+				<connector uid="18" angle="270">
+					<from>&quot;Price_of_Cotton_-_TOLL&quot;</from>
+					<to>Gold_arrives_Village</to>
+				</connector>
+				<connector uid="19" angle="90">
+					<from>Trader_arrived_Cottonbog</from>
+					<to>Gold_arrives_Village</to>
+				</connector>
+				<stacked_container uid="20" x="1321" y="604.714" width="562" height="250" visible_index="1">
+					<graph x="1321" y="604.714" width="562" height="250" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Gold_in_village"/>
+						</plot>
+					</graph>
+					<graph x="1321" y="604.714" width="562" height="250" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Gold_arrives_Village"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<group locked="false" x="894.857" y="48.2377" width="1000" height="523" name="SlagTown Trade"/>
+				<group locked="false" x="290" y="49" width="603.857" height="521" name="Cotton Production">
+					<item uid="5"/>
+				</group>
+				<group locked="false" x="292.857" y="587.238" width="602" height="280" name="Gold">
+					<item uid="16"/>
+				</group>
+			</view>
+		</views>
+	</model>
+</xmile>
+
