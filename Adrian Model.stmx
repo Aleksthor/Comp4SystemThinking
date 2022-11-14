@@ -1,0 +1,1145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee" uses_conveyor=""/>
+		<name>Adrian Model</name>
+		<uuid>4a60abb5-5a3b-4010-a353-c92cb4edb1d3</uuid>
+		<vendor>isee systems, inc.</vendor>
+		<product version="1.7.1" isee:build_number="1574" isee:saved_by_v1="true" lang="en">Stella Architect</product>
+	</header>
+	<sim_specs isee:simulation_delay="0" method="Euler" time_units="Weeks" isee:instantaneous_flows="false">
+		<start>520</start>
+		<stop>4000</stop>
+		<dt reciprocal="true">7</dt>
+	</sim_specs>
+	<isee:prefs show_module_prefix="true" live_update_on_drag="true" show_restore_buttons="false" layer="model" interface_scale_ui="true" interface_max_page_width="10000" interface_max_page_height="10000" interface_min_page_width="0" interface_min_page_height="0" saved_runs="5" keep="false" rifp="true"/>
+	<isee:multiplayer_settings include_chat="true" allow_observers="false" advance_time_increment="1" observer_start_page="home_page" enabled="false"/>
+	<isee:time_formats default_format="Builtin">
+		<isee:time_format name="Builtin" type="adaptive"/>
+	</isee:time_formats>
+	<default_format/>
+	<model_units/>
+	<model>
+		<variables>
+			<stock name="Trades in\nCottonbog">
+				<eqn>35</eqn>
+				<inflow>Traders_in</inflow>
+				<outflow>Traders_out</outflow>
+				<non_negative/>
+			</stock>
+			<flow name="Traders in">
+				<eqn>Traders_Entering_Cottonbog_from_CoalPeak +
+Out</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Traders out">
+				<eqn>PULSE((Check_if_traders_go_out_of_Cottonbog_to_CoalPeak * &quot;Is_there_cotton_to_trade?&quot;),  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Check if traders\ngo out of\nCottonbog to\nCoalPeak">
+				<eqn>PULSE(IF(CoalPeak_Activated &gt; 0)
+
+THEN(
+IF(Trades_in_Cottonbog &gt; 0)
+
+THEN ROUND(Trades_in_Cottonbog / 4) 
+ELSE 0)
+
+ELSE 0, 
+
+0,  1)</eqn>
+			</aux>
+			<aux name="CoalPeak\nActivated">
+				<eqn>1</eqn>
+			</aux>
+			<group name="Traders" run="false">
+				<entity name="Trades_in_Cottonbog"/>
+				<entity name="Traders_in"/>
+				<entity name="Traders_out"/>
+				<entity name="CoalPeak_Activated"/>
+				<entity name="Check_if_traders_go_out_of_Cottonbog_to_CoalPeak"/>
+			</group>
+			<stock name="Cotton in\nCottonbog">
+				<eqn>0</eqn>
+				<inflow>Cotton_in</inflow>
+				<outflow>Cotton_out</outflow>
+				<non_negative/>
+			</stock>
+			<flow name="Cotton in">
+				<eqn>Harvest_Cotton</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Cotton out">
+				<eqn>&quot;Cotton/Trader&quot;</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Harvest\nCotton">
+				<eqn>PULSE(24000,  0,  52)</eqn>
+			</aux>
+			<aux name="Cotton/Trader">
+				<eqn>Traders_out *
+Amount_of_Cotton</eqn>
+			</aux>
+			<aux name="Amount of\nCotton">
+				<eqn>13</eqn>
+			</aux>
+			<group name="Cotton" run="false">
+				<entity name='"Is_there_cotton_to_trade?"'/>
+				<entity name="Harvest_Cotton"/>
+				<entity name='"Cotton/Trader"'/>
+				<entity name="Cotton_in_Cottonbog"/>
+				<entity name="Cotton_in"/>
+				<entity name="Cotton_out"/>
+				<entity name="Amount_of_Cotton"/>
+			</group>
+			<stock name="Leave\nCottonbog">
+				<eqn>0</eqn>
+				<inflow>Start_trip_CoalPeak</inflow>
+				<outflow>End_trip_to_CoalPeak</outflow>
+				<conveyor>
+					<len>2</len>
+				</conveyor>
+			</stock>
+			<stock name="Leave\nCoalPeak">
+				<eqn>0</eqn>
+				<inflow>Start_trip_back_from_Coalpeak</inflow>
+				<outflow>End_trip_back_from_CoalPeak</outflow>
+				<conveyor>
+					<len>2</len>
+				</conveyor>
+			</stock>
+			<stock name="Traders in\nCoalPeak">
+				<eqn>0</eqn>
+				<inflow>End_trip_to_CoalPeak</inflow>
+				<outflow>Start_trip_back_from_Coalpeak</outflow>
+				<outflow>Traders_Stolen_on_way_to_CaolPeak</outflow>
+				<non_negative/>
+			</stock>
+			<flow name="Start trip\nCoalPeak">
+				<eqn>Traders_out *
+CoalPeak_Activated</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="End trip to\nCoalPeak">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Start trip\nback from\nCoalpeak">
+				<eqn>PULSE(Traders_ready_to_leave_CoalPeak*Is_there_any_traders_in_CoalPeak,  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="End trip\nback from\nCoalPeak">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Is there any\ntraders in\nCoalPeak">
+				<eqn>Traders_in_CoalPeak</eqn>
+				<gf type="discrete">
+					<xscale min="0" max="1"/>
+					<yscale min="0" max="1"/>
+					<ypts>0,1,1</ypts>
+				</gf>
+			</aux>
+			<aux name="Traders ready\nto leave\nCoalPeak">
+				<eqn>Traders_in_CoalPeak</eqn>
+			</aux>
+			<aux name="Total traders CoalPeak">
+				<eqn>Leave_CoalPeak +
+Leave_Cottonbog +
+Traders_in_CoalPeak</eqn>
+			</aux>
+			<aux name="Total Traders\nCottonbog">
+				<eqn>Trades_in_Cottonbog</eqn>
+			</aux>
+			<aux name="Total Traders">
+				<eqn>Total_Traders_Cottonbog +
+Total_traders_CoalPeak</eqn>
+			</aux>
+			<stock name="Gold i\nCottonbog">
+				<eqn>100000</eqn>
+				<inflow>Gold_in</inflow>
+				<outflow>Gold_out</outflow>
+				<non_negative/>
+			</stock>
+			<flow name="Gold in">
+				<eqn>Gold_gained_after_trip_from_CoalPeak</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Gold out">
+				<eqn>Weekly_Expences_for_cittecent</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Weekly Expences\nfor cittecent">
+				<eqn>Total_citizent_in_Cottonbog *
+Gold_per_Citizen_per_week</eqn>
+			</aux>
+			<aux name="Gold gained\nafter trip from\nCoalPeak">
+				<eqn>Traders_Entering_Cottonbog_from_CoalPeak *
+Gold_from_CoalPeak</eqn>
+			</aux>
+			<aux name="Gold from\nCoalPeak">
+				<eqn>8000</eqn>
+			</aux>
+			<aux name="Robbery to\nCoalPeak">
+				<eqn>Chance_of_robbery_to_CoalPeak *
+Traders_in_CoalPeak</eqn>
+			</aux>
+			<aux name="Chance of\nrobbery\nto CoalPeak">
+				<eqn>IF(RANDOM(1,  Calculate_preparedness_CoalPeak) &gt; Calculate_preparedness_CoalPeak - 1)
+
+THEN 1
+ELSE 0</eqn>
+			</aux>
+			<stock name="Dead Traders\nfrom CoalPeak">
+				<eqn>0</eqn>
+				<inflow>Traders_Stolen_on_way_to_CaolPeak</inflow>
+				<inflow>Traders_stolen_on_way_home_from_CoalPeak</inflow>
+				<non_negative/>
+			</stock>
+			<flow name="Traders Stolen\non way to\nCaolPeak">
+				<eqn>PULSE(Robbery_to_CoalPeak)</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Calculate\npreparedness\nCoalPeak">
+				<eqn>1000</eqn>
+			</aux>
+			<stock name="Traders\nArrival from\nCoalPeak">
+				<eqn>0</eqn>
+				<inflow>End_trip_back_from_CoalPeak</inflow>
+				<outflow>Traders_stolen_on_way_home_from_CoalPeak</outflow>
+				<outflow>Traders_Entering_Cottonbog_from_CoalPeak</outflow>
+				<non_negative/>
+			</stock>
+			<aux name="Robbery from\nCoalPeak">
+				<eqn>Chance_of_robbery_from_CoalPeak *
+Traders_Arrival_from_CoalPeak</eqn>
+			</aux>
+			<aux name="Chance of robbery\nfrom CoalPeak">
+				<eqn>IF(RANDOM(1,  Calculate_preparedness_CoalPeak) &gt; Calculate_preparedness_CoalPeak - 1)
+
+THEN 1
+ELSE 0</eqn>
+			</aux>
+			<flow name="Traders stolen on\nway home from\nCoalPeak">
+				<eqn>PULSE(Robbery_from_CoalPeak,  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Traders\nEntering\nCottonbog\nfrom CoalPeak">
+				<eqn>PULSE(Is_there_any_traders_in_CoalPeak_End *
+Traders_ready_to_leave_CoalPeak_End,  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Is there any\ntraders in\nCoalPeak End">
+				<eqn>Traders_Arrival_from_CoalPeak</eqn>
+				<gf type="discrete">
+					<xscale min="0" max="1"/>
+					<yscale min="0" max="1"/>
+					<ypts>0,1,1</ypts>
+				</gf>
+			</aux>
+			<aux name="Traders ready\nto leave\nCoalPeak End">
+				<eqn>Traders_Arrival_from_CoalPeak</eqn>
+			</aux>
+			<group name="CoalPeak" run="false">
+				<entity name="Traders_stolen_on_way_home_from_CoalPeak"/>
+				<entity name="Start_trip_back_from_Coalpeak"/>
+				<entity name="Gold_gained_after_trip_from_CoalPeak"/>
+				<entity name="Is_there_any_traders_in_CoalPeak_End"/>
+				<entity name="Chance_of_robbery_from_CoalPeak"/>
+				<entity name="Start_trip_CoalPeak"/>
+				<entity name="Gold_from_CoalPeak"/>
+				<entity name="Robbery_from_CoalPeak"/>
+				<entity name="Leave_Cottonbog"/>
+				<entity name="Leave_CoalPeak"/>
+				<entity name="Traders_ready_to_leave_CoalPeak_End"/>
+				<entity name="Traders_Entering_Cottonbog_from_CoalPeak"/>
+				<entity name="Robbery_to_CoalPeak"/>
+				<entity name="Traders_ready_to_leave_CoalPeak"/>
+				<entity name="End_trip_back_from_CoalPeak"/>
+				<entity name="Is_there_any_traders_in_CoalPeak"/>
+				<entity name="Traders_Arrival_from_CoalPeak"/>
+				<entity name="End_trip_to_CoalPeak"/>
+				<entity name="Traders_Stolen_on_way_to_CaolPeak"/>
+				<entity name="Traders_in_CoalPeak"/>
+				<entity name="Dead_Traders_from_CoalPeak"/>
+				<entity name="Chance_of_robbery_to_CoalPeak"/>
+			</group>
+			<group name="Gold" run="false">
+				<entity name="Gold_i_Cottonbog"/>
+				<entity name="Weekly_Expences_for_cittecent"/>
+				<entity name="Gold_in"/>
+				<entity name="Gold_out"/>
+			</group>
+			<stock name="Child in\nCottonbog">
+				<eqn>7500</eqn>
+				<inflow>Birth_of_children</inflow>
+				<outflow>Chlds_become_adults_in_Cottonbog</outflow>
+				<outflow>Children_death_rate</outflow>
+				<outflow>Child_Becomes_Traders</outflow>
+				<conveyor>
+					<len>780</len>
+				</conveyor>
+			</stock>
+			<stock name="Elders in\nCottonbog">
+				<eqn>10000</eqn>
+				<inflow>Workers_gets_old_in_Cottonbog</inflow>
+				<outflow>Elders_death_rate</outflow>
+				<conveyor>
+					<len>1040</len>
+				</conveyor>
+			</stock>
+			<flow name="Birth of\nchildren">
+				<eqn>PULSE(Fertile_Citicen *
+Birth_rate)</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Children\ndeath rate">
+				<eqn>0.4</eqn>
+				<non_negative/>
+				<leak/>
+			</flow>
+			<flow name="Elders\ndeath rate">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Total citizent\nin Cottonbog">
+				<eqn>Child_in_Cottonbog +
+Adults_in_Cottonbog +
+Elders_in_Cottonbog +
+Total_Traders</eqn>
+			</aux>
+			<flow name="Chlds become adults\nin Cottonbog">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<stock name="Adults in\nCottonbog">
+				<eqn>6250</eqn>
+				<inflow>Chlds_become_adults_in_Cottonbog</inflow>
+				<outflow>Workers_gets_old_in_Cottonbog</outflow>
+				<outflow>Adult_death_rate</outflow>
+				<conveyor>
+					<len>1560</len>
+				</conveyor>
+			</stock>
+			<flow name="Workers gets old in\nCottonbog">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Adult\ndeath rate">
+				<eqn>0.5</eqn>
+				<non_negative/>
+				<leak/>
+			</flow>
+			<aux name="Fertile Citicen">
+				<eqn>Adults_in_Cottonbog / 2</eqn>
+			</aux>
+			<aux name="Birth rate">
+				<eqn>0.0006</eqn>
+			</aux>
+			<stock name="Dead\nChildren">
+				<eqn>0</eqn>
+				<inflow>Children_death_rate</inflow>
+				<non_negative/>
+			</stock>
+			<stock name="Dead\nAdults">
+				<eqn>0</eqn>
+				<inflow>Adult_death_rate</inflow>
+				<non_negative/>
+			</stock>
+			<stock name="Dead\nElders">
+				<eqn>0</eqn>
+				<inflow>Elders_death_rate</inflow>
+				<non_negative/>
+			</stock>
+			<flow name="Child Becomes\nTraders">
+				<eqn>0.2</eqn>
+				<non_negative/>
+				<leak/>
+			</flow>
+			<stock name="Child Waiting\nGame">
+				<eqn>0</eqn>
+				<inflow>Child_Becomes_Traders</inflow>
+				<outflow>Out</outflow>
+				<non_negative/>
+			</stock>
+			<flow name="Out">
+				<eqn>PULSE(Check,  0, 1)</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Check">
+				<eqn>Child_Waiting_Game</eqn>
+				<gf type="discrete">
+					<xscale min="0" max="2"/>
+					<yscale min="0" max="1"/>
+					<ypts>0,1,1</ypts>
+				</gf>
+			</aux>
+			<stock name="Childs out">
+				<eqn>0</eqn>
+				<inflow>Out</inflow>
+				<non_negative/>
+			</stock>
+			<aux name="Is there cotton\nto trade?">
+				<eqn>IF(Cotton_in_Cottonbog &gt; (13 * Check_if_traders_go_out_of_Cottonbog_to_CoalPeak))
+
+THEN 1
+ELSE 0</eqn>
+			</aux>
+			<aux name="Gold per\nCitizen\nper week">
+				<eqn>5.8</eqn>
+			</aux>
+			<isee:dependencies>
+				<var name="Traders_in">
+					<in>Traders_Entering_Cottonbog_from_CoalPeak</in>
+					<in>Out</in>
+				</var>
+				<var name="Traders_out">
+					<in>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</in>
+					<in>&quot;Is_there_cotton_to_trade?&quot;</in>
+				</var>
+				<var name="Check_if_traders_go_out_of_Cottonbog_to_CoalPeak">
+					<in>Trades_in_Cottonbog</in>
+					<in>CoalPeak_Activated</in>
+				</var>
+				<var name="Cotton_in">
+					<in>Harvest_Cotton</in>
+				</var>
+				<var name="Cotton_out">
+					<in>&quot;Cotton/Trader&quot;</in>
+				</var>
+				<var name='"Cotton/Trader"'>
+					<in>Traders_out</in>
+					<in>Amount_of_Cotton</in>
+				</var>
+				<var name="Start_trip_CoalPeak">
+					<in>Traders_out</in>
+					<in>CoalPeak_Activated</in>
+				</var>
+				<var name="Start_trip_back_from_Coalpeak">
+					<in>Traders_ready_to_leave_CoalPeak</in>
+					<in>Is_there_any_traders_in_CoalPeak</in>
+				</var>
+				<var name="Is_there_any_traders_in_CoalPeak">
+					<in>Traders_in_CoalPeak</in>
+				</var>
+				<var name="Traders_ready_to_leave_CoalPeak">
+					<in>Traders_in_CoalPeak</in>
+				</var>
+				<var name="Total_traders_CoalPeak">
+					<in>Leave_CoalPeak</in>
+					<in>Leave_Cottonbog</in>
+					<in>Traders_in_CoalPeak</in>
+				</var>
+				<var name="Total_Traders_Cottonbog">
+					<in>Trades_in_Cottonbog</in>
+				</var>
+				<var name="Total_Traders">
+					<in>Total_Traders_Cottonbog</in>
+					<in>Total_traders_CoalPeak</in>
+				</var>
+				<var name="Gold_in">
+					<in>Gold_gained_after_trip_from_CoalPeak</in>
+				</var>
+				<var name="Gold_out">
+					<in>Weekly_Expences_for_cittecent</in>
+				</var>
+				<var name="Weekly_Expences_for_cittecent">
+					<in>Total_citizent_in_Cottonbog</in>
+					<in>Gold_per_Citizen_per_week</in>
+				</var>
+				<var name="Gold_gained_after_trip_from_CoalPeak">
+					<in>Gold_from_CoalPeak</in>
+					<in>Traders_Entering_Cottonbog_from_CoalPeak</in>
+				</var>
+				<var name="Robbery_to_CoalPeak">
+					<in>Chance_of_robbery_to_CoalPeak</in>
+					<in>Traders_in_CoalPeak</in>
+				</var>
+				<var name="Chance_of_robbery_to_CoalPeak">
+					<in>Calculate_preparedness_CoalPeak</in>
+				</var>
+				<var name="Traders_Stolen_on_way_to_CaolPeak">
+					<in>Robbery_to_CoalPeak</in>
+				</var>
+				<var name="Robbery_from_CoalPeak">
+					<in>Chance_of_robbery_from_CoalPeak</in>
+					<in>Traders_Arrival_from_CoalPeak</in>
+				</var>
+				<var name="Chance_of_robbery_from_CoalPeak">
+					<in>Calculate_preparedness_CoalPeak</in>
+				</var>
+				<var name="Traders_stolen_on_way_home_from_CoalPeak">
+					<in>Robbery_from_CoalPeak</in>
+				</var>
+				<var name="Traders_Entering_Cottonbog_from_CoalPeak">
+					<in>Is_there_any_traders_in_CoalPeak_End</in>
+					<in>Traders_ready_to_leave_CoalPeak_End</in>
+				</var>
+				<var name="Is_there_any_traders_in_CoalPeak_End">
+					<in>Traders_Arrival_from_CoalPeak</in>
+				</var>
+				<var name="Traders_ready_to_leave_CoalPeak_End">
+					<in>Traders_Arrival_from_CoalPeak</in>
+				</var>
+				<var name="Birth_of_children">
+					<in>Fertile_Citicen</in>
+					<in>Birth_rate</in>
+				</var>
+				<var name="Total_citizent_in_Cottonbog">
+					<in>Child_in_Cottonbog</in>
+					<in>Adults_in_Cottonbog</in>
+					<in>Elders_in_Cottonbog</in>
+					<in>Total_Traders</in>
+				</var>
+				<var name="Fertile_Citicen">
+					<in>Adults_in_Cottonbog</in>
+				</var>
+				<var name="Out">
+					<in>Check</in>
+				</var>
+				<var name="Check">
+					<in>Child_Waiting_Game</in>
+				</var>
+				<var name='"Is_there_cotton_to_trade?"'>
+					<in>Cotton_in_Cottonbog</in>
+					<in>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</in>
+				</var>
+			</isee:dependencies>
+		</variables>
+		<views>
+			<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+				<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<isee:loop_indicator color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+				<numeric_display color="blue" background="white" font_size="9pt" isee:transparent="false"/>
+				<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false" axis_title_font_style="normal" axis_title_font_weight="normal" axis_title_text_decoration="none" axis_title_text_align="center" axis_title_vertical_text_align="center" axis_title_font_color="black" axis_title_font_family="Arial" axis_title_font_size="12pt" axis_title_text_padding="2" axis_title_text_border_color="black" axis_title_text_border_width="thin" axis_title_text_border_style="none" axis_label_font_style="normal" axis_label_font_weight="normal" axis_label_text_decoration="none" axis_label_text_align="center" axis_label_vertical_text_align="center" axis_label_font_color="black" axis_label_font_family="Arial" axis_label_font_size="9pt" axis_label_text_padding="2" axis_label_text_border_color="black" axis_label_text_border_width="thin" axis_label_text_border_style="none">
+					<isee:series_styles>
+						<isee:series_style color="blue" thickness="1"/>
+						<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF7F00" thickness="1"/>
+						<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#FF007F" thickness="1"/>
+						<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+						<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+						<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+						<isee:series_style color="#C8C8C8" thickness="1"/>
+					</isee:series_styles>
+				</graph>
+				<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous" header_font_style="normal" header_font_weight="normal" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="12pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
+				<button color="black" background="#E0E0E0" font_size="12pt" transparent="false" corner_radius="0" isee:flat="false" icon_side="top" isee:highlight_on_hover="false" isee:highlight_color="#959595"/>
+				<isee:annotation color="black" background="#E0E0E0" font_size="12pt" transparent="false" corner_radius="0" isee:flat="false" icon_side="top" isee:highlight_on_hover="false" isee:highlight_color="#959595" popup_background_color="#FFFECF"/>
+				<slider color="black" background="#E0E0E0" font_size="12pt" num_ticks="3" label_side="top" wrap_title="true" vertical="false" isee:always_show_hover_tip="false" input_expands="true" input_width="100"/>
+				<isee:sim_speed_slider color="black" background="white"/>
+				<isee:time_slider color="#E95F74" background="silver"/>
+				<isee:pie_input color="black" background="white" font_size="12pt" legend_position="bottom" isee:transparent="false"/>
+				<knob color="#66CC66" background="#E0E0E0" font_size="12pt" label_side="bottom" wrap_title="true"/>
+				<numeric_input color="black" background="#E0E0E0" font_size="12pt" label_side="left" wrap_title="true" input_expands="false" input_width="100"/>
+				<switch color="black" background="#E0E0E0" font_size="12pt" label_side="top" wrap_title="true" isee:appearance="switch"/>
+				<options color="black" background="white" appearance="radio-buttons" arrangement="vertical"/>
+				<graphical_input color="black" background="#E0E0E0" font_size="12pt"/>
+				<group_input color="black" background="#E0E0E0" font_size="12pt"/>
+				<lamp color="black" background="white" font_size="9pt"/>
+				<gauge color="black" background="white" font_size="9pt" needle_color="#F09F72" bar_color="#EEEEEE" bar_progress_color="black" appearance="radial" num_major_ticks="11" num_minor_ticks="11" show_numeric_value="true"/>
+				<isee:spatial_map color="black" background="white" font_size="12pt"/>
+				<isee:animation_object color="black" background="white" font_size="12pt"/>
+			</style>
+			<view isee:show_pages="false" page_width="1292" page_height="992" isee:page_cols="3" isee:page_rows="2" isee:scroll_x="929.286" isee:scroll_y="1333.57" zoom="140" isee:popup_graphs_are_comparative="true" type="stock_flow">
+				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
+					<stock color="blue" background="white" font_color="blue" font_size="9pt" label_side="top">
+						<shape type="rectangle" width="45" height="35"/>
+					</stock>
+					<flow color="blue" background="white" font_color="blue" font_size="9pt" label_side="bottom"/>
+					<module color="blue" background="white" font_color="blue" font_size="9pt" label_side="top">
+						<shape type="rectangle" width="55" height="45"/>
+					</module>
+					<aux color="blue" background="white" font_color="blue" font_size="9pt" label_side="bottom">
+						<shape type="circle" radius="18"/>
+					</aux>
+					<group color="red" background="white" font_color="red" font_size="9pt"/>
+					<connector color="#FF007F" background="white" font_color="#FF007F" font_size="9pt" isee:thickness="1"/>
+					<text_box color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+					<isee:loop_indicator color="black" background="white" text_align="left" vertical_text_align="top" font_size="12pt"/>
+					<numeric_display color="blue" background="white" font_size="9pt" isee:transparent="false"/>
+					<graph color="black" background="white" font_size="12pt" axis_color="#666666" grid_color="#C8C8C8" isee:graph_area_color="white" legend_position="bottom" isee:transparent="false" isee:hide_border="false" axis_title_font_style="normal" axis_title_font_weight="normal" axis_title_text_decoration="none" axis_title_text_align="center" axis_title_vertical_text_align="center" axis_title_font_color="black" axis_title_font_family="Arial" axis_title_font_size="12pt" axis_title_text_padding="2" axis_title_text_border_color="black" axis_title_text_border_width="thin" axis_title_text_border_style="none" axis_label_font_style="normal" axis_label_font_weight="normal" axis_label_text_decoration="none" axis_label_text_align="center" axis_label_vertical_text_align="center" axis_label_font_color="black" axis_label_font_family="Arial" axis_label_font_size="9pt" axis_label_text_padding="2" axis_label_text_border_color="black" axis_label_text_border_width="thin" axis_label_text_border_style="none">
+						<isee:series_styles>
+							<isee:series_style color="blue" thickness="1"/>
+							<isee:series_style color="red" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="fuchsia" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="#008F44" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF7F00" thickness="1"/>
+							<isee:series_style color="#7F00FF" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#0CA0FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="lime" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#FF007F" thickness="1"/>
+							<isee:series_style color="aqua" thickness="1" pen_style="dot_dashed"/>
+							<isee:series_style color="#F586FF" thickness="1" pen_style="dotted"/>
+							<isee:series_style color="black" thickness="1" pen_style="dashed"/>
+							<isee:series_style color="#C8C8C8" thickness="1"/>
+						</isee:series_styles>
+					</graph>
+					<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous" header_font_style="normal" header_font_weight="normal" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="12pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
+				</style>
+				<stock label_side="top" x="273.167" y="470.042" name="Trades in\nCottonbog"/>
+				<flow x="191.167" y="470.042" name="Traders in">
+					<pts>
+						<pt x="131.667" y="470.042"/>
+						<pt x="250.667" y="470.042"/>
+					</pts>
+				</flow>
+				<flow x="345.833" y="472.024" name="Traders out">
+					<pts>
+						<pt x="295.667" y="472.024"/>
+						<pt x="420" y="472.024"/>
+					</pts>
+				</flow>
+				<aux x="345.833" y="536.667" name="Check if traders\ngo out of\nCottonbog to\nCoalPeak"/>
+				<connector uid="1" angle="317.484">
+					<from>Trades_in_Cottonbog</from>
+					<to>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</to>
+				</connector>
+				<aux x="273.167" y="536.667" name="CoalPeak\nActivated"/>
+				<connector uid="2" angle="0">
+					<from>CoalPeak_Activated</from>
+					<to>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</to>
+				</connector>
+				<stacked_container uid="3" x="1413.63" y="482.56" width="403.036" height="201.714">
+					<graph x="1413.63" y="482.56" width="403.036" height="201.714" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Trades_in_Cottonbog"/>
+						</plot>
+						<plot color="red" pen_width="1" index="1" show_y_axis="true">
+							<entity name="Traders_out"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<connector uid="4" angle="89.9996">
+					<from>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</from>
+					<to>Traders_out</to>
+				</connector>
+				<group locked="true" x="108.571" y="415.167" width="350.714" height="206.143" name="Traders">
+					<item uid="5"/>
+					<item uid="6"/>
+				</group>
+				<stock x="250.667" y="208.571" width="45" height="35" name="Cotton in\nCottonbog"/>
+				<flow x="189.524" y="224.405" name="Cotton in">
+					<pts>
+						<pt x="128.381" y="224.405"/>
+						<pt x="250.667" y="224.405"/>
+					</pts>
+				</flow>
+				<flow x="344.762" y="226.786" name="Cotton out">
+					<pts>
+						<pt x="295.667" y="226.786"/>
+						<pt x="417.857" y="226.786"/>
+					</pts>
+				</flow>
+				<aux x="185.464" y="149.786" name="Harvest\nCotton"/>
+				<connector uid="7" angle="273.114">
+					<from>Harvest_Cotton</from>
+					<to>Cotton_in</to>
+				</connector>
+				<aux x="344.988" y="315.952" name="Cotton/Trader"/>
+				<connector uid="8" angle="90.1453">
+					<from>&quot;Cotton/Trader&quot;</from>
+					<to>Cotton_out</to>
+				</connector>
+				<connector uid="9" angle="90.3104">
+					<from>Traders_out</from>
+					<to>&quot;Cotton/Trader&quot;</to>
+				</connector>
+				<aux x="273.167" y="315.952" name="Amount of\nCotton"/>
+				<connector uid="10" angle="0">
+					<from>Amount_of_Cotton</from>
+					<to>&quot;Cotton/Trader&quot;</to>
+				</connector>
+				<stacked_container uid="11" x="1832.91" y="490.203" width="372.083" height="186.429">
+					<graph x="1832.91" y="490.203" width="372.083" height="186.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Cotton_in_Cottonbog"/>
+						</plot>
+						<plot color="red" pen_style="dotted" pen_width="0.3" index="1" show_y_axis="true">
+							<entity name="Cotton_out"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<group locked="true" x="110.714" y="136.786" width="346.429" height="249.714" name="Cotton"/>
+				<stock x="442.167" y="940.107" name="Leave\nCottonbog"/>
+				<stock x="442.167" y="802.964" name="Leave\nCoalPeak"/>
+				<stock x="601.595" y="871.964" name="Traders in\nCoalPeak"/>
+				<flow label_side="bottom" x="441.429" y="1005.23" name="Start trip\nCoalPeak">
+					<pts>
+						<pt x="441.429" y="1052.86"/>
+						<pt x="441.429" y="957.607"/>
+					</pts>
+				</flow>
+				<flow label_side="bottom" x="534.631" y="940.107" name="End trip to\nCoalPeak">
+					<pts>
+						<pt x="464.667" y="940.107"/>
+						<pt x="604.595" y="940.107"/>
+						<pt x="604.595" y="889.464"/>
+					</pts>
+				</flow>
+				<flow x="540.119" y="802.143" name="Start trip\nback from\nCoalpeak">
+					<pts>
+						<pt x="603.571" y="854.464"/>
+						<pt x="603.571" y="802.143"/>
+						<pt x="464.667" y="802.143"/>
+					</pts>
+				</flow>
+				<flow x="344.476" y="802.964" name="End trip\nback from\nCoalPeak">
+					<pts>
+						<pt x="419.667" y="802.964"/>
+						<pt x="269.286" y="802.964"/>
+						<pt x="269.286" y="852.679"/>
+					</pts>
+				</flow>
+				<connector uid="12" angle="10.5497">
+					<from>
+						<alias uid="13"/>
+					</from>
+					<to>Start_trip_CoalPeak</to>
+				</connector>
+				<connector uid="14" angle="168.533">
+					<from>
+						<alias uid="15"/>
+					</from>
+					<to>Start_trip_CoalPeak</to>
+				</connector>
+				<aux x="646.155" y="764.107" name="Is there any\ntraders in\nCoalPeak"/>
+				<aux x="540.119" y="871.964" name="Traders ready\nto leave\nCoalPeak"/>
+				<connector uid="16" angle="180">
+					<from>Traders_in_CoalPeak</from>
+					<to>Traders_ready_to_leave_CoalPeak</to>
+				</connector>
+				<connector uid="17" angle="67.5528">
+					<from>Traders_in_CoalPeak</from>
+					<to>Is_there_any_traders_in_CoalPeak</to>
+				</connector>
+				<connector uid="18" angle="90">
+					<from>Traders_ready_to_leave_CoalPeak</from>
+					<to>Start_trip_back_from_Coalpeak</to>
+				</connector>
+				<connector uid="19" angle="199.733">
+					<from>Is_there_any_traders_in_CoalPeak</from>
+					<to>Start_trip_back_from_Coalpeak</to>
+				</connector>
+				<stacked_container uid="20" x="1834.56" y="680.536" width="368.794" height="190">
+					<graph x="1834.56" y="680.536" width="368.794" height="190" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="red" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Leave_Cottonbog"/>
+						</plot>
+						<plot color="blue" pen_width="1" index="1" show_y_axis="true">
+							<entity name="Leave_CoalPeak"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<aux x="1212.67" y="1081.42" name="Total traders CoalPeak"/>
+				<connector uid="21" angle="298.166">
+					<from>
+						<alias uid="22"/>
+					</from>
+					<to>Total_traders_CoalPeak</to>
+				</connector>
+				<connector uid="23" angle="270">
+					<from>
+						<alias uid="24"/>
+					</from>
+					<to>Total_traders_CoalPeak</to>
+				</connector>
+				<stacked_container uid="25" x="1345.67" y="897.667" width="552.5" height="317.5">
+					<graph x="1345.67" y="897.667" width="552.5" height="317.5" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="#1AAF00" pen_style="dotted" pen_width="0.5" index="0" show_y_axis="true">
+							<entity name="Total_Traders"/>
+						</plot>
+						<plot color="#FF5AFD" pen_width="0.5" index="1" show_y_axis="true">
+							<entity name="Total_Traders_Cottonbog"/>
+						</plot>
+						<plot color="black" pen_width="0.3" index="2" show_y_axis="true">
+							<entity name="Total_traders_CoalPeak"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<aux x="1069.17" y="1081.42" name="Total Traders\nCottonbog"/>
+				<connector uid="26" angle="270">
+					<from>
+						<alias uid="27"/>
+					</from>
+					<to>Total_Traders_Cottonbog</to>
+				</connector>
+				<aux x="1152.67" y="1189.75" name="Total Traders"/>
+				<connector uid="28" angle="307.624">
+					<from>Total_Traders_Cottonbog</from>
+					<to>Total_Traders</to>
+				</connector>
+				<connector uid="29" angle="241.02">
+					<from>Total_traders_CoalPeak</from>
+					<to>Total_Traders</to>
+				</connector>
+				<connector uid="30" angle="241.904">
+					<from>
+						<alias uid="31"/>
+					</from>
+					<to>Total_traders_CoalPeak</to>
+				</connector>
+				<stock x="612.857" y="260" name="Gold i\nCottonbog"/>
+				<flow x="549.821" y="257.857" name="Gold in">
+					<pts>
+						<pt x="509.286" y="257.857"/>
+						<pt x="590.357" y="257.857"/>
+					</pts>
+				</flow>
+				<flow x="673.179" y="259.286" name="Gold out">
+					<pts>
+						<pt x="635.357" y="259.286"/>
+						<pt x="735" y="259.286"/>
+					</pts>
+				</flow>
+				<aux x="673.179" y="167.738" name="Weekly Expences\nfor cittecent"/>
+				<connector uid="32" angle="270">
+					<from>Weekly_Expences_for_cittecent</from>
+					<to>Gold_out</to>
+				</connector>
+				<stacked_container uid="33" x="1335.36" y="695.226" width="241.429" height="192.048">
+					<graph x="1335.36" y="695.226" width="241.429" height="192.048" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Gold_i_Cottonbog"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<aux x="177.131" y="958.107" name="Gold gained\nafter trip from\nCoalPeak"/>
+				<aux x="177.131" y="1023.23" name="Gold from\nCoalPeak"/>
+				<connector uid="34" angle="90">
+					<from>Gold_from_CoalPeak</from>
+					<to>Gold_gained_after_trip_from_CoalPeak</to>
+				</connector>
+				<connector uid="35" angle="270">
+					<from>
+						<alias uid="36"/>
+					</from>
+					<to>Gold_in</to>
+				</connector>
+				<aux x="675.798" y="946.821" name="Robbery to\nCoalPeak"/>
+				<aux x="726.786" y="946.821" name="Chance of\nrobbery\nto CoalPeak"/>
+				<connector uid="37" angle="180">
+					<from>Chance_of_robbery_to_CoalPeak</from>
+					<to>Robbery_to_CoalPeak</to>
+				</connector>
+				<connector uid="38" angle="314.748">
+					<from>Traders_in_CoalPeak</from>
+					<to>Robbery_to_CoalPeak</to>
+				</connector>
+				<stock x="726.786" y="802.143" name="Dead Traders\nfrom CoalPeak"/>
+				<flow x="675.798" y="870.179" name="Traders Stolen\non way to\nCaolPeak">
+					<pts>
+						<pt x="624.095" y="870.179"/>
+						<pt x="727.5" y="870.179"/>
+						<pt x="727.5" y="819.643"/>
+					</pts>
+				</flow>
+				<connector uid="39" angle="90">
+					<from>Robbery_to_CoalPeak</from>
+					<to>Traders_Stolen_on_way_to_CaolPeak</to>
+				</connector>
+				<stacked_container uid="40" x="1419.4" y="77.7857" width="350" height="192.5">
+					<graph x="1419.4" y="77.7857" width="350" height="192.5" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Dead_Traders_from_CoalPeak"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<aux label_side="bottom" x="185.464" y="35.7143" name="Calculate\npreparedness\nCoalPeak"/>
+				<stock label_side="top" x="233.333" y="852.679" width="45" height="35" name="Traders\nArrival from\nCoalPeak"/>
+				<aux x="234.143" y="686.226" name="Robbery from\nCoalPeak"/>
+				<aux x="167.31" y="686.226" name="Chance of robbery\nfrom CoalPeak"/>
+				<connector uid="41" angle="0">
+					<from>Chance_of_robbery_from_CoalPeak</from>
+					<to>Robbery_from_CoalPeak</to>
+				</connector>
+				<flow label_side="top" x="490.536" y="724.25" name="Traders stolen on\nway home from\nCoalPeak">
+					<pts>
+						<pt x="254.286" y="852.679"/>
+						<pt x="254.286" y="724.25"/>
+						<pt x="726.786" y="724.25"/>
+						<pt x="726.786" y="784.643"/>
+					</pts>
+				</flow>
+				<flow x="255" y="957.625" name="Traders\nEntering\nCottonbog\nfrom CoalPeak">
+					<pts>
+						<pt x="255" y="887.679"/>
+						<pt x="255" y="1048.57"/>
+					</pts>
+				</flow>
+				<connector uid="42" angle="90.1428">
+					<from>
+						<alias uid="6"/>
+					</from>
+					<to>Traders_in</to>
+				</connector>
+				<connector uid="43" angle="90">
+					<from>
+						<alias uid="44"/>
+					</from>
+					<to>Chance_of_robbery_from_CoalPeak</to>
+				</connector>
+				<connector uid="45" angle="90">
+					<from>
+						<alias uid="46"/>
+					</from>
+					<to>Chance_of_robbery_to_CoalPeak</to>
+				</connector>
+				<connector uid="47" angle="96.7249">
+					<from>Traders_Arrival_from_CoalPeak</from>
+					<to>Robbery_from_CoalPeak</to>
+				</connector>
+				<connector uid="48" angle="351.564">
+					<from>Robbery_from_CoalPeak</from>
+					<to>Traders_stolen_on_way_home_from_CoalPeak</to>
+				</connector>
+				<aux x="336.548" y="870.179" name="Is there any\ntraders in\nCoalPeak End"/>
+				<connector uid="49" angle="0">
+					<from>Traders_Arrival_from_CoalPeak</from>
+					<to>Is_there_any_traders_in_CoalPeak_End</to>
+				</connector>
+				<connector uid="50" angle="226.999">
+					<from>Is_there_any_traders_in_CoalPeak_End</from>
+					<to>Traders_Entering_Cottonbog_from_CoalPeak</to>
+				</connector>
+				<aux x="177.131" y="870.179" name="Traders ready\nto leave\nCoalPeak End"/>
+				<connector uid="51" angle="180">
+					<from>Traders_Arrival_from_CoalPeak</from>
+					<to>Traders_ready_to_leave_CoalPeak_End</to>
+				</connector>
+				<connector uid="52" angle="311.684">
+					<from>Traders_ready_to_leave_CoalPeak_End</from>
+					<to>Traders_Entering_Cottonbog_from_CoalPeak</to>
+				</connector>
+				<connector uid="53" angle="180.355">
+					<from>Traders_Entering_Cottonbog_from_CoalPeak</from>
+					<to>Gold_gained_after_trip_from_CoalPeak</to>
+				</connector>
+				<group locked="true" x="108.214" y="654.25" width="666.548" height="428.524" name="CoalPeak">
+					<item uid="13"/>
+					<item uid="15"/>
+					<item uid="44"/>
+					<item uid="46"/>
+				</group>
+				<group locked="true" x="471.429" y="136.714" width="300" height="184" name="Gold">
+					<item uid="54"/>
+					<item uid="36"/>
+				</group>
+				<stock x="1384.17" y="1493.33" name="Child in\nCottonbog"/>
+				<stock x="1759.17" y="1495.48" name="Elders in\nCottonbog"/>
+				<flow x="1319.58" y="1493.33" name="Birth of\nchildren">
+					<pts>
+						<pt x="1277.5" y="1493.33"/>
+						<pt x="1361.67" y="1493.33"/>
+					</pts>
+				</flow>
+				<flow x="1383.33" y="1555.31" name="Children\ndeath rate">
+					<pts>
+						<pt x="1383.33" y="1510.83"/>
+						<pt x="1383.33" y="1611.79"/>
+					</pts>
+				</flow>
+				<flow x="1759.29" y="1556.38" name="Elders\ndeath rate">
+					<pts>
+						<pt x="1759.29" y="1512.98"/>
+						<pt x="1759.29" y="1611.79"/>
+					</pts>
+				</flow>
+				<aux x="2059.17" y="1505" name="Total citizent\nin Cottonbog"/>
+				<flow label_side="top" x="1472.51" y="1495.6" name="Chlds become adults\nin Cottonbog">
+					<pts>
+						<pt x="1406.67" y="1495.6"/>
+						<pt x="1550.36" y="1495.6"/>
+					</pts>
+				</flow>
+				<stock x="1572.86" y="1497.86" name="Adults in\nCottonbog"/>
+				<flow label_side="top" x="1660.01" y="1496.67" name="Workers gets old in\nCottonbog">
+					<pts>
+						<pt x="1595.36" y="1496.67"/>
+						<pt x="1736.67" y="1496.67"/>
+					</pts>
+				</flow>
+				<connector uid="55" angle="270">
+					<from>
+						<alias uid="56"/>
+					</from>
+					<to>Total_citizent_in_Cottonbog</to>
+				</connector>
+				<connector uid="57" angle="0">
+					<from>
+						<alias uid="58"/>
+					</from>
+					<to>Total_citizent_in_Cottonbog</to>
+				</connector>
+				<connector uid="59" angle="180">
+					<from>
+						<alias uid="60"/>
+					</from>
+					<to>Total_citizent_in_Cottonbog</to>
+				</connector>
+				<stacked_container uid="61" x="2045.71" y="1790.17">
+					<graph x="1870.71" y="1665.17" width="350" height="250" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" right_axis="true" show_y_axis="true">
+							<entity name="Total_citizent_in_Cottonbog"/>
+						</plot>
+						<plot color="red" pen_style="dot_dashed" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Child_in_Cottonbog"/>
+						</plot>
+						<plot color="fuchsia" pen_style="dotted" pen_width="1" index="1" show_y_axis="true">
+							<entity name="Adults_in_Cottonbog"/>
+						</plot>
+						<plot color="#008F44" pen_style="dashed" pen_width="1" index="2" show_y_axis="true">
+							<entity name="Elders_in_Cottonbog"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<flow x="1570.71" y="1557.57" name="Adult\ndeath rate">
+					<pts>
+						<pt x="1570.71" y="1515.36"/>
+						<pt x="1570.71" y="1611.79"/>
+					</pts>
+				</flow>
+				<aux x="1472.51" y="1555.31" name="Fertile Citicen"/>
+				<connector uid="62" angle="209.791">
+					<from>Adults_in_Cottonbog</from>
+					<to>Fertile_Citicen</to>
+				</connector>
+				<connector uid="63" angle="157.938">
+					<from>Fertile_Citicen</from>
+					<to>Birth_of_children</to>
+				</connector>
+				<aux x="1319.58" y="1405.64" name="Birth rate"/>
+				<connector uid="64" angle="270">
+					<from>Birth_rate</from>
+					<to>Birth_of_children</to>
+				</connector>
+				<stock label_side="bottom" x="1383.33" y="1629.29" name="Dead\nChildren"/>
+				<stock label_side="bottom" x="1570.71" y="1629.29" name="Dead\nAdults"/>
+				<stock label_side="bottom" x="1759.29" y="1629.29" name="Dead\nElders"/>
+				<alias font_style="italic" uid="65" x="84.5714" y="26.7143" width="18" height="18">
+					<of>CoalPeak_Activated</of>
+				</alias>
+				<alias font_style="italic" uid="13" x="364.702" y="1008.85" width="18" height="18">
+					<of>Traders_out</of>
+				</alias>
+				<alias font_style="italic" uid="15" x="494.607" y="1008.85" width="18" height="18">
+					<of>CoalPeak_Activated</of>
+				</alias>
+				<alias font_style="italic" uid="22" x="1133.5" y="958.083" width="45" height="35">
+					<of>Leave_CoalPeak</of>
+				</alias>
+				<alias font_style="italic" uid="24" x="1190.17" y="958.083" width="45" height="35">
+					<of>Leave_Cottonbog</of>
+				</alias>
+				<alias font_style="italic" uid="31" x="1246.67" y="958.083" width="45" height="35">
+					<of>Traders_in_CoalPeak</of>
+				</alias>
+				<alias font_style="italic" uid="27" x="1046.67" y="958.083" width="45" height="35">
+					<of>Trades_in_Cottonbog</of>
+				</alias>
+				<alias font_style="italic" uid="36" x="540.821" y="158.738" width="18" height="18">
+					<of>Gold_gained_after_trip_from_CoalPeak</of>
+				</alias>
+				<alias font_style="italic" uid="46" x="717.786" y="1008.85" width="18" height="18">
+					<of>Calculate_preparedness_CoalPeak</of>
+				</alias>
+				<alias font_style="italic" uid="6" x="182.333" y="527.667" width="18" height="18">
+					<of>Traders_Entering_Cottonbog_from_CoalPeak</of>
+				</alias>
+				<alias font_style="italic" label_side="bottom" uid="44" x="158.31" y="737.107" width="18" height="18">
+					<of>Calculate_preparedness_CoalPeak</of>
+				</alias>
+				<alias font_style="italic" uid="56" x="2036.67" y="1407.5" width="45" height="35">
+					<of>Child_in_Cottonbog</of>
+				</alias>
+				<alias font_style="italic" uid="58" x="1951.07" y="1487.5" width="45" height="35">
+					<of>Adults_in_Cottonbog</of>
+				</alias>
+				<alias font_style="italic" uid="60" x="2126.79" y="1487.5" width="45" height="35">
+					<of>Elders_in_Cottonbog</of>
+				</alias>
+				<flow label_side="top" x="1384.38" y="1399.85" name="Child Becomes\nTraders">
+					<pts>
+						<pt x="1384.38" y="1475.83"/>
+						<pt x="1384.38" y="1311.88"/>
+					</pts>
+				</flow>
+				<stock x="1384.38" y="1294.38" name="Child Waiting\nGame"/>
+				<flow x="1450.12" y="1293.75" name="Out">
+					<pts>
+						<pt x="1406.88" y="1293.75"/>
+						<pt x="1505.36" y="1293.75"/>
+					</pts>
+				</flow>
+				<aux x="1448.89" y="1360" name="Check"/>
+				<connector uid="66" angle="314.509">
+					<from>Child_Waiting_Game</from>
+					<to>Check</to>
+				</connector>
+				<connector uid="67" angle="88.9342">
+					<from>Check</from>
+					<to>Out</to>
+				</connector>
+				<stock x="1527.86" y="1293.75" name="Childs out"/>
+				<stacked_container uid="68" x="1627.67" y="1238.01" width="192.5" height="158.635">
+					<graph x="1627.67" y="1238.01" width="192.5" height="158.635" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Graph" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
+							<entity name="Childs_out"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<alias color="blue" background="white" font_style="italic" uid="5" x="129.125" y="527.667" width="18" height="18">
+					<of>Out</of>
+				</alias>
+				<connector uid="69" angle="51.4757">
+					<from>
+						<alias uid="5"/>
+					</from>
+					<to>Traders_in</to>
+				</connector>
+				<aux x="156.125" y="315.952" name="Is there cotton\nto trade?"/>
+				<connector uid="70" angle="217.522">
+					<from>Cotton_in_Cottonbog</from>
+					<to>&quot;Is_there_cotton_to_trade?&quot;</to>
+				</connector>
+				<connector uid="71" angle="320.556">
+					<from>&quot;Is_there_cotton_to_trade?&quot;</from>
+					<to>Traders_out</to>
+				</connector>
+				<connector uid="72" angle="235.362">
+					<from>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</from>
+					<to>&quot;Is_there_cotton_to_trade?&quot;</to>
+				</connector>
+				<aux x="765" y="199.571" name="Gold per\nCitizen\nper week"/>
+				<alias font_style="italic" uid="54" x="721.625" y="140.738" width="18" height="18">
+					<of>Total_citizent_in_Cottonbog</of>
+				</alias>
+				<connector uid="73" angle="196.069">
+					<from>
+						<alias uid="54"/>
+					</from>
+					<to>Weekly_Expences_for_cittecent</to>
+				</connector>
+				<connector uid="74" angle="159.914">
+					<from>Gold_per_Citizen_per_week</from>
+					<to>Weekly_Expences_for_cittecent</to>
+				</connector>
+				<alias font_style="italic" uid="75" x="2051" y="1577.43" width="18" height="18">
+					<of>Total_Traders</of>
+				</alias>
+				<connector uid="76" angle="87.6141">
+					<from>
+						<alias uid="75"/>
+					</from>
+					<to>Total_citizent_in_Cottonbog</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>
+
