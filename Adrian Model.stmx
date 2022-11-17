@@ -7,7 +7,7 @@
 		<vendor>isee systems, inc.</vendor>
 		<product version="1.7.1" isee:build_number="1574" isee:saved_by_v1="true" lang="en">Stella Architect</product>
 	</header>
-	<sim_specs isee:simulation_delay="0" method="Euler" time_units="Weeks" isee:instantaneous_flows="false">
+	<sim_specs isee:simulation_delay="0" method="Euler" time_units="Week" isee:instantaneous_flows="false">
 		<start>0</start>
 		<stop>2600</stop>
 		<dt reciprocal="true">7</dt>
@@ -298,124 +298,6 @@ ELSE 0</eqn>
 			<aux name="Season\nharvest\nVariation">
 				<eqn>RANDOM(0.75,  1.25)</eqn>
 			</aux>
-			<flow name="Traders\nEntering\nCottonbog\nfrom CoalPeak">
-				<eqn>PULSE(Is_there_any_traders_in_CoalPeak_End *
-Traders_ready_to_leave_CoalPeak_End,  0,  1)</eqn>
-				<non_negative/>
-			</flow>
-			<flow name="Traders Dies on\nway home from\nCoalPeak">
-				<eqn>PULSE(ROUND (Fight_from_CoalPeak * 0.6),  0,  1)</eqn>
-				<non_negative/>
-			</flow>
-			<flow name="End trip to\nCoalPeak">
-				<eqn>0</eqn>
-				<non_negative/>
-			</flow>
-			<flow name="End trip\nback from\nCoalPeak">
-				<eqn>0</eqn>
-				<non_negative/>
-			</flow>
-			<flow name="bandit Dies\non way to\nCoalPeak">
-				<eqn>PULSE(ROUND (Fight_to_CoalPeak * 0.6),  0,  1)</eqn>
-				<non_negative/>
-			</flow>
-			<flow name="Start trip\nback from\nCoalpeak">
-				<eqn>PULSE(Traders_ready_to_leave_CoalPeak*Is_there_any_traders_in_CoalPeak,  0,  1)</eqn>
-				<non_negative/>
-			</flow>
-			<flow name="Start trip\nCoalPeak">
-				<eqn>Traders_travel_out_of_Cottonbog *
-CoalPeak_Activated</eqn>
-				<non_negative/>
-			</flow>
-			<stock name="Dead\nTraders in\nCoalPeak">
-				<eqn>0</eqn>
-				<inflow>bandit_Dies_on_way_to_CoalPeak</inflow>
-				<inflow>Traders_Dies_on_way_home_from_CoalPeak</inflow>
-				<non_negative/>
-			</stock>
-			<stock name="Traders\nHome from\nCoalPeak">
-				<eqn>0</eqn>
-				<inflow>End_trip_back_from_CoalPeak</inflow>
-				<outflow>Traders_Dies_on_way_home_from_CoalPeak</outflow>
-				<outflow>Traders_Entering_Cottonbog_from_CoalPeak</outflow>
-				<outflow>Injured_Traders_home_from_CoalPeak</outflow>
-				<non_negative/>
-			</stock>
-			<stock name="Traders\nArrival in\nCoalPeak">
-				<eqn>0</eqn>
-				<inflow>End_trip_to_CoalPeak</inflow>
-				<outflow>Start_trip_back_from_Coalpeak</outflow>
-				<outflow>bandit_Dies_on_way_to_CoalPeak</outflow>
-				<outflow>Injured_Traders_to_CoalPeak</outflow>
-				<non_negative/>
-			</stock>
-			<stock name="Leave\nCoalPeak">
-				<eqn>0</eqn>
-				<inflow>Start_trip_back_from_Coalpeak</inflow>
-				<outflow>End_trip_back_from_CoalPeak</outflow>
-				<conveyor>
-					<len>2</len>
-				</conveyor>
-			</stock>
-			<stock name="Leave\nCottonbog\nto CoalPeak">
-				<eqn>0</eqn>
-				<inflow>Start_trip_CoalPeak</inflow>
-				<outflow>End_trip_to_CoalPeak</outflow>
-				<conveyor>
-					<len>2</len>
-				</conveyor>
-			</stock>
-			<aux name="Traders ready\nto leave\nCoalPeak\nEnd">
-				<eqn>Traders_Home_from_CoalPeak</eqn>
-			</aux>
-			<aux name="Are Bandits\npresent from\nCoalPeak?">
-				<eqn>IF(RANDOM(1,  Chance_of_Bandit_Raid_in_CoalPeak) &gt; Chance_of_Bandit_Raid_in_CoalPeak - 1)
-
-THEN 1
-ELSE 0</eqn>
-			</aux>
-			<aux name="Are Bandits\npresent in\nCoalPeak?">
-				<eqn>IF(RANDOM(1,  Chance_of_Bandit_Raid_in_CoalPeak) &gt; Chance_of_Bandit_Raid_in_CoalPeak - 1)
-
-THEN 1
-ELSE 0</eqn>
-			</aux>
-			<aux name="Fight to\nCoalPeak">
-				<eqn>(&quot;Are_Bandits_present_in_CoalPeak?&quot; *
-Traders_Arrival_in_CoalPeak) *
-
-Combat_Calculation_in_CoalPeak</eqn>
-			</aux>
-			<aux name="Fight from\nCoalPeak">
-				<eqn>(&quot;Are_Bandits_present_from_CoalPeak?&quot; *
-Traders_Home_from_CoalPeak) *
-
-Combat_Calculation_home_from_CoalPeak</eqn>
-			</aux>
-			<aux name="Gold gained\nafter trip from\nCoalPeak">
-				<eqn>Traders_Entering_Cottonbog_from_CoalPeak *
-Gold_from_CoalPeak</eqn>
-			</aux>
-			<aux name="Is there any\ntraders in\nCoalPeak\nEnd">
-				<eqn>Traders_Home_from_CoalPeak</eqn>
-				<gf type="discrete">
-					<xscale min="0" max="1"/>
-					<yscale min="0" max="1"/>
-					<ypts>0,1,1</ypts>
-				</gf>
-			</aux>
-			<aux name="Traders ready\nto leave\nCoalPeak">
-				<eqn>Traders_Arrival_in_CoalPeak</eqn>
-			</aux>
-			<aux name="Is there any\ntraders in\nCoalPeak">
-				<eqn>Traders_Arrival_in_CoalPeak</eqn>
-				<gf type="discrete">
-					<xscale min="0" max="1"/>
-					<yscale min="0" max="1"/>
-					<ypts>0,1,1</ypts>
-				</gf>
-			</aux>
 			<aux name="Bandits Dice\nin CoalPeak">
 				<eqn>ROUND(RANDOM(1,  Bandits_Combat_Level))</eqn>
 			</aux>
@@ -433,13 +315,15 @@ Gold_from_CoalPeak</eqn>
 				<non_negative/>
 			</stock>
 			<aux name="Combat\nCalculation\nin CoalPeak">
-				<eqn>IF((Traders_Dice_in_CoalPeak * Traders_Arrival_in_CoalPeak) &lt; (Bandits_Dice_in_CoalPeak))
+				<eqn>IF((Traders_Dice_in_CoalPeak * Traders_Arrival_in_CoalPeak) &lt; (Bandits_Dice_in_CoalPeak *
+Amount_of_Bandits_in_Raid_in_CoalPeak))
 
 THEN 0
 ELSE 1</eqn>
 			</aux>
 			<aux name="Combat\nCalculation\nhome from\nCoalPeak">
-				<eqn>IF((Traders_Dice_home_from_CoalPeak * Traders_Home_from_CoalPeak) &lt; (Bandits_Dice_home_from_CoalPeak))
+				<eqn>IF((Traders_Dice_home_from_CoalPeak * Traders_Home_from_CoalPeak) &lt; (Bandits_Dice_home_from_CoalPeak *
+Amount_of_Bandits_in_Raid_from_CoalPeak))
 
 THEN 0
 ELSE 1</eqn>
@@ -450,10 +334,6 @@ ELSE 1</eqn>
 			<aux name="Traders Dice\nhome from\nCoalPeak">
 				<eqn>ROUND(RANDOM(1,  Traders_Combat_Level))</eqn>
 			</aux>
-			<flow name="Injured Traders\nto CoalPeak">
-				<eqn>PULSE(ROUND (Fight_to_CoalPeak * 0.4),  0,  1)</eqn>
-				<non_negative/>
-			</flow>
 			<flow name="Injured Traders\nIn hospital">
 				<eqn>Injured_Traders_to_CoalPeak +
 Injured_Traders_home_from_CoalPeak</eqn>
@@ -464,23 +344,19 @@ Injured_Traders_home_from_CoalPeak</eqn>
 				<inflow>Injured_Traders_In_hospital</inflow>
 				<outflow>Traders_Healed_out_from_hospital</outflow>
 				<conveyor>
-					<len>1</len>
+					<len>26</len>
 				</conveyor>
 			</stock>
 			<flow name="Traders Healed out\nfrom hospital">
 				<eqn>0</eqn>
 				<non_negative/>
 			</flow>
-			<flow name="Injured Traders\nhome from\nCoalPeak">
-				<eqn>PULSE(ROUND (Fight_from_CoalPeak * 0.4),  0,  1)</eqn>
-				<non_negative/>
-			</flow>
 			<flow name="Bandits\nLevelUp">
-				<eqn>Bendit_LevelUp_Check</eqn>
+				<eqn>PULSE(Bendit_LevelUp_Check,  0,  1)</eqn>
 				<non_negative/>
 			</flow>
 			<flow name="Traders\nLevelUp">
-				<eqn>Traders_LevelUp_Check</eqn>
+				<eqn>PULSE(Traders_LevelUp_Check,  0,  1)</eqn>
 				<non_negative/>
 			</flow>
 			<aux name="Traders\nLevelUp\nCheck">
@@ -503,7 +379,7 @@ ELSE 0</eqn>
 			</aux>
 			<flow name="Bandit Exp In">
 				<eqn>PULSE(ROUND((
-bandit_Dies_on_way_to_CoalPeak +
+Traders_Dies_on_way_to_CoalPeak +
 Traders_Dies_on_way_home_from_CoalPeak +
 Traders_Dies_on_way_to_Slagtown +
 Traders_Dies_on_way_from_Slagtown +
@@ -524,15 +400,7 @@ Traders_Dies_on_way_from_Goldford
 				<non_negative/>
 			</stock>
 			<flow name="Traders Exp in">
-				<eqn>PULSE(ROUND((
-Bandits_Dies_on_way_to_CoalPeak +
-Bandits_Dies_on_way_from_CoalPeak +
-Bandits_Dies_on_way_to_Slagtown +
-Bandits_Dies_on_way_from_Slagtown +
-Bandits_Dies_on_way_to_Goldford +
-Bandits_Dies_on_way_from_Goldford
-
-)),  0,  1)</eqn>
+				<eqn>PULSE(ROUND(Bandit_Adults_die_in_Combat))</eqn>
 				<non_negative/>
 			</flow>
 			<flow name="Traders Exp Out">
@@ -553,17 +421,14 @@ ELSE 0</eqn>
 				<non_negative/>
 			</flow>
 			<group name="Combat (Bandits vs. Traders)" run="false">
-				<entity name="Bandits_Dies_on_way_from_CoalPeak"/>
-				<entity name="Bandits_Dies_on_way_to_Slagtown"/>
-				<entity name="Bandits_Dies_on_way_to_Goldford"/>
-				<entity name="Bandits_Dies_on_way_from_Goldford"/>
+				<entity name="Amount_of_Bandits_in_Raid_from_CoalPeak"/>
 				<entity name="Combat_Calculation_in_CoalPeak"/>
 				<entity name="Bandits_Exp_to_reach_for_levelUp"/>
-				<entity name="Bandits_Dies_on_way_from_Slagtown"/>
 				<entity name="Traders_Exp_Out"/>
 				<entity name="Traders_Exp"/>
 				<entity name="Bandits_Dice_home_from_CoalPeak"/>
 				<entity name="Traders_LevelUp_Check"/>
+				<entity name="Amount_of_Bandits_in_Raid_in_CoalPeak"/>
 				<entity name="Traders_Dies_on_way_from_Goldford"/>
 				<entity name="Traders_Combat_Level"/>
 				<entity name="Bandits_LevelUp"/>
@@ -581,36 +446,7 @@ ELSE 0</eqn>
 				<entity name="Traders_Dies_on_way_to_Slagtown"/>
 				<entity name="Traders_Exp_to_reach_for_levelUp"/>
 				<entity name="Bandits_Dice_in_CoalPeak"/>
-				<entity name="Bandits_Dies_on_way_to_CoalPeak"/>
 				<entity name="Bendit_LevelUp_Check"/>
-			</group>
-			<group name="CoalPeak" run="false">
-				<entity name="Bandits_Battle_Aftermath"/>
-				<entity name='"By_kjøper_av_\"Black_Market\"_først"'/>
-				<entity name='"Are_Bandits_present_in_CoalPeak?"'/>
-				<entity name="Start_trip_CoalPeak"/>
-				<entity name="Etterspørsel"/>
-				<entity name="End_trip_to_CoalPeak"/>
-				<entity name="Fight_to_CoalPeak"/>
-				<entity name="Injured_Traders_to_CoalPeak"/>
-				<entity name="bandit_Dies_on_way_to_CoalPeak"/>
-				<entity name="Traders_ready_to_leave_CoalPeak"/>
-				<entity name="Is_there_any_traders_in_CoalPeak_End"/>
-				<entity name="Traders_Entering_Cottonbog_from_CoalPeak"/>
-				<entity name="Is_there_any_traders_in_CoalPeak"/>
-				<entity name="End_trip_back_from_CoalPeak"/>
-				<entity name="Traders_Arrival_in_CoalPeak"/>
-				<entity name="Leave_CoalPeak"/>
-				<entity name="Gold_gained_after_trip_from_CoalPeak"/>
-				<entity name="Traders_ready_to_leave_CoalPeak_End"/>
-				<entity name="Traders_Home_from_CoalPeak"/>
-				<entity name="Traders_Dies_on_way_home_from_CoalPeak"/>
-				<entity name='"Are_Bandits_present_from_CoalPeak?"'/>
-				<entity name="Dead_Traders_in_CoalPeak"/>
-				<entity name="Fight_from_CoalPeak"/>
-				<entity name="Start_trip_back_from_Coalpeak"/>
-				<entity name="Leave_Cottonbog_to_CoalPeak"/>
-				<entity name="Injured_Traders_home_from_CoalPeak"/>
 			</group>
 			<stock name="Bandit\nChilds">
 				<eqn>150</eqn>
@@ -688,10 +524,26 @@ Birth_rate_Bandits)</eqn>
 				<non_negative/>
 			</stock>
 			<group name="Populasjonsdynamikk - Bandits" run="false">
+				<entity name="Childs_become_Bandits"/>
+				<entity name="Childeren_to_become_Bandits"/>
+				<entity name="Bandits_rehabilitated"/>
+				<entity name="Total_Bandits_in_Combat"/>
+				<entity name="Bandit_Adults_in_Hospital"/>
+				<entity name="Injured_Bandits_out_from_hospital"/>
+				<entity name="Injured_Bandits_In_hospital"/>
+				<entity name="Amount_of_Bandits_die_in_combat_to_Slagtown"/>
+				<entity name="Amount_of_Bandits_die_in_combat_from_Slagtown"/>
+				<entity name="Amount_of_Bandits_die_in_combat_to_CoalPeak"/>
 				<entity name="Bandit_Childs"/>
+				<entity name="Amount_of_Bandits_die_in_combat_from_Goldford"/>
+				<entity name="Amount_of_Bandits_die_in_combat_to_Goldford"/>
+				<entity name="Bandit_Adults_die_in_Combat"/>
 				<entity name="Bandit_Adult_Raiders"/>
 				<entity name="Bandit_childs_become_Raiders"/>
 				<entity name="Birth_rate_Bandits"/>
+				<entity name="Bandit_Hospitalized"/>
+				<entity name='"Are_there_enough_Bandits_to_Raid?"'/>
+				<entity name="Amount_of_Bandits_die_in_combat_from_CoalPeak"/>
 				<entity name="Bandits_gets_old"/>
 				<entity name='"Elders_death_rate_-_Bandits"'/>
 				<entity name='"Adult_death_rate_-_Bandits"'/>
@@ -712,16 +564,310 @@ Birth_rate_Bandits)</eqn>
 			</flow>
 			<stock name="Bandit\nAdult\nRaiders">
 				<eqn>50</eqn>
-				<inflow>Bandit_childs_become_Raiders</inflow>
+				<inflow>Bandits_rehabilitated</inflow>
+				<inflow>Childs_become_Bandits</inflow>
+				<outflow>Bandit_Adults_die_in_Combat</outflow>
+				<outflow>Bandit_Adults_in_Hospital</outflow>
 				<non_negative/>
 			</stock>
 			<aux name="Traders\nExp to reach\nfor levelUp">
-				<eqn>Traders_Combat_Level</eqn>
-				<gf>
-					<xscale min="0" max="100"/>
-					<yscale min="10" max="1000"/>
-					<ypts>10,1000</ypts>
-				</gf>
+				<eqn>IF(Traders_Combat_Level &lt; 1)
+
+THEN 5
+ELSE IF(Traders_Combat_Level &lt; 2)
+THEN 10
+
+ELSE IF(Traders_Combat_Level &lt; 3)
+THEN 15
+
+ELSE IF(Traders_Combat_Level &lt; 4)
+THEN 20
+
+ELSE IF(Traders_Combat_Level &lt; 5)
+THEN 25
+
+ELSE IF(Traders_Combat_Level &lt; 6)
+THEN 30
+
+ELSE IF(Traders_Combat_Level &lt; 7)
+THEN 35
+
+ELSE IF(Traders_Combat_Level &lt; 8)
+THEN 40
+
+ELSE IF(Traders_Combat_Level &lt; 9)
+THEN 45
+
+ELSE IF(Traders_Combat_Level &lt; 10)
+THEN 50
+
+ELSE IF(Traders_Combat_Level &lt; 11)
+THEN 55
+
+ELSE IF(Traders_Combat_Level &lt; 12)
+THEN 60
+
+ELSE IF(Traders_Combat_Level &lt; 13)
+THEN 65
+
+ELSE IF(Traders_Combat_Level &lt; 14)
+THEN 70
+
+ELSE IF(Traders_Combat_Level &lt; 15)
+THEN 75
+
+ELSE IF(Traders_Combat_Level &lt; 16)
+THEN 80
+
+ELSE IF(Traders_Combat_Level &lt; 17)
+THEN 85
+
+ELSE IF(Traders_Combat_Level &lt; 18)
+THEN 90
+
+ELSE IF(Traders_Combat_Level &lt; 19)
+THEN 95
+
+ELSE IF(Traders_Combat_Level &lt; 20)
+THEN 100
+
+ELSE IF(Traders_Combat_Level &lt; 21)
+THEN 105
+
+ELSE IF(Traders_Combat_Level &lt; 22)
+THEN 110
+
+ELSE IF(Traders_Combat_Level &lt; 23)
+THEN 115
+
+ELSE IF(Traders_Combat_Level &lt; 24)
+THEN 120
+
+ELSE IF(Traders_Combat_Level &lt; 25)
+THEN 125
+
+ELSE IF(Traders_Combat_Level &lt; 26)
+THEN 130
+
+ELSE IF(Traders_Combat_Level &lt; 27)
+THEN 135
+
+ELSE IF(Traders_Combat_Level &lt; 28)
+THEN 140
+
+ELSE IF(Traders_Combat_Level &lt; 29)
+THEN 145
+
+ELSE IF(Traders_Combat_Level &lt; 30)
+THEN 150
+
+ELSE IF(Traders_Combat_Level &lt; 31)
+THEN 155
+
+ELSE IF(Traders_Combat_Level &lt; 32)
+THEN 160
+
+ELSE IF(Traders_Combat_Level &lt; 33)
+THEN 165
+
+ELSE IF(Traders_Combat_Level &lt; 34)
+THEN 170
+
+ELSE IF(Traders_Combat_Level &lt; 35)
+THEN 175
+
+ELSE IF(Traders_Combat_Level &lt; 36)
+THEN 180
+
+ELSE IF(Traders_Combat_Level &lt; 37)
+THEN 185
+
+ELSE IF(Traders_Combat_Level &lt; 38)
+THEN 190
+
+ELSE IF(Traders_Combat_Level &lt; 39)
+THEN 195
+
+ELSE IF(Traders_Combat_Level &lt; 40)
+THEN 200
+
+ELSE IF(Traders_Combat_Level &lt; 41)
+THEN 205
+
+ELSE IF(Traders_Combat_Level &lt; 42)
+THEN 210
+
+ELSE IF(Traders_Combat_Level &lt; 43)
+THEN 215
+
+ELSE IF(Traders_Combat_Level &lt; 44)
+THEN 220
+
+ELSE IF(Traders_Combat_Level &lt; 45)
+THEN 225
+
+ELSE IF(Traders_Combat_Level &lt; 46)
+THEN 230
+
+ELSE IF(Traders_Combat_Level &lt; 47)
+THEN 235
+
+ELSE IF(Traders_Combat_Level &lt; 48)
+THEN 240
+
+ELSE IF(Traders_Combat_Level &lt; 49)
+THEN 245
+
+ELSE IF(Traders_Combat_Level &lt; 50)
+THEN 250
+
+ELSE IF(Traders_Combat_Level &lt; 51)
+THEN 255
+
+ELSE IF(Traders_Combat_Level &lt; 52)
+THEN 260
+
+ELSE IF(Traders_Combat_Level &lt; 53)
+THEN 265
+
+ELSE IF(Traders_Combat_Level &lt; 54)
+THEN 270
+
+ELSE IF(Traders_Combat_Level &lt; 55)
+THEN 275
+
+ELSE IF(Traders_Combat_Level &lt; 56)
+THEN 280
+
+ELSE IF(Traders_Combat_Level &lt; 57)
+THEN 285
+
+ELSE IF(Traders_Combat_Level &lt; 58)
+THEN 290
+
+ELSE IF(Traders_Combat_Level &lt; 59)
+THEN 295
+
+ELSE IF(Traders_Combat_Level &lt; 60)
+THEN 300
+
+ELSE IF(Traders_Combat_Level &lt; 61)
+THEN 305
+
+ELSE IF(Traders_Combat_Level &lt; 62)
+THEN 310
+
+ELSE IF(Traders_Combat_Level &lt; 63)
+THEN 315
+
+ELSE IF(Traders_Combat_Level &lt; 64)
+THEN 320
+
+ELSE IF(Traders_Combat_Level &lt; 65)
+THEN 325
+
+ELSE IF(Traders_Combat_Level &lt; 66)
+THEN 330
+
+ELSE IF(Traders_Combat_Level &lt; 67)
+THEN 345
+
+ELSE IF(Traders_Combat_Level &lt; 68)
+THEN 350
+
+ELSE IF(Traders_Combat_Level &lt; 69)
+THEN 355
+
+ELSE IF(Traders_Combat_Level &lt; 70)
+THEN 360
+
+ELSE IF(Traders_Combat_Level &lt; 71)
+THEN 365
+
+ELSE IF(Traders_Combat_Level &lt; 72)
+THEN 370
+
+ELSE IF(Traders_Combat_Level &lt; 73)
+THEN 375
+
+ELSE IF(Traders_Combat_Level &lt; 74)
+THEN 380
+
+ELSE IF(Traders_Combat_Level &lt; 75)
+THEN 385
+
+ELSE IF(Traders_Combat_Level &lt; 76)
+THEN 390
+
+ELSE IF(Traders_Combat_Level &lt; 77)
+THEN 395
+
+ELSE IF(Traders_Combat_Level &lt; 78)
+THEN 400
+
+ELSE IF(Traders_Combat_Level &lt; 79)
+THEN 405
+
+ELSE IF(Traders_Combat_Level &lt; 80)
+THEN 410
+
+ELSE IF(Traders_Combat_Level &lt; 81)
+THEN 415
+
+ELSE IF(Traders_Combat_Level &lt; 82)
+THEN 420
+
+ELSE IF(Traders_Combat_Level &lt; 83)
+THEN 425
+
+ELSE IF(Traders_Combat_Level &lt; 84)
+THEN 430
+
+ELSE IF(Traders_Combat_Level &lt; 85)
+THEN 435
+
+ELSE IF(Traders_Combat_Level &lt; 86)
+THEN 440
+
+ELSE IF(Traders_Combat_Level &lt; 87)
+THEN 445
+
+ELSE IF(Traders_Combat_Level &lt; 88)
+THEN 450
+
+ELSE IF(Traders_Combat_Level &lt; 89)
+THEN 455
+
+ELSE IF(Traders_Combat_Level &lt; 90)
+THEN 460
+
+ELSE IF(Traders_Combat_Level &lt; 91)
+THEN 465
+
+ELSE IF(Traders_Combat_Level &lt; 92)
+THEN 470
+
+ELSE IF(Traders_Combat_Level &lt; 93)
+THEN 475
+
+ELSE IF(Traders_Combat_Level &lt; 94)
+THEN 480
+
+ELSE IF(Traders_Combat_Level &lt; 95)
+THEN 485
+
+ELSE IF(Traders_Combat_Level &lt; 96)
+THEN 490
+
+ELSE IF(Traders_Combat_Level &lt; 97)
+THEN 495
+
+ELSE IF(Traders_Combat_Level &lt; 98)
+THEN 500
+
+ELSE IF(Traders_Combat_Level &lt; 99)
+THEN 505
+ELSE 10000000000</eqn>
 			</aux>
 			<aux name="Bandits\nExp to reach\nfor levelUp">
 				<eqn>IF(Bandits_Combat_Level &lt; 1)
@@ -1050,24 +1196,6 @@ Dead_Traders_in_Goldford</eqn>
 			<aux name="Traders Dies\non way from\nGoldford">
 				<eqn>0</eqn>
 			</aux>
-			<aux name="Bandits Dies\non way to\nSlagtown">
-				<eqn>0</eqn>
-			</aux>
-			<aux name="Bandits Dies\non way from\nSlagtown" isee:display_name="Bandits Dies on way from Slagtown">
-				<eqn>0</eqn>
-			</aux>
-			<aux name="Bandits Dies\non way to\nGoldford">
-				<eqn>0</eqn>
-			</aux>
-			<aux name="Bandits Dies\non way from\nGoldford">
-				<eqn>0</eqn>
-			</aux>
-			<aux name="Bandits Dies\non way to\nCoalPeak">
-				<eqn>0</eqn>
-			</aux>
-			<aux name="Bandits Dies\non way from\nCoalPeak">
-				<eqn>0</eqn>
-			</aux>
 			<group name="Cotton - Bandits" run="false"/>
 			<group name="Gold - Bandits" run="false"/>
 			<aux name="Total\nBandits">
@@ -1198,9 +1326,55 @@ Traders_Arrival_in_CoalPeak</eqn>
 				<eqn>0</eqn>
 				<non_negative/>
 			</stock>
+			<flow name="Injured Traders\nhome from\nCoalPeak">
+				<eqn>PULSE(ROUND (Fight_from_CoalPeak * 0.4),  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Traders\nEntering\nCottonbog\nfrom CoalPeak">
+				<eqn>PULSE(Is_there_any_traders_in_CoalPeak_End *
+Traders_ready_to_leave_CoalPeak_End,  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="End trip\nback from\nCoalPeak">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Injured Traders\nto CoalPeak">
+				<eqn>PULSE(ROUND (Fight_to_CoalPeak * 0.4),  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Traders Dies on\nway home from\nCoalPeak">
+				<eqn>PULSE(ROUND (Fight_from_CoalPeak * 0.6),  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="End trip to\nCoalPeak">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Traders Dies\non way to\nCoalPeak">
+				<eqn>PULSE(ROUND (Fight_to_CoalPeak * 0.6),  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Start trip\nback from\nCoalpeak">
+				<eqn>PULSE(Traders_ready_to_leave_CoalPeak*Is_there_any_traders_in_CoalPeak,  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Start trip\nCoalPeak">
+				<eqn>Traders_travel_out_of_Cottonbog *
+CoalPeak_Activated</eqn>
+				<non_negative/>
+			</flow>
 			<stock name="Etterspørsel">
 				<eqn>0</eqn>
 				<non_negative/>
+			</stock>
+			<stock name="Leave\nCottonbog\nto CoalPeak">
+				<eqn>0</eqn>
+				<inflow>Start_trip_CoalPeak</inflow>
+				<outflow>End_trip_to_CoalPeak</outflow>
+				<conveyor>
+					<len>2</len>
+				</conveyor>
 			</stock>
 			<stock name='By kjøper av\n"Black Market"\nførst'>
 				<eqn>0</eqn>
@@ -1210,10 +1384,177 @@ Traders_Arrival_in_CoalPeak</eqn>
 				<eqn>0</eqn>
 				<non_negative/>
 			</stock>
+			<stock name="Dead\nTraders in\nCoalPeak">
+				<eqn>0</eqn>
+				<inflow>Traders_Dies_on_way_to_CoalPeak</inflow>
+				<inflow>Traders_Dies_on_way_home_from_CoalPeak</inflow>
+				<non_negative/>
+			</stock>
+			<stock name="Traders\nHome from\nCoalPeak">
+				<eqn>0</eqn>
+				<inflow>End_trip_back_from_CoalPeak</inflow>
+				<outflow>Traders_Dies_on_way_home_from_CoalPeak</outflow>
+				<outflow>Traders_Entering_Cottonbog_from_CoalPeak</outflow>
+				<outflow>Injured_Traders_home_from_CoalPeak</outflow>
+				<non_negative/>
+			</stock>
+			<stock name="Traders\nArrival in\nCoalPeak">
+				<eqn>0</eqn>
+				<inflow>End_trip_to_CoalPeak</inflow>
+				<outflow>Start_trip_back_from_Coalpeak</outflow>
+				<outflow>Traders_Dies_on_way_to_CoalPeak</outflow>
+				<outflow>Injured_Traders_to_CoalPeak</outflow>
+				<non_negative/>
+			</stock>
+			<stock name="Leave\nCoalPeak">
+				<eqn>0</eqn>
+				<inflow>Start_trip_back_from_Coalpeak</inflow>
+				<outflow>End_trip_back_from_CoalPeak</outflow>
+				<conveyor>
+					<len>2</len>
+				</conveyor>
+			</stock>
+			<aux name="Traders ready\nto leave\nCoalPeak\nEnd">
+				<eqn>Traders_Home_from_CoalPeak</eqn>
+			</aux>
+			<aux name="Are Bandits\npresent from\nCoalPeak?">
+				<eqn>IF(RANDOM(1,  Chance_of_Bandit_Raid_in_CoalPeak) &gt; Chance_of_Bandit_Raid_in_CoalPeak - 1)
+
+THEN 1
+ELSE 0</eqn>
+			</aux>
+			<aux name="Are Bandits\npresent in\nCoalPeak?">
+				<eqn>IF(RANDOM(1,  Chance_of_Bandit_Raid_in_CoalPeak) &gt; Chance_of_Bandit_Raid_in_CoalPeak - 1)
+
+THEN 1
+ELSE 0</eqn>
+			</aux>
+			<aux name="Fight to\nCoalPeak">
+				<eqn>(&quot;Are_Bandits_present_in_CoalPeak?&quot; *
+Traders_Arrival_in_CoalPeak) *
+
+Combat_Calculation_in_CoalPeak</eqn>
+			</aux>
+			<aux name="Fight from\nCoalPeak">
+				<eqn>(&quot;Are_Bandits_present_from_CoalPeak?&quot; *
+Traders_Home_from_CoalPeak) *
+
+Combat_Calculation_home_from_CoalPeak</eqn>
+			</aux>
+			<aux name="Gold gained\nafter trip from\nCoalPeak">
+				<eqn>Traders_Entering_Cottonbog_from_CoalPeak *
+Gold_from_CoalPeak</eqn>
+			</aux>
+			<aux name="Is there any\ntraders in\nCoalPeak\nEnd">
+				<eqn>Traders_Home_from_CoalPeak</eqn>
+				<gf type="discrete">
+					<xscale min="0" max="1"/>
+					<yscale min="0" max="1"/>
+					<ypts>0,1,1</ypts>
+				</gf>
+			</aux>
+			<aux name="Traders ready\nto leave\nCoalPeak">
+				<eqn>Traders_Arrival_in_CoalPeak</eqn>
+			</aux>
+			<aux name="Is there any\ntraders in\nCoalPeak">
+				<eqn>Traders_Arrival_in_CoalPeak</eqn>
+				<gf type="discrete">
+					<xscale min="0" max="1"/>
+					<yscale min="0" max="1"/>
+					<ypts>0,1,1</ypts>
+				</gf>
+			</aux>
+			<flow name="Bandit Adults\ndie in Combat">
+				<eqn>PULSE(ROUND(Total_Bandits_in_Combat * 0.4),  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Amount of Bandits\ndie in combat\nto CoalPeak">
+				<eqn>&quot;Did_Bandits_lose_in_CoalPeak?&quot; *
+Amount_of_Bandits_in_Raid_in_CoalPeak</eqn>
+			</aux>
+			<aux name="Amount of Bandits\ndie in combat\nfrom CoalPeak">
+				<eqn>0</eqn>
+			</aux>
+			<aux name="Amount of Bandits\ndie in combat\nto Slagtown">
+				<eqn>0</eqn>
+			</aux>
+			<aux name="Amount of Bandits\ndie in combat\nfrom Slagtown">
+				<eqn>0</eqn>
+			</aux>
+			<aux name="Amount of Bandits\ndie in combat\nto Goldford">
+				<eqn>0</eqn>
+			</aux>
+			<aux name="Amount of Bandits\ndie in combat\nfrom Goldford">
+				<eqn>0</eqn>
+			</aux>
+			<aux name="Amount of\nBandits in Raid\nin CoalPeak">
+				<eqn>ROUND(RANDOM(3,  5) * &quot;Are_there_enough_Bandits_to_Raid?&quot;)</eqn>
+			</aux>
+			<aux name="Amount of\nBandits in Raid\nfrom CoalPeak">
+				<eqn>ROUND(RANDOM(3,  5) *
+&quot;Are_there_enough_Bandits_to_Raid?&quot;)</eqn>
+			</aux>
+			<aux name="Did Bandits lose\nin CoalPeak?">
+				<eqn>IF(Fight_to_CoalPeak &lt;= 0)
+
+THEN 1
+ELSE 0</eqn>
+			</aux>
+			<aux name="Are there enough\nBandits to\nRaid?">
+				<eqn>IF(Bandit_Adult_Raiders &gt; 5)
+
+THEN 1
+ELSE 0</eqn>
+			</aux>
+			<stock name="Bandit\nHospitalized">
+				<eqn>0</eqn>
+				<inflow>Injured_Bandits_In_hospital</inflow>
+				<outflow>Injured_Bandits_out_from_hospital</outflow>
+				<conveyor>
+					<len>26</len>
+				</conveyor>
+			</stock>
+			<flow name="Injured Bandits\nIn hospital">
+				<eqn>Bandit_Adults_in_Hospital</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Injured Bandits out\nfrom hospital">
+				<eqn>0</eqn>
+				<non_negative/>
+			</flow>
+			<flow name="Bandit Adults\nin Hospital">
+				<eqn>PULSE(ROUND(Total_Bandits_in_Combat * 0.6),  0,  1)</eqn>
+				<non_negative/>
+			</flow>
+			<aux name="Total Bandits\nin Combat">
+				<eqn>Amount_of_Bandits_die_in_combat_to_CoalPeak +
+Amount_of_Bandits_die_in_combat_from_CoalPeak +
+Amount_of_Bandits_die_in_combat_to_Slagtown +
+Amount_of_Bandits_die_in_combat_from_Slagtown +
+Amount_of_Bandits_die_in_combat_to_Goldford +
+Amount_of_Bandits_die_in_combat_from_Goldford</eqn>
+			</aux>
+			<flow name="Bandits rehabilitated">
+				<eqn>Injured_Bandits_out_from_hospital</eqn>
+				<non_negative/>
+			</flow>
+			<stock name="Childeren\nto become\nBandits">
+				<eqn>0</eqn>
+				<inflow>Bandit_childs_become_Raiders</inflow>
+				<outflow>Childs_become_Bandits</outflow>
+				<non_negative/>
+			</stock>
+			<flow name="Childs become\nBandits">
+				<eqn>IF(Childeren_to_become_Bandits &gt;= 1)
+
+THEN PULSE(ROUND(Childeren_to_become_Bandits),  0,  1)
+ELSE 0</eqn>
+				<non_negative/>
+			</flow>
 			<isee:dependencies>
 				<var name="Traders_arrive_in_Cottonbog">
-					<in>Traders_Entering_Cottonbog_from_CoalPeak</in>
 					<in>Child_becomes_Trader</in>
+					<in>Traders_Entering_Cottonbog_from_CoalPeak</in>
 				</var>
 				<var name="Traders_travel_out_of_Cottonbog">
 					<in>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</in>
@@ -1268,56 +1609,6 @@ Traders_Arrival_in_CoalPeak</eqn>
 					<in>Cotton_in_Cottonbog</in>
 					<in>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</in>
 				</var>
-				<var name="Traders_Entering_Cottonbog_from_CoalPeak">
-					<in>Traders_ready_to_leave_CoalPeak_End</in>
-					<in>Is_there_any_traders_in_CoalPeak_End</in>
-				</var>
-				<var name="Traders_Dies_on_way_home_from_CoalPeak">
-					<in>Fight_from_CoalPeak</in>
-				</var>
-				<var name="bandit_Dies_on_way_to_CoalPeak">
-					<in>Fight_to_CoalPeak</in>
-				</var>
-				<var name="Start_trip_back_from_Coalpeak">
-					<in>Traders_ready_to_leave_CoalPeak</in>
-					<in>Is_there_any_traders_in_CoalPeak</in>
-				</var>
-				<var name="Start_trip_CoalPeak">
-					<in>CoalPeak_Activated</in>
-					<in>Traders_travel_out_of_Cottonbog</in>
-				</var>
-				<var name="Traders_ready_to_leave_CoalPeak_End">
-					<in>Traders_Home_from_CoalPeak</in>
-				</var>
-				<var name='"Are_Bandits_present_from_CoalPeak?"'>
-					<in>Chance_of_Bandit_Raid_in_CoalPeak</in>
-				</var>
-				<var name='"Are_Bandits_present_in_CoalPeak?"'>
-					<in>Chance_of_Bandit_Raid_in_CoalPeak</in>
-				</var>
-				<var name="Fight_to_CoalPeak">
-					<in>Traders_Arrival_in_CoalPeak</in>
-					<in>&quot;Are_Bandits_present_in_CoalPeak?&quot;</in>
-					<in>Combat_Calculation_in_CoalPeak</in>
-				</var>
-				<var name="Fight_from_CoalPeak">
-					<in>Traders_Home_from_CoalPeak</in>
-					<in>&quot;Are_Bandits_present_from_CoalPeak?&quot;</in>
-					<in>Combat_Calculation_home_from_CoalPeak</in>
-				</var>
-				<var name="Gold_gained_after_trip_from_CoalPeak">
-					<in>Traders_Entering_Cottonbog_from_CoalPeak</in>
-					<in>Gold_from_CoalPeak</in>
-				</var>
-				<var name="Is_there_any_traders_in_CoalPeak_End">
-					<in>Traders_Home_from_CoalPeak</in>
-				</var>
-				<var name="Traders_ready_to_leave_CoalPeak">
-					<in>Traders_Arrival_in_CoalPeak</in>
-				</var>
-				<var name="Is_there_any_traders_in_CoalPeak">
-					<in>Traders_Arrival_in_CoalPeak</in>
-				</var>
 				<var name="Bandits_Dice_in_CoalPeak">
 					<in>Bandits_Combat_Level</in>
 				</var>
@@ -1328,11 +1619,13 @@ Traders_Arrival_in_CoalPeak</eqn>
 					<in>Bandits_Dice_in_CoalPeak</in>
 					<in>Traders_Dice_in_CoalPeak</in>
 					<in>Traders_Arrival_in_CoalPeak</in>
+					<in>Amount_of_Bandits_in_Raid_in_CoalPeak</in>
 				</var>
 				<var name="Combat_Calculation_home_from_CoalPeak">
 					<in>Traders_Dice_home_from_CoalPeak</in>
 					<in>Bandits_Dice_home_from_CoalPeak</in>
 					<in>Traders_Home_from_CoalPeak</in>
+					<in>Amount_of_Bandits_in_Raid_from_CoalPeak</in>
 				</var>
 				<var name="Bandits_Dice_home_from_CoalPeak">
 					<in>Bandits_Combat_Level</in>
@@ -1340,15 +1633,9 @@ Traders_Arrival_in_CoalPeak</eqn>
 				<var name="Traders_Dice_home_from_CoalPeak">
 					<in>Traders_Combat_Level</in>
 				</var>
-				<var name="Injured_Traders_to_CoalPeak">
-					<in>Fight_to_CoalPeak</in>
-				</var>
 				<var name="Injured_Traders_In_hospital">
 					<in>Injured_Traders_to_CoalPeak</in>
 					<in>Injured_Traders_home_from_CoalPeak</in>
-				</var>
-				<var name="Injured_Traders_home_from_CoalPeak">
-					<in>Fight_from_CoalPeak</in>
 				</var>
 				<var name="Bandits_LevelUp">
 					<in>Bendit_LevelUp_Check</in>
@@ -1365,24 +1652,19 @@ Traders_Arrival_in_CoalPeak</eqn>
 					<in>Bandits_Exp_to_reach_for_levelUp</in>
 				</var>
 				<var name="Bandit_Exp_In">
-					<in>bandit_Dies_on_way_to_CoalPeak</in>
-					<in>Traders_Dies_on_way_home_from_CoalPeak</in>
 					<in>Traders_Dies_on_way_to_Slagtown</in>
 					<in>Traders_Dies_on_way_from_Slagtown</in>
 					<in>Traders_Dies_on_way_to_Goldford</in>
 					<in>Traders_Dies_on_way_from_Goldford</in>
+					<in>Traders_Dies_on_way_home_from_CoalPeak</in>
+					<in>Traders_Dies_on_way_to_CoalPeak</in>
 				</var>
 				<var name="Bandit_Exp_out">
 					<in>Bendit_LevelUp_Check</in>
 					<in>Bandit_Exp</in>
 				</var>
 				<var name="Traders_Exp_in">
-					<in>Bandits_Dies_on_way_to_CoalPeak</in>
-					<in>Bandits_Dies_on_way_from_CoalPeak</in>
-					<in>Bandits_Dies_on_way_to_Slagtown</in>
-					<in>Bandits_Dies_on_way_from_Slagtown</in>
-					<in>Bandits_Dies_on_way_to_Goldford</in>
-					<in>Bandits_Dies_on_way_from_Goldford</in>
+					<in>Bandit_Adults_die_in_Combat</in>
 				</var>
 				<var name="Traders_Exp_Out">
 					<in>Traders_Exp</in>
@@ -1406,10 +1688,10 @@ Traders_Arrival_in_CoalPeak</eqn>
 				</var>
 				<var name="Total_dead_Adults_in_Cottonbog">
 					<in>Dead_Adult_Field_Workers_Cottonbog</in>
-					<in>Dead_Traders_in_CoalPeak</in>
 					<in>Dead_Adult_Inhabitants_Cottonbog</in>
 					<in>Dead_Traders_in_Slagtown</in>
 					<in>Dead_Traders_in_Goldford</in>
+					<in>Dead_Traders_in_CoalPeak</in>
 				</var>
 				<var name="Total_Bandits">
 					<in>Bandit_Childs</in>
@@ -1458,6 +1740,101 @@ Traders_Arrival_in_CoalPeak</eqn>
 					<in>Leave_Cottonbog_to_CoalPeak</in>
 					<in>Leave_CoalPeak</in>
 				</var>
+				<var name="Injured_Traders_home_from_CoalPeak">
+					<in>Fight_from_CoalPeak</in>
+				</var>
+				<var name="Traders_Entering_Cottonbog_from_CoalPeak">
+					<in>Traders_ready_to_leave_CoalPeak_End</in>
+					<in>Is_there_any_traders_in_CoalPeak_End</in>
+				</var>
+				<var name="Injured_Traders_to_CoalPeak">
+					<in>Fight_to_CoalPeak</in>
+				</var>
+				<var name="Traders_Dies_on_way_home_from_CoalPeak">
+					<in>Fight_from_CoalPeak</in>
+				</var>
+				<var name="Traders_Dies_on_way_to_CoalPeak">
+					<in>Fight_to_CoalPeak</in>
+				</var>
+				<var name="Start_trip_back_from_Coalpeak">
+					<in>Traders_ready_to_leave_CoalPeak</in>
+					<in>Is_there_any_traders_in_CoalPeak</in>
+				</var>
+				<var name="Start_trip_CoalPeak">
+					<in>CoalPeak_Activated</in>
+					<in>Traders_travel_out_of_Cottonbog</in>
+				</var>
+				<var name="Traders_ready_to_leave_CoalPeak_End">
+					<in>Traders_Home_from_CoalPeak</in>
+				</var>
+				<var name='"Are_Bandits_present_from_CoalPeak?"'>
+					<in>Chance_of_Bandit_Raid_in_CoalPeak</in>
+				</var>
+				<var name='"Are_Bandits_present_in_CoalPeak?"'>
+					<in>Chance_of_Bandit_Raid_in_CoalPeak</in>
+				</var>
+				<var name="Fight_to_CoalPeak">
+					<in>Traders_Arrival_in_CoalPeak</in>
+					<in>&quot;Are_Bandits_present_in_CoalPeak?&quot;</in>
+					<in>Combat_Calculation_in_CoalPeak</in>
+				</var>
+				<var name="Fight_from_CoalPeak">
+					<in>Traders_Home_from_CoalPeak</in>
+					<in>&quot;Are_Bandits_present_from_CoalPeak?&quot;</in>
+					<in>Combat_Calculation_home_from_CoalPeak</in>
+				</var>
+				<var name="Gold_gained_after_trip_from_CoalPeak">
+					<in>Traders_Entering_Cottonbog_from_CoalPeak</in>
+					<in>Gold_from_CoalPeak</in>
+				</var>
+				<var name="Is_there_any_traders_in_CoalPeak_End">
+					<in>Traders_Home_from_CoalPeak</in>
+				</var>
+				<var name="Traders_ready_to_leave_CoalPeak">
+					<in>Traders_Arrival_in_CoalPeak</in>
+				</var>
+				<var name="Is_there_any_traders_in_CoalPeak">
+					<in>Traders_Arrival_in_CoalPeak</in>
+				</var>
+				<var name="Bandit_Adults_die_in_Combat">
+					<in>Total_Bandits_in_Combat</in>
+				</var>
+				<var name="Amount_of_Bandits_die_in_combat_to_CoalPeak">
+					<in>&quot;Did_Bandits_lose_in_CoalPeak?&quot;</in>
+					<in>Amount_of_Bandits_in_Raid_in_CoalPeak</in>
+				</var>
+				<var name="Amount_of_Bandits_in_Raid_in_CoalPeak">
+					<in>&quot;Are_there_enough_Bandits_to_Raid?&quot;</in>
+				</var>
+				<var name="Amount_of_Bandits_in_Raid_from_CoalPeak">
+					<in>&quot;Are_there_enough_Bandits_to_Raid?&quot;</in>
+				</var>
+				<var name='"Did_Bandits_lose_in_CoalPeak?"'>
+					<in>Fight_to_CoalPeak</in>
+				</var>
+				<var name='"Are_there_enough_Bandits_to_Raid?"'>
+					<in>Bandit_Adult_Raiders</in>
+				</var>
+				<var name="Injured_Bandits_In_hospital">
+					<in>Bandit_Adults_in_Hospital</in>
+				</var>
+				<var name="Bandit_Adults_in_Hospital">
+					<in>Total_Bandits_in_Combat</in>
+				</var>
+				<var name="Total_Bandits_in_Combat">
+					<in>Amount_of_Bandits_die_in_combat_to_CoalPeak</in>
+					<in>Amount_of_Bandits_die_in_combat_from_CoalPeak</in>
+					<in>Amount_of_Bandits_die_in_combat_to_Slagtown</in>
+					<in>Amount_of_Bandits_die_in_combat_from_Slagtown</in>
+					<in>Amount_of_Bandits_die_in_combat_to_Goldford</in>
+					<in>Amount_of_Bandits_die_in_combat_from_Goldford</in>
+				</var>
+				<var name="Bandits_rehabilitated">
+					<in>Injured_Bandits_out_from_hospital</in>
+				</var>
+				<var name="Childs_become_Bandits">
+					<in>Childeren_to_become_Bandits</in>
+				</var>
 			</isee:dependencies>
 		</variables>
 		<views>
@@ -1500,7 +1877,7 @@ Traders_Arrival_in_CoalPeak</eqn>
 				<isee:spatial_map color="black" background="white" font_size="12pt"/>
 				<isee:animation_object color="black" background="white" font_size="12pt"/>
 			</style>
-			<view isee:show_pages="false" page_width="1292" page_height="992" isee:page_cols="8" isee:page_rows="4" zoom="40" isee:popup_graphs_are_comparative="true" type="stock_flow">
+			<view isee:show_pages="false" page_width="1292" page_height="992" isee:page_cols="8" isee:page_rows="4" isee:scroll_x="1074" isee:scroll_y="1793" isee:popup_graphs_are_comparative="true" type="stock_flow">
 				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
 					<stock color="blue" background="white" font_color="blue" font_size="9pt" label_side="top">
 						<shape type="rectangle" width="45" height="35"/>
@@ -1572,60 +1949,60 @@ Traders_Arrival_in_CoalPeak</eqn>
 					<item uid="9"/>
 					<item uid="10"/>
 				</group>
-				<stock label_side="center" x="2322.38" y="1942.95" name="Cotton in\nCottonbog"/>
-				<flow x="2238.74" y="1941.28" name="Cotton into\nCottonbog">
+				<stock label_side="center" x="3207.38" y="1950.45" name="Cotton in\nCottonbog"/>
+				<flow x="3123.74" y="1948.78" name="Cotton into\nCottonbog">
 					<pts>
-						<pt x="2177.6" y="1941.28"/>
-						<pt x="2299.88" y="1941.28"/>
+						<pt x="3062.6" y="1948.78"/>
+						<pt x="3184.88" y="1948.78"/>
 					</pts>
 				</flow>
-				<flow x="2394.49" y="1932.25" width="18" height="18" name="Cotton out\nfrom Cottonbog">
+				<flow x="3279.49" y="1939.75" width="18" height="18" name="Cotton out\nfrom Cottonbog">
 					<pts>
-						<pt x="2344.88" y="1941.25"/>
-						<pt x="2486.09" y="1941.25"/>
+						<pt x="3229.88" y="1948.75"/>
+						<pt x="3371.09" y="1948.75"/>
 					</pts>
 				</flow>
-				<aux label_side="bottom" x="2207.24" y="2032.21" name="Harvest\nCotton per\nField worker"/>
+				<aux label_side="bottom" x="3092.24" y="2039.71" name="Harvest\nCotton per\nField worker"/>
 				<connector uid="11" angle="70.8925">
 					<from>Harvest_Cotton_per_Field_worker</from>
 					<to>Cotton_into_Cottonbog</to>
 				</connector>
-				<aux x="2403.49" y="2032.21" name="Cotton/Trader"/>
+				<aux x="3288.49" y="2039.71" name="Cotton/Trader"/>
 				<connector uid="12" angle="90">
 					<from>&quot;Cotton/Trader&quot;</from>
 					<to>Cotton_out_from_Cottonbog</to>
 				</connector>
-				<aux label_side="top" x="2322.38" y="2032.21" name="Cotton per\nCaravan"/>
+				<aux label_side="top" x="3207.38" y="2039.71" name="Cotton per\nCaravan"/>
 				<connector uid="13" angle="0">
 					<from>Cotton_per_Caravan</from>
 					<to>&quot;Cotton/Trader&quot;</to>
 				</connector>
-				<group locked="true" x="2119.51" y="1795.95" width="414.137" height="498.464" name="Cotton - Cottonbog">
+				<group locked="true" x="3004.51" y="1803.45" width="414.137" height="498.464" name="Cotton - Cottonbog">
 					<item uid="14"/>
 					<item uid="15"/>
 					<item uid="16"/>
 					<item uid="17"/>
 				</group>
-				<stock label_side="center" x="2265.51" y="2516.25" width="45" height="35" name="Gold in\nCottonbog"/>
-				<flow x="2198.19" y="2526" width="18" height="18" name="Gold in\nto Cottonbog">
+				<stock label_side="center" x="3150.51" y="2523.75" width="45" height="35" name="Gold in\nCottonbog"/>
+				<flow x="3083.19" y="2533.5" width="18" height="18" name="Gold in\nto Cottonbog">
 					<pts>
-						<pt x="2148.88" y="2535"/>
-						<pt x="2265.51" y="2535"/>
+						<pt x="3033.88" y="2542.5"/>
+						<pt x="3150.51" y="2542.5"/>
 					</pts>
 				</flow>
-				<flow x="2357.69" y="2535" name="Gold out\nfrom Cottonbog">
+				<flow x="3242.69" y="2542.5" name="Gold out\nfrom Cottonbog">
 					<pts>
-						<pt x="2310.51" y="2535"/>
-						<pt x="2428.88" y="2535"/>
+						<pt x="3195.51" y="2542.5"/>
+						<pt x="3313.88" y="2542.5"/>
 					</pts>
 				</flow>
-				<aux label_side="bottom" x="2357.69" y="2450.46" name="Weekly Expences\nfor cittezen"/>
+				<aux label_side="bottom" x="3242.69" y="2457.96" name="Weekly Expences\nfor cittezen"/>
 				<connector uid="18" angle="270">
 					<from>Weekly_Expences_for_cittezen</from>
 					<to>Gold_out_from_Cottonbog</to>
 				</connector>
-				<aux label_side="bottom" x="208.696" y="63.8571" name="Chance of\nBandit Raid in\nCoalPeak"/>
-				<group locked="true" x="2119.26" y="2354.82" width="340" height="438.931" name="Gold - Cottonbog">
+				<aux label_side="bottom" x="206.196" y="77.1905" name="Chance of\nBandit Raid in\nCoalPeak"/>
+				<group locked="true" x="3004.26" y="2362.32" width="340" height="438.931" name="Gold - Cottonbog">
 					<item uid="19"/>
 					<item uid="20"/>
 					<item uid="21"/>
@@ -1676,8 +2053,8 @@ Traders_Arrival_in_CoalPeak</eqn>
 						<pt x="1185.27" y="2280.48"/>
 					</pts>
 				</flow>
-				<aux label_side="top" x="1067.58" y="1958.86" name="Fertil\nCitizens in\nCottonbog"/>
-				<connector uid="24" angle="224.467">
+				<aux label_side="top" x="1067.58" y="1960.85" name="Fertil\nCitizens in\nCottonbog"/>
+				<connector uid="24" angle="224.155">
 					<from>Fertil_Citizens_in_Cottonbog</from>
 					<to>Birth_of_children_in_Cottonbog</to>
 				</connector>
@@ -1696,12 +2073,12 @@ Traders_Arrival_in_CoalPeak</eqn>
 						<pt x="903.348" y="1960.85"/>
 					</pts>
 				</flow>
-				<aux x="2322.38" y="1871" name="Is there cotton\nto trade?"/>
+				<aux x="3207.38" y="1878.5" name="Is there cotton\nto trade?"/>
 				<connector uid="26" angle="90">
 					<from>Cotton_in_Cottonbog</from>
 					<to>&quot;Is_there_cotton_to_trade?&quot;</to>
 				</connector>
-				<aux label_side="top" x="2419.08" y="2450.46" name="Gold per\nCitizen\nper week"/>
+				<aux label_side="top" x="3304.08" y="2457.96" name="Gold per\nCitizen\nper week"/>
 				<connector uid="27" angle="270">
 					<from>
 						<alias uid="21"/>
@@ -1712,7 +2089,7 @@ Traders_Arrival_in_CoalPeak</eqn>
 					<from>Gold_per_Citizen_per_week</from>
 					<to>Weekly_Expences_for_cittezen</to>
 				</connector>
-				<alias font_style="italic" uid="29" x="50.034" y="54.8571" width="18" height="18">
+				<alias font_style="italic" uid="29" x="47.534" y="68.1905" width="18" height="18">
 					<of>CoalPeak_Activated</of>
 				</alias>
 				<alias font_style="italic" uid="30" x="45.2813" y="233.519" width="45" height="35">
@@ -1721,7 +2098,7 @@ Traders_Arrival_in_CoalPeak</eqn>
 				<alias font_style="italic" uid="23" x="45.2813" y="327.995" width="45" height="35">
 					<of>Adult_Field_Workers_in_Cottonbog</of>
 				</alias>
-				<alias color="black" font_style="italic" font_color="black" label_side="top" uid="21" x="2348.69" y="2395.46" width="18" height="18">
+				<alias color="black" font_style="italic" font_color="black" label_side="top" uid="21" x="3233.69" y="2402.96" width="18" height="18">
 					<of>Total_citizen_in_Cottonbog</of>
 				</alias>
 				<flow label_side="bottom" x="1097.47" y="2043.21" name="Childs become\nAdults Inhabitants\nin Cottonbog">
@@ -1746,7 +2123,7 @@ Traders_Arrival_in_CoalPeak</eqn>
 						<pt x="1184.17" y="1880.05"/>
 					</pts>
 				</flow>
-				<alias color="black" font_style="italic" font_color="black" label_side="top" uid="17" x="2216.24" y="1853.5" width="45" height="35">
+				<alias color="black" font_style="italic" font_color="black" label_side="top" uid="17" x="3101.24" y="1861" width="45" height="35">
 					<of>Adult_Field_Workers_in_Cottonbog</of>
 				</alias>
 				<connector uid="31" angle="270">
@@ -1755,7 +2132,7 @@ Traders_Arrival_in_CoalPeak</eqn>
 					</from>
 					<to>Cotton_into_Cottonbog</to>
 				</connector>
-				<connector uid="32" angle="144.381">
+				<connector uid="32" angle="145.027">
 					<from>Adult_Inhabitants_in_Cottonbog</from>
 					<to>Fertil_Citizens_in_Cottonbog</to>
 				</connector>
@@ -1769,260 +2146,58 @@ Traders_Arrival_in_CoalPeak</eqn>
 					</from>
 					<to>Total_citizen_in_Cottonbog</to>
 				</connector>
-				<group locked="true" x="740.309" y="1799.64" width="707.857" height="992.905" name="Populasjonsdynamikk - Cottonbog">
+				<group locked="true" x="740.309" y="1799.64" width="707.857" height="1046.79" name="Populasjonsdynamikk - Cottonbog">
 					<item uid="35"/>
 					<item uid="36"/>
 					<item uid="37"/>
 					<item uid="38"/>
 					<item uid="39"/>
 				</group>
-				<aux label_side="bottom" x="2263.11" y="2032.21" name="Season\nharvest\nVariation"/>
+				<aux label_side="bottom" x="3148.11" y="2039.71" name="Season\nharvest\nVariation"/>
 				<connector uid="40" angle="105.006">
 					<from>Season_harvest_Variation</from>
 					<to>Cotton_into_Cottonbog</to>
 				</connector>
-				<flow x="1103.33" y="602.654" name="Traders\nEntering\nCottonbog\nfrom CoalPeak">
-					<pts>
-						<pt x="1103.33" y="502.975"/>
-						<pt x="1103.33" y="723.333"/>
-					</pts>
-				</flow>
-				<flow label_side="top" x="1424.29" y="264.962" name="Traders Dies on\nway home from\nCoalPeak">
-					<pts>
-						<pt x="1102.15" y="467.975"/>
-						<pt x="1102.15" y="264.962"/>
-						<pt x="1746.43" y="264.962"/>
-						<pt x="1746.43" y="353.581"/>
-					</pts>
-				</flow>
-				<flow label_side="bottom" x="1468.7" y="556.786" name="End trip to\nCoalPeak">
-					<pts>
-						<pt x="1364.19" y="556.786"/>
-						<pt x="1573.21" y="556.786"/>
-						<pt x="1573.21" y="504.76"/>
-					</pts>
-				</flow>
-				<flow label_side="center" x="1209.17" y="410.093" width="18" height="18" name="End trip\nback from\nCoalPeak">
-					<pts>
-						<pt x="1319.19" y="419.093"/>
-						<pt x="1117.15" y="419.093"/>
-						<pt x="1117.15" y="467.975"/>
-					</pts>
-				</flow>
-				<flow label_side="top" x="1671.63" y="472.01" name="bandit Dies\non way to\nCoalPeak">
-					<pts>
-						<pt x="1596.12" y="472.01"/>
-						<pt x="1747.15" y="472.01"/>
-						<pt x="1747.15" y="388.581"/>
-					</pts>
-				</flow>
-				<flow label_side="center" x="1466.9" y="409.272" width="18" height="18" name="Start trip\nback from\nCoalpeak">
-					<pts>
-						<pt x="1575.6" y="469.76"/>
-						<pt x="1575.6" y="418.272"/>
-						<pt x="1364.19" y="418.272"/>
-					</pts>
-				</flow>
-				<flow label_side="bottom" x="1341.67" y="646.868" name="Start trip\nCoalPeak">
-					<pts>
-						<pt x="1341.67" y="720"/>
-						<pt x="1341.67" y="573.736"/>
-					</pts>
-				</flow>
-				<stock label_side="center" x="1746.43" y="371.081" name="Dead\nTraders in\nCoalPeak"/>
-				<stock label_side="center" x="1081.19" y="467.975" width="45" height="35" name="Traders\nHome from\nCoalPeak"/>
-				<stock label_side="center" x="1573.62" y="487.26" name="Traders\nArrival in\nCoalPeak"/>
-				<stock label_side="center" x="1341.69" y="419.093" name="Leave\nCoalPeak"/>
-				<stock label_side="top" x="1341.69" y="556.236" name="Leave\nCottonbog\nto CoalPeak"/>
-				<aux x="1029.99" y="511.975" name="Traders ready\nto leave\nCoalPeak\nEnd"/>
-				<connector uid="41" angle="308.966">
-					<from>Traders_ready_to_leave_CoalPeak_End</from>
-					<to>Traders_Entering_Cottonbog_from_CoalPeak</to>
-				</connector>
-				<connector uid="42" angle="199.776">
-					<from>Traders_Home_from_CoalPeak</from>
-					<to>Traders_ready_to_leave_CoalPeak_End</to>
-				</connector>
-				<aux color="black" font_color="black" label_side="top" x="894.503" y="319.688" name="Are Bandits\npresent from\nCoalPeak?"/>
-				<aux color="black" font_color="black" label_side="bottom" x="1573.62" y="661.717" name="Are Bandits\npresent in\nCoalPeak?"/>
-				<aux x="1573.62" y="584.529" name="Fight to\nCoalPeak"/>
-				<connector uid="43" angle="48.942">
-					<from>Fight_to_CoalPeak</from>
-					<to>bandit_Dies_on_way_to_CoalPeak</to>
-				</connector>
-				<connector uid="44" angle="235.37">
-					<from>Traders_Arrival_in_CoalPeak</from>
-					<to>Fight_to_CoalPeak</to>
-				</connector>
-				<connector uid="45" angle="90">
-					<from>&quot;Are_Bandits_present_in_CoalPeak?&quot;</from>
-					<to>Fight_to_CoalPeak</to>
-				</connector>
-				<aux x="964.026" y="319.688" name="Fight from\nCoalPeak"/>
-				<connector uid="46" angle="6.78073">
-					<from>Fight_from_CoalPeak</from>
-					<to>Traders_Dies_on_way_home_from_CoalPeak</to>
-				</connector>
-				<connector uid="47" angle="130.112">
-					<from>Traders_Home_from_CoalPeak</from>
-					<to>Fight_from_CoalPeak</to>
-				</connector>
-				<connector uid="48" angle="0">
-					<from>&quot;Are_Bandits_present_from_CoalPeak?&quot;</from>
-					<to>Fight_from_CoalPeak</to>
-				</connector>
-				<aux x="1020.99" y="593.654" width="18" height="18" name="Gold gained\nafter trip from\nCoalPeak"/>
-				<connector uid="49" angle="180">
-					<from>Traders_Entering_Cottonbog_from_CoalPeak</from>
-					<to>Gold_gained_after_trip_from_CoalPeak</to>
-				</connector>
-				<aux x="1180.84" y="511.975" name="Is there any\ntraders in\nCoalPeak\nEnd"/>
-				<connector uid="50" angle="229.48">
-					<from>Is_there_any_traders_in_CoalPeak_End</from>
-					<to>Traders_Entering_Cottonbog_from_CoalPeak</to>
-				</connector>
-				<connector uid="51" angle="341.042">
-					<from>Traders_Home_from_CoalPeak</from>
-					<to>Is_there_any_traders_in_CoalPeak_End</to>
-				</connector>
-				<aux color="blue" label_side="bottom" x="1475.9" y="487.26" name="Traders ready\nto leave\nCoalPeak"/>
-				<connector uid="52" angle="150.209">
-					<from>Traders_ready_to_leave_CoalPeak</from>
-					<to>Start_trip_back_from_Coalpeak</to>
-				</connector>
-				<connector uid="53" angle="180">
-					<from>Traders_Arrival_in_CoalPeak</from>
-					<to>Traders_ready_to_leave_CoalPeak</to>
-				</connector>
-				<aux color="blue" label_side="top" x="1475.9" y="350.188" name="Is there any\ntraders in\nCoalPeak"/>
-				<connector uid="54" angle="270">
-					<from>Is_there_any_traders_in_CoalPeak</from>
-					<to>Start_trip_back_from_Coalpeak</to>
-				</connector>
-				<connector uid="55" angle="125.487">
-					<from>Traders_Arrival_in_CoalPeak</from>
-					<to>Is_there_any_traders_in_CoalPeak</to>
-				</connector>
-				<alias color="black" font_style="italic" font_color="black" label_side="top" uid="56" x="815.503" y="310.688" width="18" height="18">
-					<of>Chance_of_Bandit_Raid_in_CoalPeak</of>
-				</alias>
-				<connector uid="57" angle="0">
-					<from>
-						<alias uid="56"/>
-					</from>
-					<to>&quot;Are_Bandits_present_from_CoalPeak?&quot;</to>
-				</connector>
-				<alias font_style="italic" uid="10" x="410.306" y="370.679" width="18" height="18">
-					<of>Traders_Entering_Cottonbog_from_CoalPeak</of>
-				</alias>
-				<connector uid="58" angle="90">
-					<from>
-						<alias uid="10"/>
-					</from>
-					<to>Traders_arrive_in_Cottonbog</to>
-				</connector>
-				<alias font_style="italic" label_side="top" uid="20" x="2198.19" y="2441.46" width="18" height="18">
-					<of>Gold_gained_after_trip_from_CoalPeak</of>
-				</alias>
-				<connector uid="59" angle="270">
-					<from>
-						<alias uid="20"/>
-					</from>
-					<to>Gold_in_to_Cottonbog</to>
-				</connector>
-				<alias font_style="italic" label_side="top" uid="60" x="1401.46" y="655.868" width="18" height="18">
-					<of>CoalPeak_Activated</of>
-				</alias>
-				<connector uid="61" angle="165.336">
-					<from>
-						<alias uid="60"/>
-					</from>
-					<to>Start_trip_CoalPeak</to>
-				</connector>
-				<alias font_style="italic" label_side="top" uid="62" x="1257.17" y="655.868" width="18" height="18">
-					<of>Traders_travel_out_of_Cottonbog</of>
-				</alias>
-				<connector uid="63" angle="13.4101">
-					<from>
-						<alias uid="62"/>
-					</from>
-					<to>Start_trip_CoalPeak</to>
-				</connector>
-				<alias color="black" font_style="italic" font_color="black" uid="64" x="1484.9" y="652.717" width="18" height="18">
-					<of>Chance_of_Bandit_Raid_in_CoalPeak</of>
-				</alias>
-				<connector uid="65" angle="0">
-					<from>
-						<alias uid="64"/>
-					</from>
-					<to>&quot;Are_Bandits_present_in_CoalPeak?&quot;</to>
-				</connector>
-				<aux color="black" font_color="black" x="1700.93" y="2110.66" name="Bandits Dice\nin CoalPeak"/>
-				<aux color="#DD8100" font_color="#DD8100" x="1700.93" y="2259.69" name="Traders Dice\nin CoalPeak"/>
-				<stock color="black" font_color="black" label_side="center" x="1667.43" y="2003.82" width="348" height="50" name="Bandits\nCombat Level"/>
-				<connector uid="66" angle="210.222">
+				<aux color="black" font_color="black" x="1748.15" y="2102.05" name="Bandits Dice\nin CoalPeak"/>
+				<aux color="#DD8100" font_color="#DD8100" x="1748.15" y="2251.08" name="Traders Dice\nin CoalPeak"/>
+				<stock color="black" font_color="black" label_side="center" x="1734.93" y="2001.32" width="1012.33" height="45.3333" name="Bandits\nCombat Level"/>
+				<connector uid="41" angle="182.62">
 					<from>Bandits_Combat_Level</from>
 					<to>Bandits_Dice_in_CoalPeak</to>
 				</connector>
-				<stock color="#DD8100" background="white" font_color="#DD8100" label_side="center" x="1662.57" y="2321.86" width="352" height="41" name="Traders\nCombat Level"/>
-				<connector uid="67" angle="149.012">
+				<stock color="#DD8100" background="white" font_color="#DD8100" label_side="center" x="1730.07" y="2312.69" width="1018.67" height="48" name="Traders\nCombat Level"/>
+				<connector uid="42" angle="177.221">
 					<from>Traders_Combat_Level</from>
 					<to>Traders_Dice_in_CoalPeak</to>
 				</connector>
-				<aux x="1700.93" y="2176.55" name="Combat\nCalculation\nin CoalPeak"/>
-				<connector uid="68" angle="270">
+				<aux x="1748.15" y="2167.93" name="Combat\nCalculation\nin CoalPeak"/>
+				<connector uid="43" angle="270">
 					<from>Bandits_Dice_in_CoalPeak</from>
 					<to>Combat_Calculation_in_CoalPeak</to>
 				</connector>
-				<connector uid="69" angle="90">
+				<connector uid="44" angle="90">
 					<from>Traders_Dice_in_CoalPeak</from>
 					<to>Combat_Calculation_in_CoalPeak</to>
 				</connector>
-				<alias color="#DD8100" font_style="italic" font_color="#DD8100" label_side="center" uid="70" x="1761.24" y="2151.27" width="62.2222" height="50.5556">
-					<of>Traders_Arrival_in_CoalPeak</of>
-				</alias>
-				<connector uid="71" angle="180">
-					<from>
-						<alias uid="70"/>
-					</from>
-					<to>Combat_Calculation_in_CoalPeak</to>
-				</connector>
-				<aux x="1980.93" y="2176.55" name="Combat\nCalculation\nhome from\nCoalPeak"/>
-				<alias color="#DD8100" font_style="italic" font_color="#DD8100" label_side="center" uid="72" x="1856.7" y="2151.27" width="60.5556" height="50.5556">
-					<of>Traders_Home_from_CoalPeak</of>
-				</alias>
-				<aux color="black" font_color="black" x="1980.93" y="2110.66" name="Bandits Dice\nhome from\nCoalPeak"/>
-				<aux color="#DD8100" font_color="#DD8100" x="1980.93" y="2259.69" name="Traders Dice\nhome from\nCoalPeak"/>
-				<connector uid="73" angle="329.6">
+				<aux label_side="bottom" x="1968.04" y="2158.93" width="18" height="18" name="Combat\nCalculation\nhome from\nCoalPeak"/>
+				<aux color="black" font_color="black" x="1968.04" y="2093.05" width="18" height="18" name="Bandits Dice\nhome from\nCoalPeak"/>
+				<aux color="#DD8100" font_color="#DD8100" x="1968.04" y="2242.08" width="18" height="18" name="Traders Dice\nhome from\nCoalPeak"/>
+				<connector uid="45" angle="184.967">
 					<from>Bandits_Combat_Level</from>
 					<to>Bandits_Dice_home_from_CoalPeak</to>
 				</connector>
-				<connector uid="74" angle="30.1431">
+				<connector uid="46" angle="174.727">
 					<from>Traders_Combat_Level</from>
 					<to>Traders_Dice_home_from_CoalPeak</to>
 				</connector>
-				<connector uid="75" angle="90">
+				<connector uid="47" angle="90">
 					<from>Traders_Dice_home_from_CoalPeak</from>
 					<to>Combat_Calculation_home_from_CoalPeak</to>
 				</connector>
-				<connector uid="76" angle="270">
+				<connector uid="48" angle="270">
 					<from>Bandits_Dice_home_from_CoalPeak</from>
 					<to>Combat_Calculation_home_from_CoalPeak</to>
 				</connector>
-				<alias color="blue" background="white" font_style="italic" uid="77" x="1643.81" y="575.529" width="18" height="18">
-					<shape type="circle" radius="18"/>
-					<of>Combat_Calculation_in_CoalPeak</of>
-				</alias>
-				<flow label_side="bottom" x="1671.45" y="501.786" name="Injured Traders\nto CoalPeak">
-					<pts>
-						<pt x="1596.12" y="501.786"/>
-						<pt x="1746.79" y="501.786"/>
-						<pt x="1746.79" y="593.214"/>
-					</pts>
-				</flow>
-				<alias color="blue" background="white" font_style="italic" uid="6" x="448.22" y="577.85" width="18" height="18">
-					<of>Injured_Traders_to_CoalPeak</of>
-				</alias>
 				<flow label_side="top" x="421.076" y="520.024" name="Injured Traders\nIn hospital">
 					<pts>
 						<pt x="362.095" y="520.024"/>
@@ -2036,145 +2211,77 @@ Traders_Arrival_in_CoalPeak</eqn>
 						<pt x="656" y="519.625"/>
 					</pts>
 				</flow>
-				<connector uid="78" angle="118.408">
-					<from>
-						<alias uid="6"/>
-					</from>
-					<to>Injured_Traders_In_hospital</to>
-				</connector>
-				<connector uid="79" angle="40.2235">
-					<from>Fight_to_CoalPeak</from>
-					<to>Injured_Traders_to_CoalPeak</to>
-				</connector>
-				<connector uid="80" angle="180">
-					<from>
-						<alias uid="77"/>
-					</from>
-					<to>Fight_to_CoalPeak</to>
-				</connector>
-				<flow x="964.026" y="470.225" name="Injured Traders\nhome from\nCoalPeak">
+				<flow color="black" font_color="black" x="1668.85" y="2025.44" name="Bandits\nLevelUp">
 					<pts>
-						<pt x="1081.19" y="470.225"/>
-						<pt x="822.86" y="470.225"/>
+						<pt x="1602.76" y="2025.44"/>
+						<pt x="1734.93" y="2025.44"/>
 					</pts>
 				</flow>
-				<alias color="blue" background="white" font_style="italic" uid="5" x="366.734" y="577.85" width="18" height="18">
-					<of>Injured_Traders_home_from_CoalPeak</of>
-				</alias>
-				<connector uid="81" angle="55.8432">
-					<from>
-						<alias uid="5"/>
-					</from>
-					<to>Injured_Traders_In_hospital</to>
-				</connector>
-				<connector uid="82" angle="270">
-					<from>Fight_from_CoalPeak</from>
-					<to>Injured_Traders_home_from_CoalPeak</to>
-				</connector>
-				<alias font_style="italic" label_side="top" uid="83" x="955.026" y="255.962" width="18" height="18">
-					<of>Combat_Calculation_home_from_CoalPeak</of>
-				</alias>
-				<connector uid="84" angle="270">
-					<from>
-						<alias uid="83"/>
-					</from>
-					<to>Fight_from_CoalPeak</to>
-				</connector>
-				<flow color="black" font_color="black" x="1601.35" y="2027.94" name="Bandits\nLevelUp">
+				<flow color="#DD8100" font_color="#DD8100" x="1658.04" y="2329" width="18" height="18" name="Traders\nLevelUp">
 					<pts>
-						<pt x="1535.26" y="2027.94"/>
-						<pt x="1667.43" y="2027.94"/>
+						<pt x="1604" y="2338"/>
+						<pt x="1730.07" y="2338"/>
 					</pts>
 				</flow>
-				<flow color="#DD8100" font_color="#DD8100" x="1589.92" y="2334.49" width="18" height="18" name="Traders\nLevelUp">
-					<pts>
-						<pt x="1535.26" y="2343.49"/>
-						<pt x="1662.57" y="2343.49"/>
-					</pts>
-				</flow>
-				<aux color="#DD8100" font_color="#DD8100" x="1596.92" y="2402.44" name="Traders\nLevelUp\nCheck"/>
-				<connector uid="85" angle="88.0569">
+				<aux color="#DD8100" font_color="#DD8100" x="1667.04" y="2399.94" name="Traders\nLevelUp\nCheck"/>
+				<connector uid="49" angle="90">
 					<from>Traders_LevelUp_Check</from>
 					<to>Traders_LevelUp</to>
 				</connector>
-				<stock color="black" background="white" font_color="black" label_side="center" x="1816.07" y="1946.32" width="45" height="35" name="Bandit\nExp"/>
-				<aux color="black" font_color="black" label_side="top" x="1601.35" y="1962.37" name="Bendit\nLevelUp\nCheck"/>
-				<connector uid="86" angle="270">
+				<stock color="black" background="white" font_color="black" label_side="center" x="1883.57" y="1943.82" width="45" height="35" name="Bandit\nExp"/>
+				<aux color="black" font_color="black" label_side="top" x="1668.85" y="1959.87" name="Bendit\nLevelUp\nCheck"/>
+				<connector uid="50" angle="270">
 					<from>Bendit_LevelUp_Check</from>
 					<to>Bandits_LevelUp</to>
 				</connector>
-				<flow color="black" font_color="black" label_side="top" x="1743.24" y="1953.37" width="18" height="18" name="Bandit Exp In">
+				<flow color="black" font_color="black" label_side="top" x="1810.74" y="1950.87" width="18" height="18" name="Bandit Exp In">
 					<pts>
-						<pt x="1688.4" y="1962.37"/>
-						<pt x="1816.07" y="1962.37"/>
+						<pt x="1755.9" y="1959.87"/>
+						<pt x="1883.57" y="1959.87"/>
 					</pts>
 				</flow>
-				<flow color="black" font_color="black" label_side="top" x="1934.74" y="1962.37" name="Bandit Exp out">
+				<flow color="black" font_color="black" label_side="top" x="2002.24" y="1959.87" name="Bandit Exp out">
 					<pts>
-						<pt x="1861.07" y="1962.37"/>
-						<pt x="2032.4" y="1962.37"/>
+						<pt x="1928.57" y="1959.87"/>
+						<pt x="2099.9" y="1959.87"/>
 					</pts>
 				</flow>
-				<connector uid="87" angle="142.515">
+				<connector uid="51" angle="142.515">
 					<from>Bandit_Exp</from>
 					<to>Bendit_LevelUp_Check</to>
 				</connector>
-				<connector uid="88" color="#FF007F" angle="338.565">
+				<connector uid="52" color="#FF007F" angle="338.565">
 					<from>Bendit_LevelUp_Check</from>
 					<to>Bandit_Exp_out</to>
 				</connector>
-				<connector uid="89" angle="36.5343">
+				<connector uid="53" angle="36.5343">
 					<from>Bandit_Exp</from>
 					<to>Bandit_Exp_out</to>
 				</connector>
-				<alias color="#DD8100" font_style="italic" font_color="#DD8100" uid="90" x="1589.43" y="1828.34" width="18" height="18">
-					<of>bandit_Dies_on_way_to_CoalPeak</of>
-				</alias>
-				<alias color="#DD8100" font_style="italic" font_color="#DD8100" uid="91" x="1664.52" y="1828.34" width="18" height="18">
-					<of>Traders_Dies_on_way_home_from_CoalPeak</of>
-				</alias>
-				<connector uid="92" color="#00B80C" font_color="#00B80C" angle="320.893">
-					<from>
-						<alias uid="90"/>
-					</from>
-					<to>Bandit_Exp_In</to>
-				</connector>
-				<connector uid="93" color="#00B80C" font_color="#00B80C" angle="302.196">
-					<from>
-						<alias uid="91"/>
-					</from>
-					<to>Bandit_Exp_In</to>
-				</connector>
-				<stock color="#DD8100" font_color="#DD8100" label_side="center" x="1815.5" y="2390.01" width="45" height="35" name="Traders\nExp"/>
-				<flow color="#DD8100" font_color="#DD8100" label_side="top" x="1748.67" y="2398.51" width="18" height="18" name="Traders Exp in">
+				<stock color="#DD8100" font_color="#DD8100" label_side="center" x="1883" y="2387.51" width="45" height="35" name="Traders\nExp"/>
+				<flow color="#DD8100" font_color="#DD8100" label_side="top" x="1806.43" y="2395.29" width="18" height="18" name="Traders Exp in">
 					<pts>
-						<pt x="1699.83" y="2407.51"/>
-						<pt x="1815.5" y="2407.51"/>
+						<pt x="1747.86" y="2404.29"/>
+						<pt x="1883" y="2404.29"/>
 					</pts>
 				</flow>
-				<flow color="#DD8100" font_color="#DD8100" label_side="top" x="1916.67" y="2407.51" name="Traders Exp Out">
+				<flow color="#DD8100" font_color="#DD8100" label_side="top" x="2001.64" y="2405" name="Traders Exp Out">
 					<pts>
-						<pt x="1860.5" y="2407.51"/>
-						<pt x="1996.83" y="2407.51"/>
+						<pt x="1928" y="2405"/>
+						<pt x="2099.29" y="2405"/>
 					</pts>
 				</flow>
-				<connector uid="94" angle="323.791">
+				<connector uid="54" angle="323.791">
 					<from>Traders_Exp</from>
 					<to>Traders_Exp_Out</to>
 				</connector>
-				<connector uid="95" angle="216.267">
+				<connector uid="55" angle="216.267">
 					<from>Traders_Exp</from>
 					<to>Traders_LevelUp_Check</to>
 				</connector>
-				<connector uid="96" angle="22.0497">
+				<connector uid="56" angle="22.0497">
 					<from>Traders_LevelUp_Check</from>
 					<to>Traders_Exp_Out</to>
-				</connector>
-				<connector uid="97" angle="0">
-					<from>
-						<alias uid="72"/>
-					</from>
-					<to>Combat_Calculation_home_from_CoalPeak</to>
 				</connector>
 				<stock color="#DD8100" font_color="#DD8100" label_side="center" x="880.848" y="1959.35" name="Children\nto become\nTraders"/>
 				<flow color="#DD8100" font_color="#DD8100" label_side="top" x="800.829" y="1950.84" width="18" height="18" name="Child becomes\nTrader">
@@ -2184,108 +2291,103 @@ Traders_Arrival_in_CoalPeak</eqn>
 						<pt x="761.31" y="2050.36"/>
 					</pts>
 				</flow>
-				<connector uid="98" angle="141.773">
+				<connector uid="57" angle="141.773">
 					<from>Children_to_become_Traders</from>
 					<to>Child_becomes_Trader</to>
 				</connector>
-				<alias color="blue" background="white" font_style="italic" label_side="top" uid="9" x="410.306" y="231.306" width="18" height="18">
+				<alias color="blue" background="white" font_style="italic" label_side="top" uid="10" x="410.306" y="231.306" width="18" height="18">
 					<of>Child_becomes_Trader</of>
 				</alias>
-				<connector uid="99" angle="270">
+				<connector uid="58" angle="270">
 					<from>
-						<alias uid="9"/>
+						<alias uid="10"/>
 					</from>
 					<to>Traders_arrive_in_Cottonbog</to>
 				</connector>
-				<group locked="true" x="1476.01" y="1799.46" width="617.5" height="1181.04" name="Combat (Bandits vs. Traders)">
-					<item uid="100"/>
-					<item uid="101"/>
-					<item uid="72"/>
-					<item uid="70"/>
-					<item uid="91"/>
-					<item uid="90"/>
-				</group>
-				<group locked="true" x="776.026" y="192.225" width="1009.64" height="994.952" name="CoalPeak">
-					<item uid="102"/>
-					<item uid="103"/>
-					<item uid="104"/>
-					<item uid="64"/>
-					<item uid="62"/>
+				<group locked="true" x="1543.51" y="1796.96" width="1241" height="1181.04" name="Combat (Bandits vs. Traders)">
+					<item uid="59"/>
 					<item uid="60"/>
-					<item uid="83"/>
-					<item uid="77"/>
-					<item uid="56"/>
+					<item uid="61"/>
+					<item uid="62"/>
+					<item uid="63"/>
+					<item uid="64"/>
+					<item uid="65"/>
+					<item uid="66"/>
 				</group>
-				<stock label_side="center" x="242.258" y="2003.07" name="Bandit\nChilds"/>
-				<stock label_side="center" x="618.098" y="2002.95" name="Bandit\nElders"/>
-				<flow x="143.003" y="1997.82" name="Birth of\nBandit\nchildren">
+				<stock label_side="center" x="223.647" y="2227.36" width="45" height="35" name="Bandit\nChilds"/>
+				<stock label_side="center" x="599.487" y="2227.24" width="45" height="35" name="Bandit\nElders"/>
+				<flow x="146.892" y="2239.61" name="Birth of\nBandit\nchildren">
 					<pts>
-						<pt x="66.249" y="1997.82"/>
-						<pt x="219.758" y="1997.82"/>
+						<pt x="70.1378" y="2239.61"/>
+						<pt x="223.647" y="2239.61"/>
 					</pts>
 				</flow>
-				<flow color="black" font_color="black" x="233.258" y="2067.77" width="18" height="18" name="Children\ndeath rate\n- Bandits">
+				<flow color="black" font_color="black" x="237.147" y="2311.65" width="18" height="18" name="Children\ndeath rate\n- Bandits">
 					<pts>
-						<pt x="242.258" y="2020.57"/>
-						<pt x="242.258" y="2144.97"/>
+						<pt x="246.147" y="2262.36"/>
+						<pt x="246.147" y="2390.94"/>
 					</pts>
 				</flow>
-				<flow color="black" font_color="black" x="618.218" y="2076.71" name="Elders\ndeath rate\n- Bandits">
+				<flow color="black" font_color="black" x="622.107" y="2320.59" name="Elders\ndeath rate\n- Bandits">
 					<pts>
-						<pt x="618.218" y="2020.45"/>
-						<pt x="618.218" y="2144.97"/>
+						<pt x="622.107" y="2262.24"/>
+						<pt x="622.107" y="2390.94"/>
 					</pts>
 				</flow>
-				<flow label_side="top" x="331.023" y="2003.07" name="Bandit childs\nbecome adult">
+				<flow label_side="top" x="334.912" y="2244.86" name="Bandit childs\nbecome adult">
 					<pts>
-						<pt x="264.758" y="2003.07"/>
-						<pt x="409.288" y="2003.07"/>
+						<pt x="268.647" y="2244.86"/>
+						<pt x="413.177" y="2244.86"/>
 					</pts>
 				</flow>
-				<stock label_side="top" x="409.288" y="1987.83" width="45" height="35" name="Bandit\nAdult\nInhabitant"/>
-				<flow label_side="top" x="509.943" y="1995.14" width="18" height="18" name="Bandits gets old">
+				<stock label_side="top" x="413.177" y="2229.62" width="45" height="35" name="Bandit\nAdult\nInhabitant"/>
+				<flow label_side="top" x="513.832" y="2236.93" width="18" height="18" name="Bandits gets old">
 					<pts>
-						<pt x="454.288" y="2004.14"/>
-						<pt x="595.598" y="2004.14"/>
+						<pt x="458.177" y="2245.93"/>
+						<pt x="599.487" y="2245.93"/>
 					</pts>
 				</flow>
-				<flow color="black" font_color="black" x="420.638" y="2068.9" width="18" height="18" name="Adult\ndeath rate\n- Bandits">
+				<flow color="black" font_color="black" x="433.527" y="2321.78" name="Adult\ndeath rate\n- Bandits">
 					<pts>
-						<pt x="429.638" y="2022.83"/>
-						<pt x="429.638" y="2144.97"/>
+						<pt x="433.527" y="2264.62"/>
+						<pt x="433.527" y="2390.94"/>
 					</pts>
 				</flow>
-				<aux color="black" font_color="black" x="331.023" y="2069.57" name="Fertile\nBandits"/>
-				<connector uid="105" angle="159.113">
+				<aux color="black" font_color="black" x="334.912" y="2308.03" name="Fertile\nBandits"/>
+				<connector uid="67" angle="160.005">
 					<from>Fertile_Bandits</from>
 					<to>Birth_of_Bandit_children</to>
 				</connector>
-				<aux x="143.003" y="1906.84" name="Birth rate\nBandits"/>
-				<stock color="black" font_color="black" label_side="center" x="242.258" y="2162.47" name="Dead\nChildren\nBandits"/>
-				<stock color="black" font_color="black" label_side="center" x="429.638" y="2162.47" name="Dead\nAdults\nBandits"/>
-				<stock color="black" font_color="black" label_side="center" x="618.218" y="2162.47" name="Dead\nElders\nBandits"/>
-				<group locked="true" x="43.4758" y="1804.46" width="675.834" height="993.974" name="Populasjonsdynamikk - Bandits">
-					<item uid="106"/>
-					<item uid="107"/>
+				<aux x="146.892" y="2155.3" name="Birth rate\nBandits"/>
+				<stock color="black" font_color="black" label_side="center" x="246.98" y="2408.44" name="Dead\nChildren\nBandits"/>
+				<stock color="black" font_color="black" label_side="center" x="434.36" y="2408.44" name="Dead\nAdults\nBandits"/>
+				<stock color="black" font_color="black" label_side="center" x="622.94" y="2408.44" name="Dead\nElders\nBandits"/>
+				<group locked="true" x="43.4758" y="1799.11" width="675.834" height="1323.97" name="Populasjonsdynamikk - Bandits">
+					<item uid="68"/>
+					<item uid="69"/>
+					<item uid="70"/>
+					<item uid="71"/>
+					<item uid="72"/>
+					<item uid="73"/>
 				</group>
-				<connector uid="108" angle="270">
+				<connector uid="74" angle="270">
 					<from>Birth_rate_Bandits</from>
 					<to>Birth_of_Bandit_children</to>
 				</connector>
-				<connector uid="109" angle="212.517">
+				<connector uid="75" angle="211.149">
 					<from>Bandit_Adult_Inhabitant</from>
 					<to>Fertile_Bandits</to>
 				</connector>
-				<flow color="#DD8100" font_color="#DD8100" label_side="top" x="311.275" y="1897.55" width="18" height="18" name="Bandit childs\nbecome Raiders">
+				<flow color="#DD8100" font_color="#DD8100" label_side="bottom" x="264.781" y="2124.89" width="18" height="18" name="Bandit childs\nbecome Raiders">
 					<pts>
-						<pt x="243.262" y="1985.57"/>
-						<pt x="243.262" y="1906.55"/>
-						<pt x="409.288" y="1906.55"/>
+						<pt x="247.151" y="2227.36"/>
+						<pt x="247.151" y="2133.89"/>
+						<pt x="312.412" y="2133.89"/>
 					</pts>
 				</flow>
-				<stock color="#DD8100" font_color="#DD8100" label_side="center" x="409.288" y="1889.34" width="45" height="35" name="Bandit\nAdult\nRaiders"/>
-				<stacked_container uid="101" x="1492.26" y="2563.46" width="585" height="196.429">
-					<graph x="1492.26" y="2563.46" width="585" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Combat Level (Lv.)" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+				<stock color="#DD8100" font_color="#DD8100" label_side="center" x="410.955" y="2051.69" width="45" height="35" name="Bandit\nAdult\nRaiders"/>
+				<stacked_container uid="66" x="1559.76" y="2560.96" width="585" height="196.429">
+					<graph x="1559.76" y="2560.96" width="585" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Combat Level (Lv.)" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="#DD8100" pen_width="1" index="0" show_y_axis="true">
 							<entity name="Traders_Combat_Level"/>
 						</plot>
@@ -2294,8 +2396,8 @@ Traders_Arrival_in_CoalPeak</eqn>
 						</plot>
 					</graph>
 				</stacked_container>
-				<stacked_container uid="100" x="1492.26" y="2769.92" width="585" height="196.429">
-					<graph x="1492.26" y="2769.92" width="585" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Exp" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+				<stacked_container uid="65" x="1559.76" y="2767.42" width="585" height="196.429">
+					<graph x="1559.76" y="2767.42" width="585" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Exp" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="#DD8100" pen_width="1" index="0" show_y_axis="true">
 							<entity name="Traders_Exp"/>
 						</plot>
@@ -2304,19 +2406,19 @@ Traders_Arrival_in_CoalPeak</eqn>
 						</plot>
 					</graph>
 				</stacked_container>
-				<aux color="#DD8100" font_color="#DD8100" x="1537.4" y="2402.44" name="Traders\nExp to reach\nfor levelUp"/>
-				<connector uid="110" angle="0">
+				<aux color="#DD8100" font_color="#DD8100" x="1604.9" y="2399.94" name="Traders\nExp to reach\nfor levelUp"/>
+				<connector uid="76" angle="0">
 					<from>Traders_Exp_to_reach_for_levelUp</from>
 					<to>Traders_LevelUp_Check</to>
 				</connector>
-				<connector uid="111" angle="186.357">
+				<connector uid="77" angle="182.684">
 					<from>Traders_Combat_Level</from>
 					<to>Traders_Exp_to_reach_for_levelUp</to>
 				</connector>
-				<aux color="black" font_color="black" label_side="top" x="1537.98" y="1962.37" name="Bandits\nExp to reach\nfor levelUp"/>
+				<aux color="black" font_color="black" label_side="top" x="1605.48" y="1959.87" name="Bandits\nExp to reach\nfor levelUp"/>
 				<stock color="black" font_color="black" label_side="top" x="1161.67" y="1845.05" width="45" height="35" name="Dead Adult\nInhabitants\nCottonbog"/>
-				<stacked_container uid="39" x="756.927" y="2372.26" width="674.623" height="196.429">
-					<graph x="756.927" y="2372.26" width="674.623" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Population in Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+				<stacked_container uid="35" x="756.927" y="2326.71" width="674.623" height="304.997">
+					<graph x="756.927" y="2326.71" width="674.623" height="304.997" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Population in Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="black" pen_style="dotted" pen_width="1" index="0" show_y_axis="true">
 							<entity name="Total_citizen_in_Cottonbog"/>
 						</plot>
@@ -2337,8 +2439,8 @@ Traders_Arrival_in_CoalPeak</eqn>
 						</plot>
 					</graph>
 				</stacked_container>
-				<stacked_container uid="38" x="756.927" y="2581.26" width="674.622" height="196.429">
-					<graph x="756.927" y="2581.26" width="674.622" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Death Rate in Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+				<stacked_container uid="36" x="756.927" y="2639.32" width="674.622" height="196.429">
+					<graph x="756.927" y="2639.32" width="674.622" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Death Rate in Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
 							<entity name="Dead_Children_Cottonbog"/>
 						</plot>
@@ -2350,46 +2452,40 @@ Traders_Arrival_in_CoalPeak</eqn>
 						</plot>
 					</graph>
 				</stacked_container>
-				<alias color="black" font_style="italic" font_color="black" label_side="center" uid="37" x="1245.49" y="1932.89" width="58.9583" height="44.375">
+				<alias color="black" font_style="italic" font_color="black" label_side="center" uid="39" x="1245.49" y="1932.89" width="58.9583" height="44.375">
 					<of>Dead_Adult_Field_Workers_Cottonbog</of>
 				</alias>
 				<aux color="black" font_color="black" label_side="center" x="1338.12" y="1923.89" name="Total dead\nAdults in\nCottonbog"/>
-				<connector uid="112" angle="26.2846">
+				<connector uid="78" angle="26.2846">
 					<from>
-						<alias uid="37"/>
+						<alias uid="39"/>
 					</from>
 					<to>Total_dead_Adults_in_Cottonbog</to>
 				</connector>
-				<alias color="black" font_style="italic" font_color="black" label_side="center" uid="36" x="1371.58" y="1838.89" width="58.75" height="47.5">
-					<of>Dead_Traders_in_CoalPeak</of>
-				</alias>
-				<connector uid="113" angle="224.266">
-					<from>
-						<alias uid="36"/>
-					</from>
-					<to>Total_dead_Adults_in_Cottonbog</to>
-				</connector>
-				<stacked_container uid="107" x="59.4981" y="2375.54" width="643.789" height="196.429">
-					<graph x="59.4981" y="2375.54" width="643.789" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Population for Robbers" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+				<stacked_container uid="73" x="59.4981" y="2677.96" width="643.789" height="218.651">
+					<graph x="59.4981" y="2677.96" width="643.789" height="218.651" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Population for Robbers" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="black" pen_style="dotted" pen_width="1" index="0" show_y_axis="true">
 							<entity name="Total_Bandits"/>
 						</plot>
 						<plot color="blue" pen_width="1" index="1" show_y_axis="true">
 							<entity name="Bandit_Childs"/>
 						</plot>
-						<plot color="red" pen_width="1" index="2" show_y_axis="true">
+						<plot color="red" pen_width="1" index="0" right_axis="true" show_y_axis="true">
 							<entity name="Bandit_Adult_Raiders"/>
 						</plot>
-						<plot color="fuchsia" pen_width="1" index="3" show_y_axis="true">
+						<plot color="fuchsia" pen_width="1" index="2" show_y_axis="true">
 							<entity name="Bandit_Adult_Inhabitant"/>
 						</plot>
-						<plot color="#008F44" pen_width="1" index="4" show_y_axis="true">
+						<plot color="#008F44" pen_width="1" index="3" show_y_axis="true">
 							<entity name="Bandit_Elders"/>
+						</plot>
+						<plot color="#FFCC00" pen_width="1" index="1" right_axis="true" show_y_axis="true">
+							<entity name="Bandit_Hospitalized"/>
 						</plot>
 					</graph>
 				</stacked_container>
-				<stacked_container uid="106" x="59.4981" y="2586.26" width="643.789" height="196.429">
-					<graph x="59.4981" y="2586.26" width="643.789" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Population for Robbers" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+				<stacked_container uid="71" x="59.4981" y="2910.9" width="643.789" height="196.429">
+					<graph x="59.4981" y="2910.9" width="643.789" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Population for Robbers" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="blue" pen_width="1" index="0" show_y_axis="true">
 							<entity name="Dead_Children_Bandits"/>
 						</plot>
@@ -2401,80 +2497,48 @@ Traders_Arrival_in_CoalPeak</eqn>
 						</plot>
 					</graph>
 				</stacked_container>
-				<stacked_container uid="104" x="795.18" y="764.262" width="971.335" height="196.429">
-					<graph x="795.18" y="764.262" width="971.335" height="196.429" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="The Cottonbog Travel Route" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
-						<plot color="blue" pen_width="0.3" index="0" show_y_axis="true">
-							<entity name="Leave_Cottonbog_to_CoalPeak"/>
-						</plot>
-						<plot color="red" pen_width="0.3" index="1" show_y_axis="true">
-							<entity name="Traders_Arrival_in_CoalPeak"/>
-						</plot>
-						<plot color="fuchsia" pen_width="0.3" index="2" show_y_axis="true">
-							<entity name="Leave_CoalPeak"/>
-						</plot>
-						<plot color="#008F44" pen_width="0.3" index="3" show_y_axis="true">
-							<entity name="Traders_Home_from_CoalPeak"/>
-						</plot>
-					</graph>
-				</stacked_container>
-				<stacked_container uid="102" x="795.18" y="970.093" width="971.335" height="205.596">
-					<graph x="795.18" y="970.093" width="971.335" height="205.596" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Stats from Combat" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
-						<plot color="blue" pen_width="0.3" index="0" show_y_axis="true">
-							<entity name="Injured_Traders_home_from_CoalPeak"/>
-						</plot>
-						<plot color="red" pen_width="0.3" index="1" show_y_axis="true">
-							<entity name="Injured_Traders_to_CoalPeak"/>
-						</plot>
-						<plot color="fuchsia" pen_width="0.3" index="2" show_y_axis="true">
-							<entity name="Traders_Dies_on_way_home_from_CoalPeak"/>
-						</plot>
-						<plot color="#008F44" pen_width="0.3" index="3" show_y_axis="true">
-							<entity name="bandit_Dies_on_way_to_CoalPeak"/>
-						</plot>
-					</graph>
-				</stacked_container>
-				<stacked_container uid="19" x="2127.63" y="2586.89" width="323.255" height="196.429">
-					<graph x="2127.63" y="2586.89" width="323.255" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Gold in Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+				<stacked_container uid="20" x="3012.63" y="2594.39" width="323.255" height="196.429">
+					<graph x="3012.63" y="2594.39" width="323.255" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Gold in Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="#B5A900" pen_width="0.3" index="0" show_y_axis="true">
 							<entity name="Gold_in_Cottonbog"/>
 						</plot>
 					</graph>
 				</stacked_container>
-				<alias color="#DD8100" font_style="italic" font_color="#DD8100" label_side="top" uid="15" x="2394.49" y="1862" width="18" height="18">
+				<alias color="#DD8100" font_style="italic" font_color="#DD8100" label_side="top" uid="15" x="3279.49" y="1869.5" width="18" height="18">
 					<of>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</of>
 				</alias>
-				<connector uid="114" angle="178.073">
+				<connector uid="79" angle="178.073">
 					<from>
 						<alias uid="15"/>
 					</from>
 					<to>&quot;Is_there_cotton_to_trade?&quot;</to>
 				</connector>
-				<alias font_style="italic" label_side="top" uid="7" x="572.965" y="231.306" width="18" height="18">
+				<alias font_style="italic" label_side="top" uid="8" x="572.965" y="231.306" width="18" height="18">
 					<of>&quot;Is_there_cotton_to_trade?&quot;</of>
 				</alias>
-				<alias color="#DD8100" font_style="italic" font_color="#DD8100" label_side="top" uid="14" x="2476.05" y="2023.21" width="18" height="18">
+				<alias color="#DD8100" font_style="italic" font_color="#DD8100" label_side="top" uid="14" x="3361.05" y="2030.71" width="18" height="18">
 					<of>Traders_travel_out_of_Cottonbog</of>
 				</alias>
-				<connector uid="115" angle="180">
+				<connector uid="80" angle="180">
 					<from>
 						<alias uid="14"/>
 					</from>
 					<to>&quot;Cotton/Trader&quot;</to>
 				</connector>
-				<connector uid="116" angle="270">
+				<connector uid="81" angle="270">
 					<from>
-						<alias uid="7"/>
+						<alias uid="8"/>
 					</from>
 					<to>Traders_travel_out_of_Cottonbog</to>
 				</connector>
-				<stacked_container uid="16" x="2127.1" y="2088.38" width="398.962" height="196.429">
-					<graph x="2127.1" y="2088.38" width="398.962" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Cotton in Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+				<stacked_container uid="16" x="3012.1" y="2095.88" width="398.962" height="196.429">
+					<graph x="3012.1" y="2095.88" width="398.962" height="196.429" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Cotton in Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="#9AC2CA" pen_width="1" index="0" show_y_axis="true">
 							<entity name="Cotton_in_Cottonbog"/>
 						</plot>
 					</graph>
 				</stacked_container>
-				<stacked_container uid="4" x="301.76" y="647.635" width="409.1" height="200.804">
+				<stacked_container uid="6" x="301.76" y="647.635" width="409.1" height="200.804">
 					<graph x="301.76" y="647.635" width="409.1" height="200.804" type="time_series" isee:points_only="false" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Traders in Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="#DD8100" pen_width="1" index="0" show_y_axis="true">
 							<entity name="Trades_in_Cottonbog"/>
@@ -2484,7 +2548,7 @@ Traders_Arrival_in_CoalPeak</eqn>
 						</plot>
 					</graph>
 				</stacked_container>
-				<stacked_container uid="8" x="302.6" y="861.635" width="407.42" height="200.804">
+				<stacked_container uid="9" x="302.6" y="861.635" width="407.42" height="200.804">
 					<graph x="302.6" y="861.635" width="407.42" height="200.804" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Trader flow inside Cottonbog" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="#1BB900" pen_width="0.3" index="0" show_y_axis="true">
 							<entity name="Traders_arrive_in_Cottonbog"/>
@@ -2495,115 +2559,85 @@ Traders_Arrival_in_CoalPeak</eqn>
 					</graph>
 				</stacked_container>
 				<group locked="true" x="25.4268" y="191.266" width="257.44" height="218.395" name="Amount of Citizens in Cottonbog">
-					<item uid="117"/>
-					<item uid="118"/>
+					<item uid="82"/>
+					<item uid="83"/>
 					<item uid="33"/>
 					<item uid="23"/>
 					<item uid="30"/>
 				</group>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="1753.83" y="1837.34" name="Traders Dies\non way to\nSlagtown"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="1817.04" y="1837.34" name="Traders Dies\non way from\nSlagtown"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="1892.66" y="1837.34" name="Traders Dies\non way to\nGoldford"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="1957.33" y="1837.34" name="Traders Dies\non way from\nGoldford"/>
-				<connector uid="119" color="#00B80C" font_color="#00B80C" angle="269.269">
+				<aux color="#A5A5A5" font_color="#A5A5A5" x="1821.33" y="1834.84" name="Traders Dies\non way to\nSlagtown"/>
+				<aux color="#A5A5A5" font_color="#A5A5A5" label_side="bottom" x="1884.54" y="1834.84" name="Traders Dies\non way from\nSlagtown"/>
+				<aux color="#A5A5A5" font_color="#A5A5A5" x="1960.16" y="1834.84" name="Traders Dies\non way to\nGoldford"/>
+				<aux color="#A5A5A5" font_color="#A5A5A5" x="2024.83" y="1834.84" name="Traders Dies\non way from\nGoldford"/>
+				<connector uid="84" color="#00B80C" font_color="#00B80C" angle="269.269">
 					<from>Traders_Dies_on_way_to_Slagtown</from>
 					<to>Bandit_Exp_In</to>
 				</connector>
-				<connector uid="120" color="#00B80C" font_color="#00B80C" angle="242.603">
+				<connector uid="85" color="#00B80C" font_color="#00B80C" angle="242.603">
 					<from>Traders_Dies_on_way_from_Slagtown</from>
 					<to>Bandit_Exp_In</to>
 				</connector>
-				<connector uid="121" color="#00B80C" font_color="#00B80C" angle="221.68">
+				<connector uid="86" color="#00B80C" font_color="#00B80C" angle="221.68">
 					<from>Traders_Dies_on_way_to_Goldford</from>
 					<to>Bandit_Exp_In</to>
 				</connector>
-				<connector uid="122" color="#00B80C" font_color="#00B80C" angle="211.367">
+				<connector uid="87" color="#00B80C" font_color="#00B80C" angle="211.367">
 					<from>Traders_Dies_on_way_from_Goldford</from>
 					<to>Bandit_Exp_In</to>
 				</connector>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="1743.45" y="2495.84" name="Bandits Dies\non way to\nSlagtown"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" label_side="bottom" x="1806.65" y="2495.84" name="Bandits Dies\non way from\nSlagtown"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="1873.27" y="2486.84" width="18" height="18" name="Bandits Dies\non way to\nGoldford"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="1946.94" y="2495.84" name="Bandits Dies\non way from\nGoldford"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="1607.2" y="2495.84" name="Bandits Dies\non way to\nCoalPeak"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="1671.02" y="2495.84" name="Bandits Dies\non way from\nCoalPeak"/>
-				<connector uid="123" color="#00B80C" font_color="#00B80C" angle="30.4149">
-					<from>Bandits_Dies_on_way_to_CoalPeak</from>
-					<to>Traders_Exp_in</to>
-				</connector>
-				<connector uid="124" color="#00B80C" font_color="#00B80C" angle="45.5526">
-					<from>Bandits_Dies_on_way_from_CoalPeak</from>
-					<to>Traders_Exp_in</to>
-				</connector>
-				<connector uid="125" color="#00B80C" font_color="#00B80C" angle="80.8547">
-					<from>Bandits_Dies_on_way_to_Slagtown</from>
-					<to>Traders_Exp_in</to>
-				</connector>
-				<connector uid="126" color="#00B80C" font_color="#00B80C" angle="119.008">
-					<from>Bandits_Dies_on_way_from_Slagtown</from>
-					<to>Traders_Exp_in</to>
-				</connector>
-				<connector uid="127" color="#00B80C" font_color="#00B80C" angle="144.666">
-					<from>Bandits_Dies_on_way_to_Goldford</from>
-					<to>Traders_Exp_in</to>
-				</connector>
-				<connector uid="128" color="#00B80C" font_color="#00B80C" angle="154.981">
-					<from>Bandits_Dies_on_way_from_Goldford</from>
-					<to>Traders_Exp_in</to>
-				</connector>
-				<group locked="false" color="#A5A5A5" font_color="#A5A5A5" x="2546.86" y="1796.5" width="412" height="496.143" name="Cotton - Bandits"/>
-				<group locked="false" color="#A5A5A5" font_color="#A5A5A5" x="2468.39" y="2354.75" width="338.75" height="438.375" name="Gold - Bandits"/>
+				<group locked="false" color="#A5A5A5" font_color="#A5A5A5" x="3431.86" y="1804" width="412" height="496.143" name="Cotton - Bandits"/>
+				<group locked="false" color="#A5A5A5" font_color="#A5A5A5" x="3353.39" y="2362.25" width="338.75" height="438.375" name="Gold - Bandits"/>
 				<aux label_side="top" x="154.147" y="524.69" name="Total\nBandits"/>
 				<group locked="true" x="25.427" y="436.266" width="257.44" height="195.379" name="Amount of Bandits">
-					<item uid="129"/>
-					<item uid="130"/>
-					<item uid="131"/>
+					<item uid="88"/>
+					<item uid="89"/>
+					<item uid="90"/>
 				</group>
-				<alias font_style="italic" uid="129" x="56.4083" y="471.631" width="45" height="35">
+				<alias font_style="italic" uid="88" x="56.4083" y="471.631" width="45" height="35">
 					<of>Bandit_Childs</of>
 				</alias>
-				<alias font_style="italic" uid="131" x="208.71" y="572.995" width="45" height="35">
+				<alias font_style="italic" uid="90" x="208.71" y="572.995" width="45" height="35">
 					<of>Bandit_Adult_Inhabitant</of>
 				</alias>
-				<alias font_style="italic" uid="130" x="208.71" y="473.436" width="45" height="35">
+				<alias font_style="italic" uid="89" x="208.71" y="473.436" width="45" height="35">
 					<of>Bandit_Elders</of>
 				</alias>
-				<connector uid="132" angle="334.703">
+				<connector uid="91" angle="334.703">
 					<from>
-						<alias uid="129"/>
+						<alias uid="88"/>
 					</from>
 					<to>Total_Bandits</to>
 				</connector>
-				<connector uid="133" angle="203.654">
+				<connector uid="92" angle="203.654">
 					<from>
-						<alias uid="130"/>
+						<alias uid="89"/>
 					</from>
 					<to>Total_Bandits</to>
 				</connector>
-				<connector uid="134" angle="139.506">
+				<connector uid="93" angle="139.506">
 					<from>
-						<alias uid="131"/>
+						<alias uid="90"/>
 					</from>
 					<to>Total_Bandits</to>
 				</connector>
-				<alias font_style="italic" uid="118" x="219.151" y="233.519" width="45" height="35">
+				<alias font_style="italic" uid="83" x="219.151" y="233.519" width="45" height="35">
 					<of>Elders_in_Cottonbog</of>
 				</alias>
-				<connector uid="135" angle="341.232">
+				<connector uid="94" angle="341.232">
 					<from>
 						<alias uid="30"/>
 					</from>
 					<to>Total_citizen_in_Cottonbog</to>
 				</connector>
-				<connector uid="136" angle="197.764">
+				<connector uid="95" angle="197.764">
 					<from>
-						<alias uid="118"/>
+						<alias uid="83"/>
 					</from>
 					<to>Total_citizen_in_Cottonbog</to>
 				</connector>
-				<group locked="false" color="#A5A5A5" font_color="#A5A5A5" x="1795.85" y="191.451" width="1010" height="996.5" name="Slagtown"/>
-				<group locked="false" color="#A5A5A5" font_color="#A5A5A5" x="2815.18" y="191.451" width="1010" height="996.5" name="Goldford"/>
-				<stacked_container uid="137" x="189.943" y="1402.98" width="518.634" height="342.054">
+				<group locked="false" color="#A5A5A5" font_color="#A5A5A5" x="2570.85" y="174.618" width="1010" height="996.5" name="Slagtown"/>
+				<group locked="false" color="#A5A5A5" font_color="#A5A5A5" x="3592.68" y="171.467" width="1010" height="996.5" name="Goldford"/>
+				<stacked_container uid="96" x="189.943" y="1402.98" width="518.634" height="342.054">
 					<graph x="189.943" y="1402.98" width="518.634" height="342.054" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Trader Traveling Flow" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
 						<plot color="black" pen_width="0.5" index="0" right_axis="true" show_y_axis="true">
 							<entity name="Total_Adult_Traders"/>
@@ -2625,168 +2659,134 @@ Traders_Arrival_in_CoalPeak</eqn>
 				<aux color="#A5A5A5" font_color="#A5A5A5" x="440.26" y="1237.54" width="18" height="18" name="Total Traders Slagtown"/>
 				<aux color="#A5A5A5" font_color="#A5A5A5" x="613.928" y="1246.54" name="Total Traders Goldford"/>
 				<aux label_side="bottom" x="440.26" y="1304.61" width="18" height="18" name="Total\nAdult Traders"/>
-				<connector uid="138" angle="270">
+				<connector uid="97" angle="270">
 					<from>Total_Traders_Slagtown</from>
 					<to>Total_Adult_Traders</to>
 				</connector>
-				<connector uid="139" angle="202.162">
+				<connector uid="98" angle="202.162">
 					<from>Total_Traders_Goldford</from>
 					<to>Total_Adult_Traders</to>
 				</connector>
 				<aux x="273.299" y="1246.54" name="Total traders CoalPeak"/>
-				<connector uid="140" angle="339.135">
+				<connector uid="99" angle="339.135">
 					<from>Total_traders_CoalPeak</from>
 					<to>Total_Adult_Traders</to>
 				</connector>
-				<alias font_style="italic" uid="141" x="302.299" y="1164.63" width="45" height="35">
-					<of>Traders_Arrival_in_CoalPeak</of>
-				</alias>
-				<connector uid="142" angle="231.355">
-					<from>
-						<alias uid="141"/>
-					</from>
-					<to>Total_traders_CoalPeak</to>
-				</connector>
-				<alias font_style="italic" uid="143" x="250.799" y="1164.63" width="45" height="35">
-					<of>Leave_Cottonbog_to_CoalPeak</of>
-				</alias>
-				<connector uid="144" angle="270">
-					<from>
-						<alias uid="143"/>
-					</from>
-					<to>Total_traders_CoalPeak</to>
-				</connector>
-				<alias font_style="italic" uid="145" x="199.129" y="1164.63" width="45" height="35">
-					<of>Leave_CoalPeak</of>
-				</alias>
-				<connector uid="146" angle="308.737">
-					<from>
-						<alias uid="145"/>
-					</from>
-					<to>Total_traders_CoalPeak</to>
-				</connector>
-				<alias font_style="italic" label_side="bottom" uid="147" x="250.799" y="1326.4" width="45" height="35">
+				<alias font_style="italic" label_side="bottom" uid="100" x="250.799" y="1326.4" width="45" height="35">
 					<of>Trades_in_Cottonbog</of>
 				</alias>
-				<connector uid="148" angle="9.76712">
+				<connector uid="101" angle="9.76712">
 					<from>
-						<alias uid="147"/>
+						<alias uid="100"/>
 					</from>
 					<to>Total_Adult_Traders</to>
 				</connector>
-				<alias font_style="italic" label_side="bottom" uid="117" x="143.156" y="352.12" width="18" height="18">
+				<alias font_style="italic" label_side="bottom" uid="82" x="143.156" y="352.12" width="18" height="18">
 					<of>Total_Adult_Traders</of>
 				</alias>
-				<connector uid="149" angle="90">
+				<connector uid="102" angle="90">
 					<from>
-						<alias uid="117"/>
+						<alias uid="82"/>
 					</from>
 					<to>Total_citizen_in_Cottonbog</to>
 				</connector>
 				<group locked="true" x="178.01" y="1118.62" width="542.5" height="637.667" name="Trader traveling flow">
-					<item uid="137"/>
-					<item uid="143"/>
-					<item uid="141"/>
-					<item uid="145"/>
-					<item uid="147"/>
+					<item uid="103"/>
+					<item uid="104"/>
+					<item uid="105"/>
+					<item uid="96"/>
+					<item uid="100"/>
 				</group>
 				<aux color="#A5A5A5" font_color="#A5A5A5" label_side="right" x="650.79" y="379.679" name="Slagtown\nActivated"/>
 				<aux color="#A5A5A5" font_color="#A5A5A5" label_side="right" x="650.79" y="414.474" name="Goldford\nActivated"/>
-				<connector uid="150" angle="178.388">
+				<connector uid="106" angle="178.388">
 					<from>Slagtown_Activated</from>
 					<to>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</to>
 				</connector>
-				<connector uid="151" angle="145.376">
+				<connector uid="107" angle="145.376">
 					<from>Goldford_Activated</from>
 					<to>Check_if_traders_go_out_of_Cottonbog_to_CoalPeak</to>
 				</connector>
-				<alias color="#A5A5A5" font_style="italic" font_color="#A5A5A5" uid="152" x="93.0559" y="54.8571" width="18" height="18">
+				<alias color="#A5A5A5" font_style="italic" font_color="#A5A5A5" uid="108" x="90.5559" y="68.1905" width="18" height="18">
 					<of>Slagtown_Activated</of>
 				</alias>
-				<alias color="#A5A5A5" font_style="italic" font_color="#A5A5A5" uid="153" x="136.375" y="54.8571" width="18" height="18">
+				<alias color="#A5A5A5" font_style="italic" font_color="#A5A5A5" uid="109" x="133.875" y="68.1905" width="18" height="18">
 					<of>Goldford_Activated</of>
 				</alias>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="270.04" y="63.8571" name="Chance of\nBandit Raid in\nSlagtown"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="330.661" y="63.8571" name="Chance of\nBandit Raid in\nGoldford"/>
-				<aux label_side="top" x="2163.11" y="2032.21" name="Cotton per\nField Worker"/>
-				<connector uid="154" angle="0">
+				<aux color="#A5A5A5" font_color="#A5A5A5" x="267.54" y="77.1905" name="Chance of\nBandit Raid in\nSlagtown"/>
+				<aux color="#A5A5A5" font_color="#A5A5A5" x="328.161" y="77.1905" name="Chance of\nBandit Raid in\nGoldford"/>
+				<aux label_side="top" x="3048.11" y="2039.71" name="Cotton per\nField Worker"/>
+				<connector uid="110" angle="0">
 					<from>Cotton_per_Field_Worker</from>
 					<to>Harvest_Cotton_per_Field_worker</to>
 				</connector>
-				<alias font_style="italic" uid="155" x="392.776" y="54.8571" width="18" height="18">
+				<alias font_style="italic" uid="111" x="390.276" y="68.1905" width="18" height="18">
 					<of>Cotton_per_Field_Worker</of>
 				</alias>
-				<alias font_style="italic" uid="156" x="446.503" y="54.8571" width="18" height="18">
+				<alias font_style="italic" uid="112" x="444.003" y="68.1905" width="18" height="18">
 					<of>Cotton_per_Caravan</of>
 				</alias>
-				<alias font_style="italic" uid="157" x="502.208" y="54.8571" width="18" height="18">
+				<alias font_style="italic" uid="113" x="499.708" y="68.1905" width="18" height="18">
 					<of>Gold_per_Citizen_per_week</of>
 				</alias>
-				<alias font_style="italic" label_side="bottom" uid="158" x="545.839" y="54.8571" width="18" height="18">
+				<alias font_style="italic" label_side="bottom" uid="114" x="543.339" y="68.1905" width="18" height="18">
 					<of>Season_harvest_Variation</of>
 				</alias>
-				<aux x="604.026" y="54.8571" width="18" height="18" name="Gold from\nCoalPeak"/>
-				<alias font_style="italic" uid="103" x="955.026" y="593.654" width="18" height="18">
-					<of>Gold_from_CoalPeak</of>
-				</alias>
-				<connector uid="159" angle="9.18324">
-					<from>
-						<alias uid="103"/>
-					</from>
-					<to>Gold_gained_after_trip_from_CoalPeak</to>
-				</connector>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="660.991" y="63.8571" name="Gold from\nSlagtown"/>
-				<aux color="#A5A5A5" font_color="#A5A5A5" x="708.818" y="63.8571" name="Gold from\nGoldford"/>
-				<connector uid="160" angle="0">
+				<aux x="601.526" y="68.1905" width="18" height="18" name="Gold from\nCoalPeak"/>
+				<aux color="#A5A5A5" font_color="#A5A5A5" x="649.491" y="68.1905" width="18" height="18" name="Gold from\nSlagtown"/>
+				<aux color="#A5A5A5" font_color="#A5A5A5" x="697.318" y="68.1905" width="18" height="18" name="Gold from\nGoldford"/>
+				<connector uid="115" angle="0">
 					<from>Bandits_Exp_to_reach_for_levelUp</from>
 					<to>Bendit_LevelUp_Check</to>
 				</connector>
-				<connector uid="161" angle="167.648">
+				<connector uid="116" angle="177.577">
 					<from>Bandits_Combat_Level</from>
 					<to>Bandits_Exp_to_reach_for_levelUp</to>
 				</connector>
-				<alias color="black" font_style="italic" font_color="black" uid="162" x="861.625" y="54.8571" width="18" height="18">
+				<alias color="black" font_style="italic" font_color="black" uid="117" x="859.125" y="68.1905" width="18" height="18">
 					<of>Bandits_Exp_to_reach_for_levelUp</of>
 				</alias>
-				<alias color="#DD8100" font_style="italic" font_color="#DD8100" uid="163" x="918" y="54.8571" width="18" height="18">
+				<alias color="#DD8100" font_style="italic" font_color="#DD8100" uid="118" x="915.5" y="68.1905" width="18" height="18">
 					<of>Traders_Exp_to_reach_for_levelUp</of>
 				</alias>
-				<alias font_style="italic" uid="164" x="757.193" y="54.8571" width="18" height="18">
+				<alias font_style="italic" uid="119" x="754.693" y="68.1905" width="18" height="18">
 					<of>Birth_rate_Cottonbog</of>
 				</alias>
-				<alias font_style="italic" uid="165" x="802.836" y="54.8571" width="18" height="18">
+				<alias font_style="italic" uid="120" x="800.336" y="68.1905" width="18" height="18">
 					<of>Birth_rate_Bandits</of>
 				</alias>
 				<stock color="#A5A5A5" font_color="#A5A5A5" label_side="center" x="1370.54" y="1899.72" width="59.1667" height="48.3333" name="Dead\nTraders in\nSlagtown"/>
 				<stock color="#A5A5A5" font_color="#A5A5A5" label_side="center" x="1370.54" y="1962.12" width="59.1667" height="48.3333" name="Dead\nTraders in\nGoldford"/>
-				<alias color="black" font_style="italic" font_color="black" label_side="center" uid="35" x="1245.7" y="1867.29" width="58.75" height="46.875">
+				<alias color="black" font_style="italic" font_color="black" label_side="center" uid="38" x="1245.7" y="1867.29" width="58.75" height="46.875">
 					<of>Dead_Adult_Inhabitants_Cottonbog</of>
 				</alias>
-				<connector uid="166" angle="332.251">
+				<connector uid="121" angle="332.251">
 					<from>
-						<alias uid="35"/>
+						<alias uid="38"/>
 					</from>
 					<to>Total_dead_Adults_in_Cottonbog</to>
 				</connector>
-				<connector uid="167" angle="180">
+				<connector uid="122" angle="180">
 					<from>Dead_Traders_in_Slagtown</from>
 					<to>Total_dead_Adults_in_Cottonbog</to>
 				</connector>
-				<connector uid="168" angle="134.822">
+				<connector uid="123" angle="134.822">
 					<from>Dead_Traders_in_Goldford</from>
 					<to>Total_dead_Adults_in_Cottonbog</to>
 				</connector>
-				<group locked="true" x="27" y="40.2503" width="934.375" height="79.625" name="Control Panel">
-					<item uid="163"/>
-					<item uid="162"/>
-					<item uid="164"/>
-					<item uid="158"/>
-					<item uid="156"/>
-					<item uid="157"/>
-					<item uid="155"/>
-					<item uid="153"/>
-					<item uid="165"/>
-					<item uid="152"/>
+				<group locked="true" x="24.5" y="53.5837" width="1306.04" height="79.625" name="Control Panel">
+					<item uid="124"/>
+					<item uid="118"/>
+					<item uid="117"/>
+					<item uid="119"/>
+					<item uid="114"/>
+					<item uid="112"/>
+					<item uid="113"/>
+					<item uid="111"/>
+					<item uid="125"/>
+					<item uid="109"/>
+					<item uid="120"/>
+					<item uid="108"/>
 					<item uid="29"/>
 				</group>
 				<stock color="#A5A5A5" font_color="#A5A5A5" x="398.929" y="1182.13" name="Leave\nSlagtown"/>
@@ -2795,33 +2795,550 @@ Traders_Arrival_in_CoalPeak</eqn>
 				<stock color="#A5A5A5" font_color="#A5A5A5" x="563.929" y="1182.13" name="Leave\nGoldford"/>
 				<stock color="#A5A5A5" font_color="#A5A5A5" x="613.928" y="1182.13" name="Leave\nCottonbog\nto Goldford"/>
 				<stock color="#A5A5A5" font_color="#A5A5A5" x="663.928" y="1182.13" name="Traders\nArrival in\nGoldford"/>
-				<connector uid="169" angle="308.006">
+				<connector uid="126" angle="308.006">
 					<from>Leave_Slagtown</from>
 					<to>Total_Traders_Slagtown</to>
 				</connector>
-				<connector uid="170" angle="270">
+				<connector uid="127" angle="270">
 					<from>Leave_Cottonbog_to_Slagtown</from>
 					<to>Total_Traders_Slagtown</to>
 				</connector>
-				<connector uid="171" angle="232.363">
+				<connector uid="128" angle="232.363">
 					<from>Traders_Arrival_in_Slagtown</from>
 					<to>Total_Traders_Slagtown</to>
 				</connector>
-				<connector uid="172" angle="307.821">
+				<connector uid="129" angle="307.821">
 					<from>Leave_Goldford</from>
 					<to>Total_Traders_Goldford</to>
 				</connector>
-				<connector uid="173" angle="270">
+				<connector uid="130" angle="270">
 					<from>Leave_Cottonbog_to_Goldford</from>
 					<to>Total_Traders_Goldford</to>
 				</connector>
-				<connector uid="174" angle="232.178">
+				<connector uid="131" angle="232.178">
 					<from>Traders_Arrival_in_Goldford</from>
 					<to>Total_Traders_Goldford</to>
 				</connector>
-				<stock color="#A5A5A5" font_color="#A5A5A5" x="820.458" y="737.5" name="Etterspørsel"/>
-				<stock color="#A5A5A5" font_color="#A5A5A5" x="884.958" y="737.5" name='By kjøper av\n"Black Market"\nførst'/>
-				<stock color="#A5A5A5" font_color="#A5A5A5" x="949.125" y="737.5" name="Bandits\nBattle\nAftermath"/>
+				<stacked_container uid="132" x="888.514" y="968.427" width="971.335" height="205.596">
+					<graph x="888.514" y="968.427" width="971.335" height="205.596" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="Stats from Combat" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="0.3" index="0" show_y_axis="true">
+							<entity name="Injured_Traders_home_from_CoalPeak"/>
+						</plot>
+						<plot color="red" pen_width="0.3" index="1" show_y_axis="true">
+							<entity name="Injured_Traders_to_CoalPeak"/>
+						</plot>
+						<plot color="fuchsia" pen_width="0.3" index="2" show_y_axis="true">
+							<entity name="Traders_Dies_on_way_home_from_CoalPeak"/>
+						</plot>
+						<plot color="#008F44" pen_width="0.3" index="3" show_y_axis="true">
+							<entity name="Traders_Dies_on_way_to_CoalPeak"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<stacked_container uid="133" x="888.513" y="762.595" width="971.335" height="196.429">
+					<graph x="888.513" y="762.595" width="971.335" height="196.429" type="time_series" isee:points_only="true" show_grid="false" include_units_in_legend="false" plot_numbers="false" isee:label_pie_slices="false" num_x_grid_lines="0" num_y_grid_lines="0" num_x_labels="5" num_y_labels="3" title="The Cottonbog Travel Route" isee:fill_intensity="0.1" left_axis_multi_scale="false" left_axis_auto_scale="true" right_axis_multi_scale="false" right_axis_auto_scale="true">
+						<plot color="blue" pen_width="0.3" index="0" show_y_axis="true">
+							<entity name="Leave_Cottonbog_to_CoalPeak"/>
+						</plot>
+						<plot color="red" pen_width="0.3" index="1" show_y_axis="true">
+							<entity name="Traders_Arrival_in_CoalPeak"/>
+						</plot>
+						<plot color="fuchsia" pen_width="0.3" index="2" show_y_axis="true">
+							<entity name="Leave_CoalPeak"/>
+						</plot>
+						<plot color="#008F44" pen_width="0.3" index="3" show_y_axis="true">
+							<entity name="Traders_Home_from_CoalPeak"/>
+						</plot>
+					</graph>
+				</stacked_container>
+				<flow x="1057.36" y="468.558" name="Injured Traders\nhome from\nCoalPeak">
+					<pts>
+						<pt x="1174.53" y="468.558"/>
+						<pt x="916.193" y="468.558"/>
+					</pts>
+				</flow>
+				<flow x="1196.67" y="600.987" name="Traders\nEntering\nCottonbog\nfrom CoalPeak">
+					<pts>
+						<pt x="1196.67" y="501.308"/>
+						<pt x="1196.67" y="721.667"/>
+					</pts>
+				</flow>
+				<flow label_side="center" x="1302.5" y="408.426" width="18" height="18" name="End trip\nback from\nCoalPeak">
+					<pts>
+						<pt x="1412.53" y="417.426"/>
+						<pt x="1210.48" y="417.426"/>
+						<pt x="1210.48" y="466.308"/>
+					</pts>
+				</flow>
+				<flow label_side="bottom" x="1764.79" y="500.119" name="Injured Traders\nto CoalPeak">
+					<pts>
+						<pt x="1689.45" y="500.119"/>
+						<pt x="1840.12" y="500.119"/>
+						<pt x="1840.12" y="591.548"/>
+					</pts>
+				</flow>
+				<flow label_side="top" x="1517.62" y="263.296" name="Traders Dies on\nway home from\nCoalPeak">
+					<pts>
+						<pt x="1195.48" y="466.308"/>
+						<pt x="1195.48" y="263.296"/>
+						<pt x="1839.76" y="263.296"/>
+						<pt x="1839.76" y="351.915"/>
+					</pts>
+				</flow>
+				<flow label_side="bottom" x="1562.04" y="555.119" name="End trip to\nCoalPeak">
+					<pts>
+						<pt x="1457.53" y="555.119"/>
+						<pt x="1666.55" y="555.119"/>
+						<pt x="1666.55" y="503.093"/>
+					</pts>
+				</flow>
+				<flow label_side="top" x="1764.97" y="470.343" name="Traders Dies\non way to\nCoalPeak">
+					<pts>
+						<pt x="1689.45" y="470.343"/>
+						<pt x="1840.48" y="470.343"/>
+						<pt x="1840.48" y="386.915"/>
+					</pts>
+				</flow>
+				<flow label_side="center" x="1560.23" y="407.605" width="18" height="18" name="Start trip\nback from\nCoalpeak">
+					<pts>
+						<pt x="1668.93" y="468.093"/>
+						<pt x="1668.93" y="416.605"/>
+						<pt x="1457.53" y="416.605"/>
+					</pts>
+				</flow>
+				<flow label_side="bottom" x="1435" y="645.201" name="Start trip\nCoalPeak">
+					<pts>
+						<pt x="1435" y="718.333"/>
+						<pt x="1435" y="572.069"/>
+					</pts>
+				</flow>
+				<stock color="#A5A5A5" font_color="#A5A5A5" x="913.792" y="735.833" name="Etterspørsel"/>
+				<stock label_side="top" x="1435.03" y="554.569" name="Leave\nCottonbog\nto CoalPeak"/>
+				<stock color="#A5A5A5" font_color="#A5A5A5" x="978.292" y="735.833" name='By kjøper av\n"Black Market"\nførst'/>
+				<stock color="#A5A5A5" font_color="#A5A5A5" x="1042.46" y="735.833" name="Bandits\nBattle\nAftermath"/>
+				<stock label_side="center" x="1839.76" y="369.415" name="Dead\nTraders in\nCoalPeak"/>
+				<stock label_side="center" x="1174.53" y="466.308" width="45" height="35" name="Traders\nHome from\nCoalPeak"/>
+				<stock label_side="center" x="1666.95" y="485.593" name="Traders\nArrival in\nCoalPeak"/>
+				<stock label_side="center" x="1435.03" y="417.426" name="Leave\nCoalPeak"/>
+				<aux x="1123.32" y="510.308" name="Traders ready\nto leave\nCoalPeak\nEnd"/>
+				<connector uid="134" angle="308.966">
+					<from>Traders_ready_to_leave_CoalPeak_End</from>
+					<to>Traders_Entering_Cottonbog_from_CoalPeak</to>
+				</connector>
+				<connector uid="135" angle="199.776">
+					<from>Traders_Home_from_CoalPeak</from>
+					<to>Traders_ready_to_leave_CoalPeak_End</to>
+				</connector>
+				<aux color="black" font_color="black" label_side="top" x="974.979" y="318.022" name="Are Bandits\npresent from\nCoalPeak?"/>
+				<aux color="black" font_color="black" label_side="bottom" x="1666.95" y="660.05" name="Are Bandits\npresent in\nCoalPeak?"/>
+				<aux x="1666.95" y="582.863" name="Fight to\nCoalPeak"/>
+				<connector uid="136" angle="48.942">
+					<from>Fight_to_CoalPeak</from>
+					<to>Traders_Dies_on_way_to_CoalPeak</to>
+				</connector>
+				<connector uid="137" angle="235.37">
+					<from>Traders_Arrival_in_CoalPeak</from>
+					<to>Fight_to_CoalPeak</to>
+				</connector>
+				<connector uid="138" angle="90">
+					<from>&quot;Are_Bandits_present_in_CoalPeak?&quot;</from>
+					<to>Fight_to_CoalPeak</to>
+				</connector>
+				<connector uid="139" angle="40.2235">
+					<from>Fight_to_CoalPeak</from>
+					<to>Injured_Traders_to_CoalPeak</to>
+				</connector>
+				<aux x="1057.36" y="318.022" name="Fight from\nCoalPeak"/>
+				<connector uid="140" angle="6.78073">
+					<from>Fight_from_CoalPeak</from>
+					<to>Traders_Dies_on_way_home_from_CoalPeak</to>
+				</connector>
+				<connector uid="141" angle="130.112">
+					<from>Traders_Home_from_CoalPeak</from>
+					<to>Fight_from_CoalPeak</to>
+				</connector>
+				<connector uid="142" angle="0">
+					<from>&quot;Are_Bandits_present_from_CoalPeak?&quot;</from>
+					<to>Fight_from_CoalPeak</to>
+				</connector>
+				<connector uid="143" angle="270">
+					<from>Fight_from_CoalPeak</from>
+					<to>Injured_Traders_home_from_CoalPeak</to>
+				</connector>
+				<aux x="1114.32" y="591.987" width="18" height="18" name="Gold gained\nafter trip from\nCoalPeak"/>
+				<connector uid="144" angle="180">
+					<from>Traders_Entering_Cottonbog_from_CoalPeak</from>
+					<to>Gold_gained_after_trip_from_CoalPeak</to>
+				</connector>
+				<aux x="1274.17" y="510.308" name="Is there any\ntraders in\nCoalPeak\nEnd"/>
+				<connector uid="145" angle="229.48">
+					<from>Is_there_any_traders_in_CoalPeak_End</from>
+					<to>Traders_Entering_Cottonbog_from_CoalPeak</to>
+				</connector>
+				<connector uid="146" angle="341.042">
+					<from>Traders_Home_from_CoalPeak</from>
+					<to>Is_there_any_traders_in_CoalPeak_End</to>
+				</connector>
+				<aux color="blue" label_side="bottom" x="1569.23" y="485.593" name="Traders ready\nto leave\nCoalPeak"/>
+				<connector uid="147" angle="91.964">
+					<from>Traders_ready_to_leave_CoalPeak</from>
+					<to>Start_trip_back_from_Coalpeak</to>
+				</connector>
+				<connector uid="148" angle="180">
+					<from>Traders_Arrival_in_CoalPeak</from>
+					<to>Traders_ready_to_leave_CoalPeak</to>
+				</connector>
+				<aux color="blue" label_side="top" x="1569.23" y="348.522" name="Is there any\ntraders in\nCoalPeak"/>
+				<connector uid="149" angle="270">
+					<from>Is_there_any_traders_in_CoalPeak</from>
+					<to>Start_trip_back_from_Coalpeak</to>
+				</connector>
+				<connector uid="150" angle="125.487">
+					<from>Traders_Arrival_in_CoalPeak</from>
+					<to>Is_there_any_traders_in_CoalPeak</to>
+				</connector>
+				<alias color="#DD8100" font_style="italic" font_color="#DD8100" uid="64" x="1732.02" y="1825.84" width="18" height="18">
+					<of>Traders_Dies_on_way_home_from_CoalPeak</of>
+				</alias>
+				<connector uid="151" color="#00B80C" font_color="#00B80C" angle="302.196">
+					<from>
+						<alias uid="64"/>
+					</from>
+					<to>Bandit_Exp_In</to>
+				</connector>
+				<alias color="#DD8100" font_style="italic" font_color="#DD8100" uid="63" x="1656.93" y="1825.84" width="18" height="18">
+					<of>Traders_Dies_on_way_to_CoalPeak</of>
+				</alias>
+				<connector uid="152" color="#00B80C" font_color="#00B80C" angle="320.893">
+					<from>
+						<alias uid="63"/>
+					</from>
+					<to>Bandit_Exp_In</to>
+				</connector>
+				<alias color="blue" background="white" font_style="italic" uid="153" x="1737.15" y="573.863" width="18" height="18">
+					<shape type="circle" radius="18"/>
+					<of>Combat_Calculation_in_CoalPeak</of>
+				</alias>
+				<connector uid="154" angle="180">
+					<from>
+						<alias uid="153"/>
+					</from>
+					<to>Fight_to_CoalPeak</to>
+				</connector>
+				<alias font_style="italic" label_side="top" uid="155" x="1048.36" y="254.296" width="18" height="18">
+					<of>Combat_Calculation_home_from_CoalPeak</of>
+				</alias>
+				<connector uid="156" angle="270">
+					<from>
+						<alias uid="155"/>
+					</from>
+					<to>Fight_from_CoalPeak</to>
+				</connector>
+				<alias color="blue" background="white" font_style="italic" uid="7" x="448.22" y="577.85" width="18" height="18">
+					<of>Injured_Traders_to_CoalPeak</of>
+				</alias>
+				<connector uid="157" angle="118.408">
+					<from>
+						<alias uid="7"/>
+					</from>
+					<to>Injured_Traders_In_hospital</to>
+				</connector>
+				<alias color="blue" background="white" font_style="italic" uid="5" x="366.734" y="577.85" width="18" height="18">
+					<of>Injured_Traders_home_from_CoalPeak</of>
+				</alias>
+				<connector uid="158" angle="55.8432">
+					<from>
+						<alias uid="5"/>
+					</from>
+					<to>Injured_Traders_In_hospital</to>
+				</connector>
+				<alias color="black" font_style="italic" font_color="black" label_side="center" uid="37" x="1371.58" y="1838.89" width="58.75" height="47.5">
+					<of>Dead_Traders_in_CoalPeak</of>
+				</alias>
+				<connector uid="159" angle="224.266">
+					<from>
+						<alias uid="37"/>
+					</from>
+					<to>Total_dead_Adults_in_Cottonbog</to>
+				</connector>
+				<alias font_style="italic" uid="160" x="1048.36" y="591.987" width="18" height="18">
+					<of>Gold_from_CoalPeak</of>
+				</alias>
+				<connector uid="161" angle="9.18324">
+					<from>
+						<alias uid="160"/>
+					</from>
+					<to>Gold_gained_after_trip_from_CoalPeak</to>
+				</connector>
+				<alias color="#DD8100" font_style="italic" font_color="#DD8100" label_side="center" uid="62" x="1867.17" y="2190.97" width="60.5556" height="50.5556">
+					<of>Traders_Home_from_CoalPeak</of>
+				</alias>
+				<connector uid="162" angle="31.2544">
+					<from>
+						<alias uid="62"/>
+					</from>
+					<to>Combat_Calculation_home_from_CoalPeak</to>
+				</connector>
+				<alias font_style="italic" uid="105" x="302.299" y="1164.63" width="45" height="35">
+					<of>Traders_Arrival_in_CoalPeak</of>
+				</alias>
+				<connector uid="163" angle="231.355">
+					<from>
+						<alias uid="105"/>
+					</from>
+					<to>Total_traders_CoalPeak</to>
+				</connector>
+				<alias font_style="italic" uid="104" x="250.799" y="1164.63" width="45" height="35">
+					<of>Leave_Cottonbog_to_CoalPeak</of>
+				</alias>
+				<connector uid="164" angle="270">
+					<from>
+						<alias uid="104"/>
+					</from>
+					<to>Total_traders_CoalPeak</to>
+				</connector>
+				<alias font_style="italic" uid="103" x="199.129" y="1164.63" width="45" height="35">
+					<of>Leave_CoalPeak</of>
+				</alias>
+				<connector uid="165" angle="308.737">
+					<from>
+						<alias uid="103"/>
+					</from>
+					<to>Total_traders_CoalPeak</to>
+				</connector>
+				<alias color="black" font_style="italic" font_color="black" label_side="top" uid="166" x="965.979" y="386.915" width="18" height="18">
+					<of>Chance_of_Bandit_Raid_in_CoalPeak</of>
+				</alias>
+				<connector uid="167" angle="90">
+					<from>
+						<alias uid="166"/>
+					</from>
+					<to>&quot;Are_Bandits_present_from_CoalPeak?&quot;</to>
+				</connector>
+				<alias font_style="italic" uid="4" x="410.306" y="370.679" width="18" height="18">
+					<of>Traders_Entering_Cottonbog_from_CoalPeak</of>
+				</alias>
+				<connector uid="168" angle="90">
+					<from>
+						<alias uid="4"/>
+					</from>
+					<to>Traders_arrive_in_Cottonbog</to>
+				</connector>
+				<alias font_style="italic" label_side="top" uid="19" x="3083.19" y="2448.96" width="18" height="18">
+					<of>Gold_gained_after_trip_from_CoalPeak</of>
+				</alias>
+				<connector uid="169" angle="270">
+					<from>
+						<alias uid="19"/>
+					</from>
+					<to>Gold_in_to_Cottonbog</to>
+				</connector>
+				<alias font_style="italic" label_side="top" uid="170" x="1494.79" y="654.201" width="18" height="18">
+					<of>CoalPeak_Activated</of>
+				</alias>
+				<connector uid="171" angle="165.336">
+					<from>
+						<alias uid="170"/>
+					</from>
+					<to>Start_trip_CoalPeak</to>
+				</connector>
+				<alias color="#DD8100" font_style="italic" font_color="#DD8100" label_side="center" uid="61" x="1795" y="2190.97" width="62.2222" height="50.5556">
+					<of>Traders_Arrival_in_CoalPeak</of>
+				</alias>
+				<connector uid="172" angle="148.215">
+					<from>
+						<alias uid="61"/>
+					</from>
+					<to>Combat_Calculation_in_CoalPeak</to>
+				</connector>
+				<alias font_style="italic" label_side="top" uid="173" x="1350.5" y="654.201" width="18" height="18">
+					<of>Traders_travel_out_of_Cottonbog</of>
+				</alias>
+				<connector uid="174" angle="13.4101">
+					<from>
+						<alias uid="173"/>
+					</from>
+					<to>Start_trip_CoalPeak</to>
+				</connector>
+				<alias color="black" font_style="italic" font_color="black" uid="175" x="1578.23" y="651.05" width="18" height="18">
+					<of>Chance_of_Bandit_Raid_in_CoalPeak</of>
+				</alias>
+				<connector uid="176" angle="0">
+					<from>
+						<alias uid="175"/>
+					</from>
+					<to>&quot;Are_Bandits_present_in_CoalPeak?&quot;</to>
+				</connector>
+				<flow color="#DD8100" font_color="#DD8100" label_side="top" x="496.873" y="2047.47" width="18" height="18" name="Bandit Adults\ndie in Combat">
+					<pts>
+						<pt x="455.955" y="2056.47"/>
+						<pt x="579.792" y="2056.47"/>
+					</pts>
+				</flow>
+				<aux label_side="bottom" x="239.425" y="1889.63" name="Amount of Bandits\ndie in combat\nto CoalPeak"/>
+				<connector uid="177" angle="340.145">
+					<from>Amount_of_Bandits_die_in_combat_to_CoalPeak</from>
+					<to>Total_Bandits_in_Combat</to>
+				</connector>
+				<aux label_side="bottom" x="317.539" y="1889.63" name="Amount of Bandits\ndie in combat\nfrom CoalPeak"/>
+				<connector uid="178" angle="332.938">
+					<from>Amount_of_Bandits_die_in_combat_from_CoalPeak</from>
+					<to>Total_Bandits_in_Combat</to>
+				</connector>
+				<aux color="#A5A5A5" font_color="#A5A5A5" label_side="bottom" x="412.873" y="1889.63" name="Amount of Bandits\ndie in combat\nto Slagtown"/>
+				<aux color="#A5A5A5" font_color="#A5A5A5" label_side="bottom" x="491.955" y="1889.63" name="Amount of Bandits\ndie in combat\nfrom Slagtown"/>
+				<aux color="#A5A5A5" font_color="#A5A5A5" label_side="bottom" x="578.984" y="1889.63" name="Amount of Bandits\ndie in combat\nto Goldford"/>
+				<aux color="#A5A5A5" font_color="#A5A5A5" label_side="bottom" x="660.817" y="1889.63" name="Amount of Bandits\ndie in combat\nfrom Goldford"/>
+				<connector uid="179" angle="314.026">
+					<from>Amount_of_Bandits_die_in_combat_to_Slagtown</from>
+					<to>Total_Bandits_in_Combat</to>
+				</connector>
+				<connector uid="180" angle="278.231">
+					<from>Amount_of_Bandits_die_in_combat_from_Slagtown</from>
+					<to>Total_Bandits_in_Combat</to>
+				</connector>
+				<connector uid="181" angle="232.771">
+					<from>Amount_of_Bandits_die_in_combat_to_Goldford</from>
+					<to>Total_Bandits_in_Combat</to>
+				</connector>
+				<connector uid="182" angle="211.84">
+					<from>Amount_of_Bandits_die_in_combat_from_Goldford</from>
+					<to>Total_Bandits_in_Combat</to>
+				</connector>
+				<aux color="black" font_color="black" label_side="top" x="1826.11" y="2167.93" name="Amount of\nBandits in Raid\nin CoalPeak"/>
+				<aux color="black" font_color="black" label_side="top" x="1897.44" y="2167.93" name="Amount of\nBandits in Raid\nfrom CoalPeak"/>
+				<connector uid="183" angle="180">
+					<from>Amount_of_Bandits_in_Raid_in_CoalPeak</from>
+					<to>Combat_Calculation_in_CoalPeak</to>
+				</connector>
+				<connector uid="184" angle="0">
+					<from>Amount_of_Bandits_in_Raid_from_CoalPeak</from>
+					<to>Combat_Calculation_home_from_CoalPeak</to>
+				</connector>
+				<alias color="black" font_style="italic" font_color="black" label_side="bottom" uid="124" x="1060.97" y="68.1905" width="18" height="18">
+					<of>Amount_of_Bandits_in_Raid_in_CoalPeak</of>
+				</alias>
+				<alias color="black" font_style="italic" font_color="black" label_side="bottom" uid="125" x="993.979" y="68.1905" width="18" height="18">
+					<of>Amount_of_Bandits_in_Raid_from_CoalPeak</of>
+				</alias>
+				<aux color="black" font_color="black" x="1746.15" y="660.05" name="Did Bandits lose\nin CoalPeak?"/>
+				<connector uid="185" angle="322.118">
+					<from>Fight_to_CoalPeak</from>
+					<to>&quot;Did_Bandits_lose_in_CoalPeak?&quot;</to>
+				</connector>
+				<alias color="black" font_style="italic" font_color="black" uid="72" x="231.425" y="1810.01" width="18" height="18">
+					<of>&quot;Did_Bandits_lose_in_CoalPeak?&quot;</of>
+				</alias>
+				<connector uid="186" angle="269.189">
+					<from>
+						<alias uid="72"/>
+					</from>
+					<to>Amount_of_Bandits_die_in_combat_to_CoalPeak</to>
+				</connector>
+				<alias color="black" font_style="italic" font_color="black" label_side="bottom" uid="70" x="162.824" y="1810.01" width="18" height="18">
+					<of>Amount_of_Bandits_in_Raid_in_CoalPeak</of>
+				</alias>
+				<connector uid="187" angle="313.746">
+					<from>
+						<alias uid="70"/>
+					</from>
+					<to>Amount_of_Bandits_die_in_combat_to_CoalPeak</to>
+				</connector>
+				<aux color="#DD8100" font_color="#DD8100" x="651.265" y="2069.68" name="Are there enough\nBandits to\nRaid?"/>
+				<connector uid="188" angle="324.829">
+					<from>Bandit_Adult_Raiders</from>
+					<to>&quot;Are_there_enough_Bandits_to_Raid?&quot;</to>
+				</connector>
+				<alias color="blue" background="white" font_style="italic" label_side="top" uid="59" x="1852.83" y="2093.05" width="18" height="18">
+					<shape type="circle" radius="18"/>
+					<of>&quot;Are_there_enough_Bandits_to_Raid?&quot;</of>
+				</alias>
+				<connector uid="189" angle="241.532">
+					<from>
+						<alias uid="59"/>
+					</from>
+					<to>Amount_of_Bandits_in_Raid_in_CoalPeak</to>
+				</connector>
+				<connector uid="190" angle="298.393">
+					<from>
+						<alias uid="59"/>
+					</from>
+					<to>Amount_of_Bandits_in_Raid_from_CoalPeak</to>
+				</connector>
+				<stock x="331.25" y="2541.25" name="Bandit\nHospitalized"/>
+				<flow x="250" y="2541.88" name="Injured Bandits\nIn hospital">
+					<pts>
+						<pt x="191.25" y="2541.88"/>
+						<pt x="308.75" y="2541.88"/>
+					</pts>
+				</flow>
+				<flow x="395.5" y="2541.25" name="Injured Bandits out\nfrom hospital">
+					<pts>
+						<pt x="353.75" y="2541.25"/>
+						<pt x="461.25" y="2541.25"/>
+					</pts>
+				</flow>
+				<flow color="#DD8100" font_color="#DD8100" label_side="bottom" x="497.477" y="2074.5" width="18" height="18" name="Bandit Adults\nin Hospital">
+					<pts>
+						<pt x="455.955" y="2083.5"/>
+						<pt x="581" y="2083.5"/>
+					</pts>
+				</flow>
+				<aux color="#DD8100" font_color="#DD8100" label_side="top" x="496.873" y="1976.85" width="18" height="18" name="Total Bandits\nin Combat"/>
+				<connector uid="191" angle="309.191">
+					<from>Total_Bandits_in_Combat</from>
+					<to>Bandit_Adults_die_in_Combat</to>
+				</connector>
+				<connector uid="192" angle="232.211">
+					<from>Total_Bandits_in_Combat</from>
+					<to>Bandit_Adults_in_Hospital</to>
+				</connector>
+				<alias color="#DD8100" font_style="italic" font_color="#DD8100" uid="69" x="241" y="2458" width="18" height="18">
+					<of>Bandit_Adults_in_Hospital</of>
+				</alias>
+				<connector uid="193" angle="270">
+					<from>
+						<alias uid="69"/>
+					</from>
+					<to>Injured_Bandits_In_hospital</to>
+				</connector>
+				<alias color="#DD8100" background="white" font_style="italic" font_color="#DD8100" label_side="top" uid="68" x="313.255" y="1976.85" width="18" height="18">
+					<of>Injured_Bandits_out_from_hospital</of>
+				</alias>
+				<flow color="#DD8100" font_color="#DD8100" label_side="top" x="322.255" y="2053.94" name="Bandits rehabilitated">
+					<pts>
+						<pt x="245.556" y="2010.56"/>
+						<pt x="245.556" y="2053.94"/>
+						<pt x="410.955" y="2053.94"/>
+					</pts>
+				</flow>
+				<connector uid="194" angle="270">
+					<from>
+						<alias uid="68"/>
+					</from>
+					<to>Bandits_rehabilitated</to>
+				</connector>
+				<stock color="#DD8100" font_color="#DD8100" x="334.912" y="2133.33" name="Childeren\nto become\nBandits"/>
+				<flow color="#DD8100" font_color="#DD8100" x="394.261" y="2133.33" name="Childs become\nBandits">
+					<pts>
+						<pt x="357.412" y="2133.33"/>
+						<pt x="431.111" y="2133.33"/>
+						<pt x="431.111" y="2086.69"/>
+					</pts>
+				</flow>
+				<connector uid="195" angle="40.1948">
+					<from>Childeren_to_become_Bandits</from>
+					<to>Childs_become_Bandits</to>
+				</connector>
+				<alias color="#DD8100" font_style="italic" font_color="#DD8100" uid="60" x="1806.43" y="2483.5" width="18" height="18">
+					<of>Bandit_Adults_die_in_Combat</of>
+				</alias>
+				<connector uid="196" angle="89.0523">
+					<from>
+						<alias uid="60"/>
+					</from>
+					<to>Traders_Exp_in</to>
+				</connector>
 			</view>
 		</views>
 	</model>
