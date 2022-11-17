@@ -33,7 +33,7 @@
 			<aux name="Cotton in route">
 				<isee:delay_aux/>
 			</aux>
-			<aux name="Trade for gold">
+			<aux name="Trade with Town">
 				<isee:delay_aux/>
 			</aux>
 			<aux name="Successful RAID">
@@ -42,7 +42,7 @@
 			<aux name="Gold in route">
 				<isee:delay_aux/>
 			</aux>
-			<aux name="Attack readiness">
+			<aux name="Traders Combat Level">
 				<isee:delay_aux/>
 			</aux>
 			<aux name="Gold in Storage">
@@ -63,9 +63,6 @@
 			<aux name="Villagers Born">
 				<isee:delay_aux/>
 			</aux>
-			<aux name="Adults in Village">
-				<isee:delay_aux/>
-			</aux>
 			<aux name="Villagers Die">
 				<isee:delay_aux/>
 			</aux>
@@ -76,9 +73,6 @@
 				<isee:delay_aux/>
 			</aux>
 			<aux name="Traders">
-				<isee:delay_aux/>
-			</aux>
-			<aux name="Village make more traders up to 35">
 				<isee:delay_aux/>
 			</aux>
 			<aux name="Children Bandits">
@@ -99,62 +93,146 @@
 			<aux name="Bandits Gold">
 				<isee:delay_aux/>
 			</aux>
-			<aux name="Villagers Kidnapped">
-				<isee:delay_aux/>
-			</aux>
 			<aux name="Bandit's Cotton">
 				<isee:delay_aux/>
 			</aux>
 			<aux name="Bandit's sell cotton on black market">
 				<isee:delay_aux/>
 			</aux>
+			<aux name="Field Workers">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Inhabitants">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Total Population">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Chance for RAID">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Battle with Traders">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandits Combat Level">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Failed RAID">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Traders DIE">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Traders Injured">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Traders rehabilitated">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandit DIE">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandit injured">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandit\nrehabilitated">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Total Bandit Population">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Bandit Expenses">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Upgrade Cotton Workers">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Remove Cotton">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Cotton Per trader">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Upgrade Caravans">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Towns Supply of Cotton">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Town Citizens use Cotton">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Town's Price of Cotton">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Death Rate">
+				<isee:delay_aux/>
+			</aux>
+			<aux name="Not Enough Gold">
+				<isee:delay_aux/>
+			</aux>
 			<isee:dependencies>
 				<var name="Cotton_in_Storage">
 					<in>Harvest_Cotton</in>
-					<in>Traders_leave_with_Cotton</in>
+					<in>Remove_Cotton</in>
+				</var>
+				<var name="Harvest_Cotton">
+					<in>Field_Workers</in>
+					<in>Upgrade_Cotton_Workers</in>
+				</var>
+				<var name="Traders_leave_with_Cotton">
+					<in>Traders</in>
 				</var>
 				<var name="Cotton_in_route">
 					<in>Traders_leave_with_Cotton</in>
 					<in>Successful_RAID</in>
+					<in>Cotton_Per_trader</in>
 				</var>
-				<var name="Trade_for_gold">
+				<var name="Trade_with_Town">
 					<in>Cotton_in_route</in>
+					<in>Town&apos;s_Price_of_Cotton</in>
 				</var>
 				<var name="Successful_RAID">
-					<in>Attack_readiness</in>
+					<in>Battle_with_Traders</in>
 				</var>
 				<var name="Gold_in_route">
-					<in>Trade_for_gold</in>
+					<in>Trade_with_Town</in>
 					<in>Successful_RAID</in>
+					<in>Pay_Toll</in>
+					<in>Town&apos;s_Price_of_Cotton</in>
 				</var>
-				<var name="Attack_readiness">
+				<var name="Traders_Combat_Level">
 					<in>Successful_RAID</in>
 				</var>
 				<var name="Gold_in_Storage">
-					<in>Pay_Toll</in>
 					<in>General_Expenses</in>
 					<in>Taxes</in>
 					<in>Return_Home</in>
+					<in>Upgrade_Cotton_Workers</in>
+					<in>Upgrade_Caravans</in>
+				</var>
+				<var name="General_Expenses">
+					<in>Total_Population</in>
 				</var>
 				<var name="Return_Home">
 					<in>Gold_in_route</in>
 				</var>
-				<var name="Adults_in_Village">
-					<in>Villagers_Die</in>
-					<in>Children_in_Village</in>
-					<in>Villagers_Kidnapped</in>
+				<var name="Villagers_Die">
+					<in>Death_Rate</in>
 				</var>
 				<var name="Elders_in_Village">
 					<in>Villagers_Die</in>
-					<in>Adults_in_Village</in>
+					<in>Field_Workers</in>
+					<in>Inhabitants</in>
 				</var>
 				<var name="Children_in_Village">
 					<in>Villagers_Die</in>
 					<in>Villagers_Born</in>
 				</var>
 				<var name="Traders">
-					<in>Village_make_more_traders_up_to_35</in>
-					<in>Villagers_Kidnapped</in>
+					<in>Children_in_Village</in>
+					<in>Traders_DIE</in>
+					<in>Traders_rehabilitated</in>
 				</var>
 				<var name="Children_Bandits">
 					<in>Bandits_Born</in>
@@ -163,7 +241,8 @@
 				<var name="Adult_Bandits">
 					<in>Bandits_Die</in>
 					<in>Children_Bandits</in>
-					<in>Villagers_Kidnapped</in>
+					<in>Bandit_DIE</in>
+					<in>Bandit_rehabilitated</in>
 				</var>
 				<var name="Elder_Bandits">
 					<in>Bandits_Die</in>
@@ -172,9 +251,7 @@
 				<var name="Bandits_Gold">
 					<in>Successful_RAID</in>
 					<in>Bandit&apos;s_sell_cotton_on_black_market</in>
-				</var>
-				<var name="Villagers_Kidnapped">
-					<in>Successful_RAID</in>
+					<in>Bandit_Expenses</in>
 				</var>
 				<var name="Bandit's_Cotton">
 					<in>Successful_RAID</in>
@@ -182,6 +259,81 @@
 				</var>
 				<var name="Bandit's_sell_cotton_on_black_market">
 					<in>Bandit&apos;s_Cotton</in>
+				</var>
+				<var name="Field_Workers">
+					<in>Children_in_Village</in>
+					<in>Villagers_Die</in>
+				</var>
+				<var name="Inhabitants">
+					<in>Children_in_Village</in>
+					<in>Villagers_Die</in>
+				</var>
+				<var name="Total_Population">
+					<in>Elders_in_Village</in>
+					<in>Field_Workers</in>
+					<in>Inhabitants</in>
+					<in>Children_in_Village</in>
+				</var>
+				<var name="Chance_for_RAID">
+					<in>Adult_Bandits</in>
+				</var>
+				<var name="Battle_with_Traders">
+					<in>Chance_for_RAID</in>
+				</var>
+				<var name="Bandits_Combat_Level">
+					<in>Failed_RAID</in>
+				</var>
+				<var name="Failed_RAID">
+					<in>Battle_with_Traders</in>
+				</var>
+				<var name="Traders_DIE">
+					<in>Successful_RAID</in>
+				</var>
+				<var name="Traders_Injured">
+					<in>Successful_RAID</in>
+				</var>
+				<var name="Traders_rehabilitated">
+					<in>Traders_Injured</in>
+				</var>
+				<var name="Bandit_DIE">
+					<in>Failed_RAID</in>
+				</var>
+				<var name="Bandit_injured">
+					<in>Failed_RAID</in>
+				</var>
+				<var name="Bandit_rehabilitated">
+					<in>Bandit_injured</in>
+				</var>
+				<var name="Total_Bandit_Population">
+					<in>Children_Bandits</in>
+					<in>Adult_Bandits</in>
+					<in>Elder_Bandits</in>
+				</var>
+				<var name="Bandit_Expenses">
+					<in>Total_Bandit_Population</in>
+				</var>
+				<var name="Upgrade_Cotton_Workers">
+					<in>Gold_in_Storage</in>
+				</var>
+				<var name="Remove_Cotton">
+					<in>Cotton_Per_trader</in>
+					<in>Traders_leave_with_Cotton</in>
+				</var>
+				<var name="Cotton_Per_trader">
+					<in>Upgrade_Caravans</in>
+				</var>
+				<var name="Upgrade_Caravans">
+					<in>Gold_in_Storage</in>
+				</var>
+				<var name="Towns_Supply_of_Cotton">
+					<in>Trade_with_Town</in>
+					<in>Town_Citizens_use_Cotton</in>
+				</var>
+				<var name="Town's_Price_of_Cotton">
+					<in>Towns_Supply_of_Cotton</in>
+				</var>
+				<var name="Death_Rate">
+					<in>Not_Enough_Gold</in>
 				</var>
 			</isee:dependencies>
 		</variables>
@@ -225,7 +377,7 @@
 				<isee:spatial_map color="black" background="white" font_size="12pt"/>
 				<isee:animation_object color="black" background="white" font_size="12pt"/>
 			</style>
-			<view isee:show_pages="false" isee:converter_size="name_only" page_width="1097" page_height="767" isee:page_cols="2" isee:page_rows="2" zoom="60" isee:popup_graphs_are_comparative="true" type="stock_flow">
+			<view isee:show_pages="false" isee:converter_size="name_only" page_width="1123" page_height="793" isee:page_cols="3" isee:page_rows="2" isee:scroll_x="648.333" isee:scroll_y="352.5" zoom="120" isee:popup_graphs_are_comparative="true" type="stock_flow">
 				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
 					<stock color="white" background="black" font_color="blue" font_size="9pt" label_side="top">
 						<shape type="rectangle" width="45" height="35"/>
@@ -261,190 +413,381 @@
 					</graph>
 					<table color="black" background="#E0E0E0" text_align="right" font_size="12pt" orientation="vertical" wrap_text="false" isee:auto_fit="true" isee:use_alternate_row_colors="false" isee:unlimited_table_length="false" blank_column_width="80" column_width="160" interval="1" report_balances="beginning" report_flows="instantaneous" header_font_style="normal" header_font_weight="normal" header_text_decoration="none" header_text_align="center" header_vertical_text_align="center" header_font_color="black" header_font_family="Arial" header_font_size="12pt" header_text_padding="2" header_text_border_color="black" header_text_border_width="thin" header_text_border_style="none"/>
 				</style>
-				<aux x="893.375" y="681.625" width="75.25" height="12" name="Cotton in Storage"/>
-				<aux x="770.25" y="611.375" width="67.25" height="12" name="Harvest Cotton"/>
-				<connector uid="1" polarity="+" isee:polarity_placement="outside" angle="1.63658">
+				<aux x="1590.3" y="333.125" width="75.25" height="12" name="Cotton in Storage"/>
+				<aux x="1594.3" y="277.958" width="67.25" height="12" name="Harvest Cotton"/>
+				<connector uid="1" polarity="+" isee:polarity_placement="outside" angle="270">
 					<from>Harvest_Cotton</from>
 					<to>Cotton_in_Storage</to>
 				</connector>
-				<aux x="743.5" y="738.25" width="109.25" height="12" name="Traders leave with Cotton"/>
-				<connector uid="2" polarity="-" isee:polarity_placement="outside" angle="358.095">
-					<from>Traders_leave_with_Cotton</from>
-					<to>Cotton_in_Storage</to>
-				</connector>
-				<aux x="855.875" y="850.75" width="64.25" height="12" name="Cotton in route"/>
-				<connector uid="3" polarity="+" isee:polarity_placement="outside" angle="342.394">
+				<aux x="1572.46" y="449.291" width="109.25" height="12" name="Traders leave with Cotton"/>
+				<aux x="1596.21" y="685.458" width="64.25" height="12" name="Cotton in route"/>
+				<connector uid="2" polarity="+" isee:polarity_placement="outside" angle="270.303">
 					<from>Traders_leave_with_Cotton</from>
 					<to>Cotton_in_route</to>
 				</connector>
-				<aux x="956.625" y="862.75" width="60.25" height="12" name="Trade for gold"/>
-				<connector uid="4" polarity="+" isee:polarity_placement="outside" angle="326.31">
+				<aux x="1594.71" y="815.208" width="67.25" height="12" name="Trade with Town"/>
+				<connector uid="3" polarity="+" isee:polarity_placement="outside" angle="270">
 					<from>Cotton_in_route</from>
-					<to>Trade_for_gold</to>
+					<to>Trade_with_Town</to>
 				</connector>
-				<aux x="962.25" y="1032.25" width="75.25" height="12" name="Successful RAID"/>
-				<connector uid="5" polarity="-" isee:polarity_placement="outside" angle="174.144">
-					<from>Successful_RAID</from>
-					<to>Cotton_in_route</to>
-				</connector>
-				<aux x="1072.13" y="850.75" width="55.25" height="12" name="Gold in route"/>
-				<connector uid="6" polarity="+" isee:polarity_placement="outside" angle="343.571">
-					<from>Trade_for_gold</from>
+				<aux x="1365.63" y="896.875" width="75.25" height="12" name="Successful RAID"/>
+				<aux x="1600.71" y="893.708" width="55.25" height="12" name="Gold in route"/>
+				<connector uid="4" polarity="+" isee:polarity_placement="outside" angle="270">
+					<from>Trade_with_Town</from>
 					<to>Gold_in_route</to>
 				</connector>
-				<connector uid="7" polarity="-" isee:polarity_placement="outside" angle="8.65254">
+				<connector uid="5" polarity="-" isee:polarity_placement="outside" angle="0.806033">
 					<from>Successful_RAID</from>
 					<to>Gold_in_route</to>
 				</connector>
-				<aux x="960.625" y="919.75" width="72.25" height="12" name="Attack readiness"/>
-				<connector uid="8" polarity="+" isee:polarity_placement="inside" angle="153.435">
-					<from>Successful_RAID</from>
-					<to>Attack_readiness</to>
-				</connector>
-				<connector uid="9" polarity="-" isee:polarity_placement="inside" angle="317.42">
-					<from>Attack_readiness</from>
-					<to>Successful_RAID</to>
-				</connector>
-				<isee:loop_indicator text="B1" orientation="clockwise" uid="10" x="978" y="960.125" width="30" height="30">
-					<isee:entities>
-						<item uid="8"/>
-						<item uid="9"/>
-					</isee:entities>
-				</isee:loop_indicator>
-				<aux x="1055.13" y="681.625" width="66.25" height="12" name="Gold in Storage"/>
-				<aux x="1163.75" y="773.25" width="35.25" height="12" name="Pay Toll"/>
-				<connector uid="11" polarity="-" isee:polarity_placement="outside" angle="98.1301">
-					<from>Pay_Toll</from>
-					<to>Gold_in_Storage</to>
-				</connector>
-				<aux x="1117.25" y="614.5" width="78.25" height="12" name="General Expenses"/>
-				<connector uid="12" polarity="-" isee:polarity_placement="outside" angle="187.595">
+				<aux x="1480.63" y="1072.08" width="95.25" height="12" name="Traders Combat Level"/>
+				<aux x="1833" y="893.708" width="66.25" height="12" name="Gold in Storage"/>
+				<aux x="1739.38" y="815.208" width="35.25" height="12" name="Pay Toll"/>
+				<aux x="1827" y="685.458" width="78.25" height="12" name="General Expenses"/>
+				<connector uid="6" polarity="-" isee:polarity_placement="outside" angle="270">
 					<from>General_Expenses</from>
 					<to>Gold_in_Storage</to>
 				</connector>
-				<aux x="1002.63" y="611.375" width="26.25" height="12" name="Taxes"/>
-				<connector uid="13" polarity="-" isee:polarity_placement="outside" angle="272.603">
+				<aux x="1853" y="1084.08" width="26.25" height="12" name="Taxes"/>
+				<connector uid="7" polarity="-" isee:polarity_placement="outside" angle="90">
 					<from>Taxes</from>
 					<to>Gold_in_Storage</to>
 				</connector>
-				<aux x="1074.13" y="777" width="58.25" height="12" name="Return Home"/>
-				<connector uid="14" polarity="+" isee:polarity_placement="outside" angle="65.677">
+				<aux x="1727.88" y="893.708" width="58.25" height="12" name="Return Home"/>
+				<connector uid="8" polarity="+" isee:polarity_placement="outside" angle="0">
 					<from>Gold_in_route</from>
 					<to>Return_Home</to>
 				</connector>
-				<connector uid="15" polarity="+" isee:polarity_placement="outside" angle="111.801">
+				<connector uid="9" polarity="+" isee:polarity_placement="outside" angle="0">
 					<from>Return_Home</from>
 					<to>Gold_in_Storage</to>
 				</connector>
-				<aux x="1291.38" y="424" width="59.25" height="12" name="Villagers Born"/>
-				<aux x="1495.25" y="474.5" width="68.25" height="12" name="Adults in Village"/>
-				<aux x="1497.25" y="560.875" width="54.25" height="12" name="Villagers Die"/>
-				<connector uid="16" polarity="-" isee:polarity_placement="outside" angle="86.687">
-					<from>Villagers_Die</from>
-					<to>Adults_in_Village</to>
-				</connector>
-				<aux x="1635.25" y="474.5" width="68.25" height="12" name="Elders in Village"/>
-				<connector uid="17" polarity="-" isee:polarity_placement="outside" angle="356.566">
+				<aux x="1101.83" y="552.375" width="59.25" height="12" name="Villagers Born"/>
+				<aux x="949.583" y="278.958" width="54.25" height="12" name="Villagers Die"/>
+				<aux x="1096.33" y="151.458" width="68.25" height="12" name="Elders in Village"/>
+				<connector uid="10" polarity="-" isee:polarity_placement="outside" angle="82.5868">
 					<from>Villagers_Die</from>
 					<to>Elders_in_Village</to>
 				</connector>
-				<connector uid="18" polarity="+" isee:polarity_placement="outside" angle="28.4429">
-					<from>Adults_in_Village</from>
-					<to>Elders_in_Village</to>
-				</connector>
-				<aux x="1350.63" y="474.5" width="76.25" height="12" name="Children in Village"/>
-				<connector uid="19" polarity="-" isee:polarity_placement="outside" angle="181.181">
+				<aux x="1093.33" y="449.125" width="76.25" height="12" name="Children in Village"/>
+				<connector uid="11" polarity="-" isee:polarity_placement="outside" angle="282.36">
 					<from>Villagers_Die</from>
 					<to>Children_in_Village</to>
 				</connector>
-				<connector uid="20" polarity="+" isee:polarity_placement="inside" angle="277.667">
+				<connector uid="12" polarity="+" isee:polarity_placement="inside" angle="90">
 					<from>Villagers_Born</from>
 					<to>Children_in_Village</to>
 				</connector>
-				<connector uid="21" polarity="+" isee:polarity_placement="outside" angle="32.9052">
-					<from>Children_in_Village</from>
-					<to>Adults_in_Village</to>
-				</connector>
-				<aux x="1018.75" y="449" width="33.25" height="12" name="Traders"/>
-				<aux x="956.375" y="371.75" width="79.25" height="26" name="Village make more traders up to 35"/>
-				<connector uid="22" polarity="+" isee:polarity_placement="outside" angle="299.271">
-					<from>Village_make_more_traders_up_to_35</from>
-					<to>Traders</to>
-				</connector>
-				<aux x="337.917" y="479.208" width="70.25" height="12" name="Children Bandits"/>
-				<aux x="224.542" y="393.833" width="55.25" height="12" name="Bandits Born"/>
-				<connector uid="23" polarity="+" isee:polarity_placement="outside" angle="293.199">
+				<aux x="1384.55" y="449.291" width="33.25" height="12" name="Traders"/>
+				<aux x="654.167" y="972.375" width="70.25" height="12" name="Children Bandits"/>
+				<aux x="661.667" y="1081.58" width="55.25" height="12" name="Bandits Born"/>
+				<connector uid="13" polarity="+" isee:polarity_placement="outside" angle="90">
 					<from>Bandits_Born</from>
 					<to>Children_Bandits</to>
 				</connector>
-				<aux x="486.917" y="479.208" width="57.25" height="12" name="Adult Bandits"/>
-				<aux x="643.177" y="479.208" width="57.25" height="12" name="Elder Bandits"/>
-				<aux x="490.417" y="562.958" width="50.25" height="12" name="Bandits Die"/>
-				<connector uid="24" polarity="-" isee:polarity_placement="outside" angle="175.426">
+				<aux x="662.167" y="836.958" width="57.25" height="12" name="Adult Bandits"/>
+				<aux x="667.427" y="724.958" width="57.25" height="12" name="Elder Bandits"/>
+				<aux x="486.667" y="836.958" width="50.25" height="12" name="Bandits Die"/>
+				<connector uid="14" polarity="-" isee:polarity_placement="outside" angle="285.62">
 					<from>Bandits_Die</from>
 					<to>Children_Bandits</to>
 				</connector>
-				<connector uid="25" polarity="-" isee:polarity_placement="outside" angle="90">
+				<connector uid="15" polarity="-" isee:polarity_placement="outside" angle="0">
 					<from>Bandits_Die</from>
 					<to>Adult_Bandits</to>
 				</connector>
-				<connector uid="26" polarity="-" isee:polarity_placement="outside" angle="358.781">
+				<connector uid="16" polarity="-" isee:polarity_placement="outside" angle="67.1545">
 					<from>Bandits_Die</from>
 					<to>Elder_Bandits</to>
 				</connector>
-				<connector uid="27" polarity="+" isee:polarity_placement="outside" angle="30.8219">
+				<connector uid="17" polarity="+" isee:polarity_placement="inside" angle="89.3654">
 					<from>Children_Bandits</from>
 					<to>Adult_Bandits</to>
 				</connector>
-				<connector uid="28" polarity="+" isee:polarity_placement="outside" angle="41.8202">
+				<connector uid="18" polarity="+" isee:polarity_placement="outside" angle="87.3111">
 					<from>Adult_Bandits</from>
 					<to>Elder_Bandits</to>
 				</connector>
-				<aux x="975.125" y="1184.75" width="55.25" height="12" name="Bandits Gold"/>
-				<aux x="945.125" y="543.375" width="83.25" height="12" name="Villagers Kidnapped"/>
-				<connector uid="29" polarity="+" isee:polarity_placement="outside" angle="357.599">
-					<from>Successful_RAID</from>
-					<to>Villagers_Kidnapped</to>
-				</connector>
-				<connector uid="30" polarity="-" isee:polarity_placement="outside" angle="113.728">
-					<from>Villagers_Kidnapped</from>
-					<to>Traders</to>
-				</connector>
-				<connector uid="31" polarity="+" isee:polarity_placement="outside" angle="114.386">
-					<from>Villagers_Kidnapped</from>
-					<to>Adult_Bandits</to>
-				</connector>
-				<connector uid="32" polarity="+" isee:polarity_placement="outside" angle="279.241">
+				<aux x="1221.71" y="1157.46" width="55.25" height="12" name="Bandits Gold"/>
+				<connector uid="19" polarity="+" isee:polarity_placement="outside" angle="239.431">
 					<from>Successful_RAID</from>
 					<to>Bandits_Gold</to>
 				</connector>
-				<aux x="969.625" y="1305.25" width="66.25" height="12" name="Bandit's Cotton"/>
-				<connector uid="33" polarity="+" isee:polarity_placement="outside" angle="237.287">
+				<aux x="1370.13" y="1072.08" width="66.25" height="12" name="Bandit's Cotton"/>
+				<connector uid="20" polarity="+" isee:polarity_placement="outside" angle="270">
 					<from>Successful_RAID</from>
 					<to>Bandit&apos;s_Cotton</to>
 				</connector>
-				<aux x="1052.13" y="1235.25" width="81.25" height="26" name="Bandit's sell cotton on black market"/>
-				<connector uid="34" polarity="-" isee:polarity_placement="outside" angle="289.29">
+				<aux x="1362.63" y="1282.83" width="81.25" height="26" name="Bandit's sell cotton on black market"/>
+				<connector uid="21" polarity="-" isee:polarity_placement="outside" angle="53.6026">
 					<from>Bandit&apos;s_sell_cotton_on_black_market</from>
 					<to>Bandit&apos;s_Cotton</to>
 				</connector>
-				<connector uid="35" polarity="+" isee:polarity_placement="outside" angle="90.9878">
+				<connector uid="22" polarity="+" isee:polarity_placement="outside" angle="139.303">
 					<from>Bandit&apos;s_sell_cotton_on_black_market</from>
 					<to>Bandits_Gold</to>
 				</connector>
-				<connector uid="36" polarity="+" isee:polarity_placement="outside" angle="78.0239">
+				<connector uid="23" polarity="+" isee:polarity_placement="outside" angle="225">
 					<from>Bandit&apos;s_Cotton</from>
 					<to>Bandit&apos;s_sell_cotton_on_black_market</to>
 				</connector>
-				<isee:loop_indicator text="B2" orientation="clockwise" uid="37" x="1035.88" y="1271.25" width="30" height="30">
+				<isee:loop_indicator text="B2" orientation="clockwise" uid="24" x="1388.26" y="1169.46" width="30" height="30">
 					<isee:entities>
-						<item uid="34"/>
-						<item uid="36"/>
+						<item uid="21"/>
+						<item uid="23"/>
 					</isee:entities>
 				</isee:loop_indicator>
-				<connector uid="38" polarity="-" isee:polarity_placement="outside" angle="48.3356">
-					<from>Villagers_Kidnapped</from>
-					<to>Adults_in_Village</to>
+				<connector uid="25" polarity="-" isee:polarity_placement="inside" angle="43.2067">
+					<from>Successful_RAID</from>
+					<to>Cotton_in_route</to>
+				</connector>
+				<connector uid="26" polarity="+" isee:polarity_placement="outside" angle="0">
+					<from>Traders</from>
+					<to>Traders_leave_with_Cotton</to>
+				</connector>
+				<aux x="1136.08" y="278.958" width="60.25" height="12" name="Field Workers"/>
+				<connector uid="27" polarity="+" isee:polarity_placement="outside" angle="78.4582">
+					<from>Children_in_Village</from>
+					<to>Field_Workers</to>
+				</connector>
+				<aux x="1067.75" y="278.958" width="48.25" height="12" name="Inhabitants"/>
+				<connector uid="28" polarity="+" isee:polarity_placement="outside" angle="103.095">
+					<from>Children_in_Village</from>
+					<to>Inhabitants</to>
+				</connector>
+				<connector uid="29" polarity="+" isee:polarity_placement="outside" angle="105.663">
+					<from>Field_Workers</from>
+					<to>Elders_in_Village</to>
+				</connector>
+				<connector uid="30" polarity="+" isee:polarity_placement="inside" angle="73.1635">
+					<from>Inhabitants</from>
+					<to>Elders_in_Village</to>
+				</connector>
+				<connector uid="31" polarity="+" isee:polarity_placement="outside" angle="359.965">
+					<from>Children_in_Village</from>
+					<to>Traders</to>
+				</connector>
+				<connector uid="32" polarity="+" isee:polarity_placement="outside" angle="0.124094">
+					<from>Field_Workers</from>
+					<to>Harvest_Cotton</to>
+				</connector>
+				<connector uid="33" polarity="-" isee:polarity_placement="outside" isee:type="info" angle="334.162">
+					<from>Villagers_Die</from>
+					<to>Inhabitants</to>
+				</connector>
+				<connector uid="34" polarity="-" isee:polarity_placement="outside" isee:type="info" angle="319.99">
+					<from>Villagers_Die</from>
+					<to>Field_Workers</to>
+				</connector>
+				<aux x="1366.55" y="154.458" width="67.25" height="12" name="Total Population"/>
+				<connector uid="35" polarity="+" isee:polarity_placement="inside" isee:type="info" angle="359.363">
+					<from>Elders_in_Village</from>
+					<to>Total_Population</to>
+				</connector>
+				<connector uid="36" polarity="+" isee:polarity_placement="inside" isee:type="info" angle="14.2771">
+					<from>Field_Workers</from>
+					<to>Total_Population</to>
+				</connector>
+				<connector uid="37" polarity="+" isee:polarity_placement="inside" isee:type="info" angle="37.2149">
+					<from>Inhabitants</from>
+					<to>Total_Population</to>
+				</connector>
+				<connector uid="38" polarity="+" isee:polarity_placement="outside" isee:type="info" angle="10.9837">
+					<from>Children_in_Village</from>
+					<to>Total_Population</to>
+				</connector>
+				<connector uid="39" polarity="+" isee:polarity_placement="outside" angle="357.736">
+					<from>Total_Population</from>
+					<to>General_Expenses</to>
+				</connector>
+				<aux x="1036.71" y="837.458" width="75.25" height="12" name="Chance for RAID"/>
+				<connector uid="40" polarity="+" isee:polarity_placement="outside" angle="359.925">
+					<from>Adult_Bandits</from>
+					<to>Chance_for_RAID</to>
+				</connector>
+				<aux x="1036.71" y="901.708" width="79.25" height="12" name="Battle with Traders"/>
+				<connector uid="41" polarity="+" isee:polarity_placement="outside" angle="271.783">
+					<from>Chance_for_RAID</from>
+					<to>Battle_with_Traders</to>
+				</connector>
+				<aux x="1029.83" y="1072.08" width="95.25" height="12" name="Bandits Combat Level"/>
+				<aux x="1049.71" y="974.875" width="53.25" height="12" name="Failed RAID"/>
+				<connector uid="42" polarity="+" isee:polarity_placement="outside" angle="270.66">
+					<from>Failed_RAID</from>
+					<to>Bandits_Combat_Level</to>
+				</connector>
+				<connector uid="43" polarity="+" isee:polarity_placement="outside" angle="0.847034">
+					<from>Battle_with_Traders</from>
+					<to>Successful_RAID</to>
+				</connector>
+				<connector uid="44" polarity="+" isee:polarity_placement="outside" angle="270">
+					<from>Battle_with_Traders</from>
+					<to>Failed_RAID</to>
+				</connector>
+				<connector uid="45" polarity="+" isee:polarity_placement="outside" angle="337.377">
+					<from>Successful_RAID</from>
+					<to>Traders_Combat_Level</to>
+				</connector>
+				<aux x="1310.38" y="685.458" width="52.25" height="12" name="Traders DIE"/>
+				<aux x="1440.88" y="685.458" width="64.25" height="12" name="Traders Injured"/>
+				<connector uid="46" polarity="+" isee:polarity_placement="outside" angle="71.7414">
+					<from>Successful_RAID</from>
+					<to>Traders_Injured</to>
+				</connector>
+				<connector uid="47" polarity="+" isee:polarity_placement="outside" angle="107.524">
+					<from>Successful_RAID</from>
+					<to>Traders_DIE</to>
+				</connector>
+				<connector uid="48" polarity="-" isee:polarity_placement="inside" angle="74.6856">
+					<from>Traders_DIE</from>
+					<to>Traders</to>
+				</connector>
+				<aux x="1428.63" y="564.375" width="86.25" height="12" name="Traders rehabilitated"/>
+				<connector uid="49" polarity="+" isee:polarity_placement="outside" angle="90.5915">
+					<from>Traders_Injured</from>
+					<to>Traders_rehabilitated</to>
+				</connector>
+				<connector uid="50" polarity="+" isee:polarity_placement="outside" angle="121.522">
+					<from>Traders_rehabilitated</from>
+					<to>Traders</to>
+				</connector>
+				<aux x="916.625" y="932.875" width="47.25" height="12" name="Bandit DIE"/>
+				<aux x="916.125" y="974.875" width="58.25" height="12" name="Bandit injured"/>
+				<connector uid="51" polarity="+" isee:polarity_placement="outside" angle="162.849">
+					<from>Failed_RAID</from>
+					<to>Bandit_DIE</to>
+				</connector>
+				<connector uid="52" polarity="+" isee:polarity_placement="outside" angle="180">
+					<from>Failed_RAID</from>
+					<to>Bandit_injured</to>
+				</connector>
+				<connector uid="53" polarity="-" isee:polarity_placement="outside" angle="158.968">
+					<from>Bandit_DIE</from>
+					<to>Adult_Bandits</to>
+				</connector>
+				<aux x="796.125" y="967.875" width="52.25" height="26" name="Bandit\nrehabilitated"/>
+				<connector uid="54" polarity="+" isee:polarity_placement="outside" angle="133.626">
+					<from>Bandit_rehabilitated</from>
+					<to>Adult_Bandits</to>
+				</connector>
+				<connector uid="55" polarity="+" isee:polarity_placement="outside" angle="180">
+					<from>Bandit_injured</from>
+					<to>Bandit_rehabilitated</to>
+				</connector>
+				<aux x="770.125" y="1081.58" width="96.25" height="12" name="Total Bandit Population"/>
+				<aux x="1040.21" y="1157.46" width="72.25" height="12" name="Bandit Expenses"/>
+				<connector uid="56" polarity="-" isee:polarity_placement="outside" angle="0">
+					<from>Bandit_Expenses</from>
+					<to>Bandits_Gold</to>
+				</connector>
+				<connector uid="57" polarity="+" isee:polarity_placement="outside" angle="329.47">
+					<from>Total_Bandit_Population</from>
+					<to>Bandit_Expenses</to>
+				</connector>
+				<connector uid="58" polarity="+" isee:polarity_placement="outside" isee:type="info" angle="319.74">
+					<from>Children_Bandits</from>
+					<to>Total_Bandit_Population</to>
+				</connector>
+				<connector uid="59" polarity="+" isee:polarity_placement="outside" isee:type="info" angle="297.521">
+					<from>Adult_Bandits</from>
+					<to>Total_Bandit_Population</to>
+				</connector>
+				<connector uid="60" polarity="+" isee:polarity_placement="outside" isee:type="info" angle="351.916">
+					<from>Elder_Bandits</from>
+					<to>Total_Bandit_Population</to>
+				</connector>
+				<aux x="1998.63" y="765.208" width="106.25" height="12" name="Upgrade Cotton Workers"/>
+				<connector uid="61" polarity="+" isee:polarity_placement="outside" isee:type="info" angle="81.846">
+					<from>Upgrade_Cotton_Workers</from>
+					<to>Harvest_Cotton</to>
+				</connector>
+				<connector uid="62" polarity="-" isee:polarity_placement="inside" angle="232.253">
+					<from>Upgrade_Cotton_Workers</from>
+					<to>Gold_in_Storage</to>
+				</connector>
+				<aux x="1593.3" y="386.291" width="69.25" height="12" name="Remove Cotton"/>
+				<connector uid="63" polarity="-" isee:polarity_placement="outside" angle="90">
+					<from>Remove_Cotton</from>
+					<to>Cotton_in_Storage</to>
+				</connector>
+				<aux x="1723.38" y="386.291" width="74.25" height="12" name="Cotton Per trader"/>
+				<connector uid="64" polarity="+" isee:polarity_placement="outside" angle="179.945">
+					<from>Cotton_Per_trader</from>
+					<to>Remove_Cotton</to>
+				</connector>
+				<connector uid="65" polarity="+" isee:polarity_placement="outside" angle="97.5143">
+					<from>Traders_leave_with_Cotton</from>
+					<to>Remove_Cotton</to>
+				</connector>
+				<aux x="2025.13" y="1032.08" width="81.25" height="12" name="Upgrade Caravans"/>
+				<connector uid="66" polarity="-" isee:polarity_placement="inside" angle="118.61">
+					<from>Upgrade_Caravans</from>
+					<to>Gold_in_Storage</to>
+				</connector>
+				<connector uid="67" polarity="+" isee:polarity_placement="outside" angle="58.1965">
+					<from>Gold_in_Storage</from>
+					<to>Upgrade_Cotton_Workers</to>
+				</connector>
+				<connector uid="68" polarity="+" isee:polarity_placement="outside" angle="306.77">
+					<from>Gold_in_Storage</from>
+					<to>Upgrade_Caravans</to>
+				</connector>
+				<isee:loop_indicator text="B3" orientation="clockwise" uid="69" x="1949.75" y="813.208" width="30" height="30">
+					<isee:entities>
+						<item uid="67"/>
+						<item uid="62"/>
+					</isee:entities>
+				</isee:loop_indicator>
+				<isee:loop_indicator text="B1" orientation="counter_clockwise" uid="70" x="1949.75" y="944.875" width="30" height="30">
+					<isee:entities>
+						<item uid="66"/>
+						<item uid="68"/>
+					</isee:entities>
+				</isee:loop_indicator>
+				<connector uid="71" polarity="+" isee:polarity_placement="outside" isee:type="info" angle="44.5993">
+					<from>Upgrade_Caravans</from>
+					<to>Cotton_Per_trader</to>
+				</connector>
+				<connector uid="72" polarity="+" isee:polarity_placement="outside" angle="299.891">
+					<from>Cotton_Per_trader</from>
+					<to>Cotton_in_route</to>
+				</connector>
+				<aux x="1786.13" y="1174" width="102.25" height="12" name="Towns Supply of Cotton"/>
+				<connector uid="73" polarity="+" isee:polarity_placement="outside" isee:type="info" angle="309.5">
+					<from>Trade_with_Town</from>
+					<to>Towns_Supply_of_Cotton</to>
+				</connector>
+				<connector uid="74" polarity="-" isee:polarity_placement="inside" angle="211.388">
+					<from>Pay_Toll</from>
+					<to>Gold_in_route</to>
+				</connector>
+				<aux x="1783.63" y="1260.46" width="107.25" height="12" name="Town Citizens use Cotton"/>
+				<connector uid="75" polarity="-" isee:polarity_placement="outside" angle="90">
+					<from>Town_Citizens_use_Cotton</from>
+					<to>Towns_Supply_of_Cotton</to>
+				</connector>
+				<aux x="1622.92" y="1174" width="96.25" height="12" name="Town's Price of Cotton"/>
+				<connector uid="76" polarity="-" isee:polarity_placement="outside" angle="180">
+					<from>Towns_Supply_of_Cotton</from>
+					<to>Town&apos;s_Price_of_Cotton</to>
+				</connector>
+				<connector uid="77" polarity="+" isee:polarity_placement="inside" isee:type="info" angle="133.079">
+					<from>Town&apos;s_Price_of_Cotton</from>
+					<to>Gold_in_route</to>
+				</connector>
+				<connector uid="78" polarity="+" isee:polarity_placement="outside" isee:type="info" angle="143.973">
+					<from>Town&apos;s_Price_of_Cotton</from>
+					<to>Trade_with_Town</to>
+				</connector>
+				<aux x="816.542" y="278.958" width="50.25" height="12" name="Death Rate"/>
+				<aux x="805.042" y="449.125" width="73.25" height="12" name="Not Enough Gold"/>
+				<connector uid="79" polarity="+" isee:polarity_placement="outside" angle="2.76833">
+					<from>Death_Rate</from>
+					<to>Villagers_Die</to>
+				</connector>
+				<connector uid="80" polarity="+" isee:polarity_placement="outside" angle="90">
+					<from>Not_Enough_Gold</from>
+					<to>Death_Rate</to>
 				</connector>
 			</view>
 		</views>
