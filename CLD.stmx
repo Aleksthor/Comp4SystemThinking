@@ -60,7 +60,7 @@
 			<aux name="Return Home">
 				<isee:delay_aux/>
 			</aux>
-			<aux name="Villagers Born">
+			<aux name="BirthRate">
 				<isee:delay_aux/>
 			</aux>
 			<aux name="Villagers Die">
@@ -78,7 +78,7 @@
 			<aux name="Children Bandits">
 				<isee:delay_aux/>
 			</aux>
-			<aux name="Bandits Born">
+			<aux name="Bandits BirthRate">
 				<isee:delay_aux/>
 			</aux>
 			<aux name="Adult Bandits">
@@ -168,7 +168,7 @@
 			<aux name="Death Rate">
 				<isee:delay_aux/>
 			</aux>
-			<aux name="Not Enough Gold">
+			<aux name="Bandits Deathrate">
 				<isee:delay_aux/>
 			</aux>
 			<isee:dependencies>
@@ -217,6 +217,9 @@
 				<var name="Return_Home">
 					<in>Gold_in_route</in>
 				</var>
+				<var name="BirthRate">
+					<in>Gold_in_Storage</in>
+				</var>
 				<var name="Villagers_Die">
 					<in>Death_Rate</in>
 				</var>
@@ -227,7 +230,7 @@
 				</var>
 				<var name="Children_in_Village">
 					<in>Villagers_Die</in>
-					<in>Villagers_Born</in>
+					<in>BirthRate</in>
 				</var>
 				<var name="Traders">
 					<in>Children_in_Village</in>
@@ -235,8 +238,11 @@
 					<in>Traders_rehabilitated</in>
 				</var>
 				<var name="Children_Bandits">
-					<in>Bandits_Born</in>
+					<in>Bandits_BirthRate</in>
 					<in>Bandits_Die</in>
+				</var>
+				<var name="Bandits_BirthRate">
+					<in>Bandits_Gold</in>
 				</var>
 				<var name="Adult_Bandits">
 					<in>Bandits_Die</in>
@@ -247,6 +253,9 @@
 				<var name="Elder_Bandits">
 					<in>Bandits_Die</in>
 					<in>Adult_Bandits</in>
+				</var>
+				<var name="Bandits_Die">
+					<in>Bandits_Deathrate</in>
 				</var>
 				<var name="Bandits_Gold">
 					<in>Successful_RAID</in>
@@ -333,7 +342,10 @@
 					<in>Towns_Supply_of_Cotton</in>
 				</var>
 				<var name="Death_Rate">
-					<in>Not_Enough_Gold</in>
+					<in>Gold_in_Storage</in>
+				</var>
+				<var name="Bandits_Deathrate">
+					<in>Bandits_Gold</in>
 				</var>
 			</isee:dependencies>
 		</variables>
@@ -377,7 +389,7 @@
 				<isee:spatial_map color="black" background="white" font_size="12pt"/>
 				<isee:animation_object color="black" background="white" font_size="12pt"/>
 			</style>
-			<view isee:show_pages="false" isee:converter_size="name_only" page_width="1123" page_height="793" isee:page_cols="3" isee:page_rows="2" isee:scroll_x="648.333" isee:scroll_y="352.5" zoom="120" isee:popup_graphs_are_comparative="true" type="stock_flow">
+			<view isee:show_pages="false" isee:converter_size="name_only" page_width="1123" page_height="793" isee:page_cols="3" isee:page_rows="2" isee:scroll_x="260" isee:scroll_y="602.5" zoom="120" isee:popup_graphs_are_comparative="true" type="stock_flow">
 				<style color="black" background="white" font_style="normal" font_weight="normal" text_decoration="none" text_align="center" vertical_text_align="center" font_color="black" font_family="Arial" font_size="10pt" padding="2" border_color="black" border_width="thin" border_style="none">
 					<stock color="white" background="black" font_color="blue" font_size="9pt" label_side="top">
 						<shape type="rectangle" width="45" height="35"/>
@@ -462,7 +474,7 @@
 					<from>Return_Home</from>
 					<to>Gold_in_Storage</to>
 				</connector>
-				<aux x="1101.83" y="552.375" width="59.25" height="12" name="Villagers Born"/>
+				<aux x="1110.83" y="552.375" width="41.25" height="12" name="BirthRate"/>
 				<aux x="949.583" y="278.958" width="54.25" height="12" name="Villagers Die"/>
 				<aux x="1096.33" y="151.458" width="68.25" height="12" name="Elders in Village"/>
 				<connector uid="10" polarity="-" isee:polarity_placement="outside" angle="82.5868">
@@ -475,14 +487,14 @@
 					<to>Children_in_Village</to>
 				</connector>
 				<connector uid="12" polarity="+" isee:polarity_placement="inside" angle="90">
-					<from>Villagers_Born</from>
+					<from>BirthRate</from>
 					<to>Children_in_Village</to>
 				</connector>
 				<aux x="1384.55" y="449.291" width="33.25" height="12" name="Traders"/>
 				<aux x="654.167" y="972.375" width="70.25" height="12" name="Children Bandits"/>
-				<aux x="661.667" y="1081.58" width="55.25" height="12" name="Bandits Born"/>
+				<aux x="651.667" y="1081.58" width="75.25" height="12" name="Bandits BirthRate"/>
 				<connector uid="13" polarity="+" isee:polarity_placement="outside" angle="90">
-					<from>Bandits_Born</from>
+					<from>Bandits_BirthRate</from>
 					<to>Children_Bandits</to>
 				</connector>
 				<aux x="662.167" y="836.958" width="57.25" height="12" name="Adult Bandits"/>
@@ -780,14 +792,44 @@
 					<to>Trade_with_Town</to>
 				</connector>
 				<aux x="816.542" y="278.958" width="50.25" height="12" name="Death Rate"/>
-				<aux x="805.042" y="449.125" width="73.25" height="12" name="Not Enough Gold"/>
 				<connector uid="79" polarity="+" isee:polarity_placement="outside" angle="2.76833">
 					<from>Death_Rate</from>
 					<to>Villagers_Die</to>
 				</connector>
-				<connector uid="80" polarity="+" isee:polarity_placement="outside" angle="90">
-					<from>Not_Enough_Gold</from>
+				<alias font_style="italic" uid="80" x="808.542" y="552.375" width="66.25" height="12">
+					<of>Gold_in_Storage</of>
+				</alias>
+				<connector uid="81" polarity="-" isee:polarity_placement="outside" angle="85.2436">
+					<from>
+						<alias uid="80"/>
+					</from>
 					<to>Death_Rate</to>
+				</connector>
+				<connector uid="82" polarity="+" isee:polarity_placement="outside" angle="6.95404">
+					<from>
+						<alias uid="80"/>
+					</from>
+					<to>BirthRate</to>
+				</connector>
+				<aux x="334.708" y="836.958" width="77.25" height="12" name="Bandits Deathrate"/>
+				<alias font_style="italic" uid="83" x="345.708" y="1081.58" width="55.25" height="12">
+					<of>Bandits_Gold</of>
+				</alias>
+				<connector uid="84" polarity="+" isee:polarity_placement="outside" angle="85.1142">
+					<from>
+						<alias uid="83"/>
+					</from>
+					<to>Bandits_Deathrate</to>
+				</connector>
+				<connector uid="85" polarity="+" isee:polarity_placement="outside" angle="2.81341">
+					<from>
+						<alias uid="83"/>
+					</from>
+					<to>Bandits_BirthRate</to>
+				</connector>
+				<connector uid="86" polarity="+" isee:polarity_placement="outside" angle="1.92939">
+					<from>Bandits_Deathrate</from>
+					<to>Bandits_Die</to>
 				</connector>
 			</view>
 		</views>
